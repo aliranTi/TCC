@@ -1,0 +1,66 @@
+\chapter{Introdução}
+\label{cap:introducao}
+
+A análise estrutural constitui uma etapa fundamental no processo de concepção e avaliação de estruturas, permitindo determinar esforços internos, deslocamentos e reações decorrentes das ações aplicadas. No contexto da formação em Engenharia, a utilização de modelos físicos em escala reduzida e de ferramentas computacionais possibilita relacionar conceitos teóricos a situações práticas de projeto. Entre as atividades que exploram essa abordagem encontram-se as competições de pontes construídas com palitos de picolé, nas quais os participantes devem desenvolver estruturas capazes de resistir aos carregamentos estabelecidos, considerando simultaneamente aspectos relacionados à geometria, ao comportamento estrutural e ao consumo de material \cite{silva2024metodologia,lamberti2025ponte}.
+
+Nesse contexto, a Competição de Pontes de Palito de Picolé (CP3) constitui uma aplicação prática de conceitos relacionados à análise estrutural e ao projeto de estruturas treliçadas. Durante o desenvolvimento de uma ponte, diferentes configurações geométricas podem ser avaliadas com o objetivo de identificar soluções estruturalmente adequadas e compatíveis com as restrições de construção. Esse processo envolve, entre outras atividades, a definição da geometria da estrutura, a determinação dos carregamentos e condições de apoio, a obtenção dos esforços atuantes nas barras e a estimativa da quantidade de material necessária para sua construção.
+
+Ferramentas computacionais de análise estrutural desempenham papel importante nesse processo, uma vez que permitem avaliar diferentes alternativas de forma mais eficiente. Entre essas ferramentas encontra-se o FTOOL, software destinado à análise bidimensional de estruturas e amplamente utilizado em contextos acadêmicos e educacionais relacionados ao ensino de Engenharia Estrutural \cite{martha2022ftool,maciel2022ftool,passinho2025ftool}. A partir da modelagem da estrutura, o programa possibilita obter informações como esforços internos, reações de apoio e deslocamentos, fornecendo subsídios para a avaliação do comportamento estrutural da solução proposta.
+
+Entretanto, a obtenção dos resultados da análise estrutural não encerra o processo necessário para a construção de uma ponte de palitos. Os esforços determinados para cada elemento precisam ser interpretados e relacionados à capacidade resistente do material e à geometria adotada. Dessa forma, torna-se necessário avaliar, por exemplo, quais elementos estão predominantemente submetidos à tração ou à compressão e estimar a quantidade de palitos necessária para que cada barra seja capaz de resistir à solicitação correspondente. Quando essas informações são transferidas e processadas manualmente, o procedimento pode tornar-se repetitivo, principalmente durante a comparação de diferentes configurações estruturais.
+
+Além disso, alterações realizadas no modelo estrutural podem exigir a repetição das etapas de análise e dimensionamento. Em um processo iterativo de projeto, no qual diferentes geometrias podem ser analisadas sucessivamente, a automatização da leitura do modelo, do processamento dos resultados e da estimativa de material pode contribuir para tornar a avaliação das alternativas mais sistemática e reduzir operações manuais intermediárias.
+
+Diante desse cenário, este trabalho propõe o desenvolvimento de uma ferramenta computacional voltada à análise de modelos de pontes utilizados no contexto da CP3. O sistema desenvolvido realiza a leitura de arquivos no formato \texttt{.ftl}, utilizados pelo FTOOL, interpreta as informações necessárias à reconstrução do modelo estrutural e executa etapas posteriores de processamento destinadas à obtenção dos esforços e ao pré-dimensionamento dos elementos da ponte.
+
+ A solução é estruturada a partir de um núcleo desenvolvido em Python responsável pela interpretação dos arquivos, representação do modelo estrutural, integração com rotinas de análise e processamento dos resultados. Para a análise estrutural, são utilizadas rotinas computacionais capazes de determinar grandezas como reações de apoio, esforços normais, esforços cortantes, momentos fletores e deslocamentos. O desenvolvimento de ferramentas de análise estrutural utilizando a linguagem Python tem sido abordado em trabalhos recentes, inclusive com o emprego de bibliotecas específicas para modelagem e análise de estruturas \cite{dumka2025anastruct}.
+
+Após a obtenção dos esforços, o sistema realiza uma etapa de pré-dimensionamento dos elementos com base principalmente nas solicitações axiais. Os elementos submetidos à tração são avaliados considerando a relação entre força normal, área resistente e resistência adotada para o material, enquanto os elementos comprimidos demandam adicionalmente a consideração dos efeitos associados à instabilidade e à flambagem. A partir dessas verificações, estima-se a quantidade de camadas de palitos necessária para cada elemento e, posteriormente, a quantidade física de palitos correspondente ao comprimento das barras.
+
+Cabe destacar que esse procedimento constitui um \textit{pré-dimensionamento} baseado em modelos matemáticos, propriedades de material e hipóteses de cálculo. As propriedades mecânicas dos palitos podem apresentar variabilidade, e fatores relacionados ao processo construtivo, às ligações, às imperfeições geométricas e às características reais da madeira podem influenciar significativamente a resistência da estrutura. Portanto, os resultados computacionais não devem ser interpretados como substitutos da caracterização experimental do material ou da validação física da ponte, mas como instrumentos de apoio ao processo de projeto e análise.
+
+Outro aspecto considerado no desenvolvimento é a acessibilidade da ferramenta. Embora o núcleo de processamento seja desenvolvido em Python, sua execução é integrada a uma aplicação Web, permitindo que as principais funcionalidades sejam utilizadas diretamente por meio de um navegador. Para isso, o código Python é executado no ambiente do cliente utilizando tecnologias baseadas em WebAssembly, enquanto a interface da aplicação é responsável pela seleção dos arquivos, visualização da estrutura e apresentação dos resultados. Essa arquitetura permite concentrar as etapas de leitura, processamento e apresentação das informações em um único ambiente de utilização.
+
+Assim, a proposta deste trabalho não se limita à obtenção automática da quantidade de palitos necessária para determinada estrutura. Busca-se desenvolver uma ferramenta computacional que integre diferentes etapas do processo de análise de uma ponte, abrangendo a interpretação do modelo produzido no FTOOL, a reconstrução computacional da estrutura, a análise dos esforços, o pré-dimensionamento dos elementos e a apresentação organizada dos resultados. Com isso, pretende-se fornecer suporte à avaliação de diferentes soluções estruturais e contribuir para a aplicação prática de conceitos de análise e dimensionamento no contexto da competição.
+
+\section{Problema de pesquisa}
+\label{sec:problema-pesquisa}
+
+O desenvolvimento de pontes para competições acadêmicas envolve um processo iterativo no qual diferentes geometrias e distribuições de material podem ser avaliadas antes da construção do modelo físico. Embora programas de análise estrutural permitam determinar os esforços atuantes nos elementos, permanece necessária a interpretação desses resultados e sua conversão em informações diretamente relacionadas à construção da ponte.
+
+Nesse sentido, o problema abordado neste trabalho está relacionado à integração entre o modelo estrutural elaborado no FTOOL e as etapas posteriores de análise e pré-dimensionamento necessárias ao projeto de uma ponte de palitos. A ausência de uma integração direta entre essas etapas pode exigir a extração, organização e processamento manual das informações de cada elemento estrutural, dificultando a avaliação sucessiva de diferentes alternativas.
+
+A partir desse problema, estabelece-se a seguinte questão de pesquisa: \textit{como desenvolver uma ferramenta computacional capaz de interpretar modelos estruturais produzidos no FTOOL e automatizar etapas de análise e pré-dimensionamento de elementos de pontes de palitos, apresentando os resultados de maneira acessível aos participantes da CP3?}
+
+\section{Objetivos}
+\label{sec:objetivos}
+
+\subsection{Objetivo geral}
+\label{subsec:objetivo-geral}
+
+Desenvolver uma ferramenta computacional Web capaz de interpretar arquivos de modelos estruturais no formato \texttt{.ftl}, realizar o processamento e a análise estrutural da ponte e auxiliar no pré-dimensionamento da quantidade de palitos necessária para seus elementos, com aplicação voltada à Competição de Pontes de Palito de Picolé.
+
+\subsection{Objetivos específicos}
+\label{subsec:objetivos-especificos}
+
+Para alcançar o objetivo geral, são definidos os seguintes objetivos específicos:
+
+\begin{itemize}
+    \item desenvolver um mecanismo para leitura e interpretação de arquivos \texttt{.ftl}, identificando informações relacionadas à geometria, aos elementos estruturais, aos apoios, aos materiais, às seções e aos carregamentos;
+
+    \item reconstruir computacionalmente a topologia da estrutura a partir das informações presentes no arquivo de entrada;
+
+    \item converter o modelo interpretado para uma representação compatível com as rotinas utilizadas na análise estrutural;
+
+    \item obter grandezas relevantes para a avaliação da estrutura, incluindo reações de apoio, esforços internos e deslocamentos;
+
+    \item identificar o comportamento dos elementos quanto às solicitações axiais de tração e compressão;
+
+    \item implementar um procedimento de pré-dimensionamento capaz de estimar a quantidade de camadas e de palitos físicos necessária para os elementos estruturais;
+
+    \item disponibilizar os resultados por meio de uma interface Web que permita a seleção do arquivo, a visualização da estrutura e a consulta das informações obtidas durante a análise;
+
+    \item verificar a consistência da interpretação dos arquivos e dos resultados produzidos por meio da comparação com modelos e resultados de referência; e
+
+    \item estabelecer uma base computacional que permita a posterior comparação entre os resultados teóricos obtidos pelo sistema e o comportamento observado em modelos físicos.
+\end{itemize}
