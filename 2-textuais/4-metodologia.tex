@@ -1,3 +1,12 @@
 \chapter{Metodologia}
 \label{chap:metodologia}
 
+% Conteúdo realocado da introdução. Os procedimentos e critérios de verificação serão detalhados nesta etapa do trabalho.
+\section{Organização da ferramenta computacional}
+\label{sec:organizacao-ferramenta}
+
+A solução é organizada em um núcleo de processamento desenvolvido em \textit{Python} e uma interface Web. O núcleo interpreta os arquivos \texttt{.ftl}, reconstrói o modelo estrutural e o converte para a representação utilizada nas rotinas de análise. Em seguida, os resultados são utilizados no pré-dimensionamento das barras e na estimativa da quantidade de palitos.
+
+A análise estrutural utiliza a biblioteca \textit{anaStruct}, cuja aplicação à modelagem de treliças em \textit{Python} é discutida por \citeonline{dumka2025anastruct}. O processamento permite obter reações de apoio, esforços internos e deslocamentos. Para o pré-dimensionamento, são consideradas as solicitações axiais de tração e compressão, com verificação da flambagem dos elementos comprimidos. O número de camadas é então convertido em quantidade física de palitos, considerando o comprimento das barras e dos palitos.
+
+A execução do núcleo no navegador ocorre por meio do \textit{Pyodide}, baseado em \textit{WebAssembly}. A interface permite selecionar o arquivo, visualizar a estrutura e consultar os resultados. Dessa forma, as etapas de leitura, análise e apresentação das informações são integradas ao fluxo de utilização da ferramenta.
