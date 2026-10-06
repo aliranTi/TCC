@@ -1,0 +1,43 @@
+\chapter{Introdução}
+\label{cap:introducao}
+
+As competições de pontes de palitos de picolé aproximam os conceitos de análise estrutural da prática de projeto e construção, permitindo aos estudantes relacionar a geometria da ponte, o comportamento dos elementos e o consumo de material \cite{lamberti2025ponte,silva2024metodologia}. Nesse contexto, a Competição de Pontes de Palito de Picolé (CP3), da Universidade Federal Rural do Semi-Árido (UFERSA), campus Pau dos Ferros, constitui uma oportunidade de aplicação desses conhecimentos \cite{ufersa2024cp3}.
+
+O projeto dessas pontes envolve a definição da geometria, dos carregamentos e dos apoios, além da análise dos esforços e da escolha da composição das barras \cite{silva2024metodologia}. Para apoiar a análise estrutural, o FTOOL permite modelar estruturas planas e obter esforços internos e deslocamentos, recursos que auxiliam na compreensão do comportamento estrutural \cite{ftoolSobre}. Seu uso no ensino de Engenharia também é abordado por \citeonline{maciel2022ftool} e \citeonline{martha2022ftool}.
+
+A partir dos esforços calculados, o pré-dimensionamento relaciona as solicitações das barras às propriedades do material e à seção adotada. No caso das pontes de palitos, essa etapa fornece uma estimativa da quantidade de material necessária à construção \cite{silva2024metodologia}. Entretanto, a utilização dos resultados da análise estrutural no pré-dimensionamento exige etapas adicionais de interpretação e cálculo, que precisam ser revistas quando ocorrem alterações no modelo da estrutura. A integração computacional dessas etapas pode reduzir a repetição de cálculos e facilitar a avaliação de diferentes configurações estruturais durante o processo de projeto.
+
+Diante desse cenário, este trabalho propõe uma ferramenta web capaz de interpretar arquivos \texttt{.ftl} do FTOOL, realizar a análise estrutural e auxiliar no pré-dimensionamento de estruturas treliçadas de palitos. A proposta reúne a leitura e a reconstrução computacional do modelo estrutural, a obtenção dos resultados da análise, a estimativa da quantidade de palitos e a apresentação das informações em um ambiente acessível pelo navegador, com aplicação voltada aos participantes da CP3. As estimativas obtidas constituem apoio ao processo de projeto e dependem das hipóteses de cálculo e das propriedades adotadas para o material.
+
+\section{Problema de pesquisa}
+\label{sec:problema-pesquisa}
+
+Embora a análise estrutural forneça informações sobre os esforços atuantes nos elementos da estrutura, sua conversão em uma estimativa da quantidade de palitos exige etapas adicionais de interpretação e pré-dimensionamento. Quando realizadas manualmente, essas etapas precisam ser revistas a cada alteração do modelo, aumentando a repetição de cálculos e dificultando a comparação entre diferentes alternativas de projeto. O problema abordado consiste, assim, na necessidade de integrar o modelo elaborado no FTOOL às etapas posteriores de análise e pré-dimensionamento da ponte.
+
+Nesse sentido, estabelece-se a seguinte questão de pesquisa: \textit{Como integrar a interpretação de modelos do FTOOL à análise e ao pré-dimensionamento de pontes de palitos em uma ferramenta web acessível aos participantes da CP3?}
+
+\section{Objetivos}
+\label{sec:objetivos}
+
+\subsection{Objetivo geral}
+\label{subsec:objetivo-geral}
+
+Desenvolver uma ferramenta web capaz de interpretar modelos do FTOOL e auxiliar na análise estrutural e no pré-dimensionamento de estruturas treliçadas de palitos destinadas à CP3.
+
+\subsection{Objetivos específicos}
+\label{subsec:objetivos-especificos}
+
+Para alcançar o objetivo geral, são definidos os seguintes objetivos específicos:
+
+\begin{itemize}
+    \item implementar a leitura de arquivos \texttt{.ftl} e a reconstrução computacional do modelo estrutural;
+    \item integrar o modelo às rotinas de análise para obter esforços internos, reações de apoio e deslocamentos;
+    \item implementar o pré-dimensionamento das barras submetidas à tração e à compressão, estimando o número de camadas e a quantidade física de palitos;
+    \item disponibilizar uma interface web para seleção do arquivo, visualização da estrutura e consulta dos resultados; e
+    \item verificar a consistência da interpretação dos modelos e dos resultados obtidos por meio de comparações com modelos e cálculos de referência.
+\end{itemize}
+
+\section{Organização do trabalho}
+\label{sec:organizacao-trabalho}
+
+Além deste capítulo introdutório, o trabalho está organizado da seguinte forma. O Capítulo~\ref{cap:fundamentacao-teorica} apresenta a fundamentação teórica necessária à compreensão do trabalho, abordando conceitos relacionados às pontes treliçadas, à análise estrutural, ao comportamento de elementos submetidos à tração e à compressão e às ferramentas computacionais empregadas. Em seguida, são apresentados os trabalhos relacionados à temática estudada. O capítulo de metodologia e desenvolvimento descreve a arquitetura da solução, o processo de interpretação dos arquivos do FTOOL, a reconstrução do modelo estrutural, a integração com as rotinas de análise, o método de pré-dimensionamento e o desenvolvimento da aplicação web. Posteriormente, são apresentados e discutidos os resultados obtidos, incluindo as verificações realizadas e as limitações identificadas. Por fim, são apresentadas as considerações finais e as possibilidades de trabalhos futuros.
