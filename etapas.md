@@ -46,17 +46,14 @@ O código é o meio utilizado para resolver o problema, não o objeto principal 
 
 ### Prioridade atual
 
-**Capítulo 2 — Fundamentação teórica.**
+**Capítulo 3 — Trabalhos relacionados.**
 
-Depois dele, seguir para **Trabalhos Relacionados** e só então consolidar a **Metodologia**.
+A pedido do autor, iniciar os Trabalhos Relacionados a partir da versão atual da fundamentação. As pendências de revisão técnica e bibliográfica do Capítulo 2 permanecem abertas. Depois do Capítulo 3, consolidar a Metodologia.
 
-### Versionamento e acompanhamento
+### Acompanhamento
 
-- Branch atual: `fundamentacao-teorica`.
-- Referência anterior a esta atualização: `3eb34a8` — versão inicial da fundamentação teórica.
-- As alterações de 07/10/2026 serão registradas no commit `docs: amplia fundamentacao teorica e atualiza roteiro do TCC`.
-- O envio deste novo commit ao GitHub permanece pendente.
 - Atualizar este roteiro junto de cada nova alteração, preservando a organização por capítulos e checklists. Marcar uma tarefa como concluída somente após a verificação correspondente.
+- Manter o roteiro voltado ao conteúdo e ao andamento do TCC, sem informações de versionamento. Corrigir diretamente erros pontuais de escrita, sem transformá-los em tarefas ou registros neste arquivo.
 
 ---
 
@@ -244,8 +241,6 @@ Explicar que:
 A versão atual já contém as seções de pontes treliçadas, análise estrutural, ferramentas computacionais (FTOOL e anaStruct), pré-dimensionamento, tração, compressão e considerações sobre o modelo. As equações de tensão normal e de área da seção composta também foram incluídas. A existência dessas seções não encerra sua revisão.
 
 - [ ] Adicionar uma referência clássica de Análise Estrutural ou Resistência dos Materiais.
-- [ ] Corrigir ocorrências como “interpretaçãodos” e “aferramenta” e revisar a expressão “nós biarticulados”.
-- [ ] Distinguir as limitações da análise plana das verificações de estabilidade das barras nos dois eixos realizadas no pré-dimensionamento.
 - [ ] Consolidar a seção de treliças.
 - [ ] Consolidar análise estrutural.
 - [ ] Consolidar FTOOL.
@@ -679,10 +674,10 @@ Executar nesta ordem:
 
 ## Agora
 
-1. [ ] concluir a redação do Capítulo 2;
-2. [ ] adicionar uma referência clássica de análise estrutural/resistência dos materiais;
-3. [ ] revisar a NBR 7190-1 e o artigo `silva2026ruptura` para fundamentar compressão/flambagem;
-4. [ ] revisar todas as citações do Capítulo 2.
+1. [ ] selecionar pelo menos quatro trabalhos relevantes entre os candidatos do Capítulo 3;
+2. [ ] consultar as fontes e registrar objetivo, método, ferramentas, validação e resultados de cada trabalho;
+3. [ ] identificar as diferenças entre os trabalhos selecionados e a proposta deste TCC;
+4. [ ] organizar a comparação que sustentará a redação e a tabela do Capítulo 3.
 
 ## Depois
 
@@ -736,6 +731,9 @@ Se um trecho não responder claramente a nenhuma dessas perguntas, verificar se 
 - Registrado o ajuste de redação do problema de pesquisa na introdução.
 - Registrada a substituição do conteúdo inicial da metodologia por texto provisório; capítulo permanece pendente.
 - Preservado o novo modelo deste roteiro, com finalidades, estruturas sugeridas, critérios de conclusão e checklists por capítulo.
-- Identificadas pendências de revisão textual e técnica na fundamentação, sem marcar o capítulo como consolidado.
-- Verificação: BibTeX e pdfLaTeX concluídos sem erros; PDF com 32 páginas, sem referências indefinidas no log final. `git diff --check` sem erros. A compilação não substitui a revisão técnica e bibliográfica pendente.
-- Commit desta etapa: `docs: amplia fundamentacao teorica e atualiza roteiro do TCC`. Publicação no GitHub pendente.
+- A fundamentação permanece em revisão técnica e bibliográfica, sem ser considerada consolidada.
+- Verificação: BibTeX e pdfLaTeX concluídos sem erros; PDF com 32 páginas, sem referências indefinidas no log final. A compilação não substitui a revisão técnica e bibliográfica pendente.
+- Configurada a compilação automática com a sequência pdfLaTeX → BibTeX → geração das listas → pdfLaTeX → pdfLaTeX. A etapa de listas usa `makeglossaries-lite`, disponível no MiKTeX e sem dependência de Perl. Lista de siglas gerada com CP3 e UFERSA; avisos de destinos ausentes eliminados na compilação final.
+- Sincronizada a lista de abreviaturas com o corpo do texto: ABNT, CP3, FTOOL, NBR e UFERSA. Retiradas as entradas de exemplo TEST e PDF, sem uso nos capítulos. As primeiras menções de CP3 e UFERSA são controladas na introdução; a identificação NBR 7190-1 mantém a forma curta. Revisar essa correspondência quando novos termos forem introduzidos.
+- Conferida a geração das cinco entradas na lista e recompilado o PDF sem erros ou avisos de destinos de siglas ausentes. A expansão de FTOOL foi conferida na documentação oficial: https://portal.ftool.com.br/sobre/.
+- Alterada a prioridade para o Capítulo 3 — Trabalhos relacionados, conforme orientação do autor. Próxima atividade: selecionar os trabalhos e conferir suas contribuições nas fontes originais. As revisões ainda pendentes da fundamentação foram preservadas no checklist do Capítulo 2.
