@@ -1,68 +1,107 @@
-\chapter{Fundamentação Teórica}
+\chapter{Fundamentação teórica}
 \label{cap:fundamentacao-teorica}
 
-Este capítulo apresenta os conceitos necessários à compreensão da solução proposta neste trabalho. Inicialmente, são abordadas as pontes treliçadas construídas com palitos de picolé e sua utilização em atividades acadêmicas. Em seguida, são apresentados aspectos relacionados à análise estrutural de treliças e ao pré-dimensionamento de seus elementos. Por fim, são discutidas ferramentas computacionais empregadas na análise estrutural, com destaque para o FTOOL e para a biblioteca anaStruct.
+Este capítulo apresenta os conceitos que fundamentam o desenvolvimento deste trabalho. Inicialmente, são abordadas as pontes treliçadas de palitos de picolé e sua utilização em atividades acadêmicas. Em seguida, são discutidos aspectos relacionados à análise estrutural de treliças e ao uso de ferramentas computacionais nesse processo, com destaque para o FTOOL e a biblioteca anaStruct. Por fim, são apresentados os fundamentos do pré-dimensionamento de elementos submetidos à tração e à compressão, considerando as particularidades das estruturas construídas com palitos de madeira.
 
 \section{Pontes treliçadas de palitos de picolé}
-\label{sec:pontes-trelicadas}
+\label{sec:pontes-trelicadas-palitos}
 
-As treliças são estruturas constituídas por elementos interligados de modo a formar uma configuração capaz de transmitir os carregamentos aplicados aos seus apoios. Em modelos idealizados de treliças planas, as barras são associadas principalmente à transmissão de esforços axiais, podendo estar submetidas à tração ou à compressão. A disposição geométrica dos elementos influencia diretamente a distribuição desses esforços e, consequentemente, o comportamento da estrutura.
+As competições de protótipos de pontes são utilizadas no ensino de Engenharia como uma forma de aproximar conceitos teóricos da aplicação prática. Nessas atividades, os estudantes participam das etapas de concepção, análise, construção e ensaio de uma estrutura, relacionando conhecimentos de diferentes componentes da formação em Engenharia. \citeonline{rodriguessilva2022trelicadas} discutem esse tipo de competição como estratégia para o ensino de estruturas treliçadas, destacando seu caráter interdisciplinar e sua associação a metodologias de aprendizagem baseadas em projetos.
 
-A construção de pontes treliçadas com palitos de picolé é empregada em atividades acadêmicas como forma de aproximar conceitos de análise estrutural das etapas de projeto, construção e ensaio de uma estrutura física. Nesse tipo de atividade, aspectos como geometria, resistência dos elementos, estabilidade e quantidade de material precisam ser considerados durante o desenvolvimento do protótipo \cite{silva2024metodologia,lamberti2025ponte}.
+No contexto das pontes construídas com palitos de picolé, o processo envolve não apenas a montagem do protótipo, mas também a definição de sua geometria, a análise dos esforços, a seleção da configuração das barras e a estimativa do comportamento da estrutura. \citeonline{silva2024metodologia} apresentam uma metodologia desenvolvida no âmbito da Competição de Pontes de Palito de Picolé (CP3), da Universidade Federal Rural do Semi-Árido (UFERSA), relacionando a construção das pontes a conhecimentos de Resistência dos Materiais e propriedades da madeira.
 
-\citeonline{silva2024metodologia} apresentam uma metodologia aplicada à construção de pontes de palitos de picolé no contexto da CP3, relacionando etapas de concepção, análise, dimensionamento e construção. Os autores destacam a atividade como uma forma de aproximar conhecimentos teóricos de resistência dos materiais e propriedades da madeira de uma aplicação prática de engenharia.
+O desenvolvimento desse tipo de estrutura também é apresentado por \citeonline{lamberti2025ponte}, que descrevem etapas de projeto estrutural, análise de resistência e estabilidade, construção e ensaio de carga de uma ponte treliçada de palitos. Dessa forma, a atividade permite relacionar o modelo estrutural empregado durante o projeto ao comportamento observado no protótipo construído.
 
-De maneira semelhante, \citeonline{lamberti2025ponte} apresentam o desenvolvimento de uma ponte treliçada de palitos envolvendo projeto estrutural, cálculos de resistência e estabilidade, construção do protótipo e ensaio de carga. O trabalho utiliza o FTOOL na obtenção dos esforços internos das barras, demonstrando a relação entre a modelagem computacional e a construção da estrutura física.
-
-No contexto da UFERSA, a Competição de Pontes de Palito de Picolé (CP3) utiliza esse tipo de atividade como instrumento de aplicação dos conhecimentos desenvolvidos durante a formação dos estudantes. Além do desempenho da estrutura construída, o processo de projeto envolve a estimativa da carga de colapso, a eficiência da solução e a análise dos esforços atuantes nos elementos.
+Essas características tornam as pontes de palitos um problema adequado à aplicação de ferramentas computacionais de análise. A possibilidade de modificar a geometria e a composição dos elementos durante o processo de projeto faz com que diferentes alternativas possam ser avaliadas antes da etapa de construção do protótipo.
 
 \section{Análise estrutural de treliças}
-\label{sec:analise-trelicas}
+\label{sec:analise-estrutural-trelicas}
 
-A análise estrutural tem como finalidade determinar o comportamento de uma estrutura diante das condições de carregamento e de apoio consideradas no modelo. A partir da geometria da estrutura, das propriedades dos elementos, dos carregamentos e das restrições impostas pelos apoios, podem ser determinados deslocamentos, reações e esforços internos.
+A análise estrutural busca determinar o comportamento de uma estrutura diante de determinadas condições de geometria, carregamento, propriedades dos elementos e restrições de apoio. A partir de sua representação matemática, podem ser obtidos deslocamentos, reações de apoio e esforços internos.
 
-Em uma treliça idealizada, os elementos são associados predominantemente a esforços axiais. Um esforço axial positivo ou negativo, de acordo com a convenção adotada, permite identificar se determinado elemento se encontra solicitado à tração ou à compressão. Essa distinção é relevante para o dimensionamento, uma vez que os mecanismos de resistência associados aos dois tipos de solicitação são diferentes.
+No modelo idealizado de treliça plana, admite-se que as barras sejam interligadas por nós biarticulados, que os carregamentos sejam aplicados nos nós e que não existam excentricidades ou carregamentos transversais diretamente sobre as barras. Adotam-se ainda pequenas deformações e comportamento elástico linear do material. Sob essas hipóteses, os elementos trabalham exclusivamente sob esforços axiais, podendo estar submetidos à tração ou à compressão \cite{souza2024elementosfinitos}.
 
-Nos elementos tracionados, a capacidade resistente está associada, entre outros fatores, à área da seção transversal e à resistência do material à tração. Nos elementos comprimidos, além da resistência do material, deve ser considerada a possibilidade de instabilidade do elemento, especialmente em barras esbeltas. Dessa forma, barras submetidas a esforços de compressão podem apresentar limitações relacionadas à flambagem antes mesmo que seja atingida a resistência do material.
+A representação computacional de treliças envolve a descrição de elementos e nós, juntamente com suas propriedades, condições de apoio e carregamentos. Métodos numéricos permitem organizar essas informações em um modelo matemático e determinar o comportamento da estrutura. \citeonline{souza2024elementosfinitos} apresenta a aplicação do método dos elementos finitos a treliças planas, incluindo sua implementação computacional.
 
-No projeto de pontes de palitos, os esforços determinados pela análise estrutural fornecem uma das informações necessárias para a definição da composição das barras. A quantidade e a disposição dos palitos modificam as propriedades geométricas do elemento e, consequentemente, sua capacidade de resistir às solicitações impostas pela estrutura \cite{silva2024metodologia,lamberti2025ponte}.
+Em pontes de palitos, os resultados dessa análise constituem uma etapa intermediária do projeto. Conhecer o esforço atuante em cada barra possibilita avaliar quais elementos estão mais solicitados e fornece dados para as verificações utilizadas no pré-dimensionamento da composição das barras.
 
-\section{Análise estrutural computacional}
-\label{sec:analise-computacional}
+A representação adotada neste trabalho é bidimensional. Dessa forma, o modelo considera o comportamento da estrutura no plano definido no FTOOL. Fenômenos associados ao comportamento tridimensional da ponte, como torção, instabilidade lateral e flambagem fora do plano, não são representados diretamente nesse modelo. Essa simplificação constitui uma das limitações da análise e deve ser considerada na interpretaçãodos resultados obtidos.
 
-A utilização de ferramentas computacionais permite representar modelos estruturais e executar de forma automatizada procedimentos que, manualmente, demandariam sucessivas operações de cálculo. Essas ferramentas são particularmente úteis durante o processo de projeto, no qual alterações de geometria, propriedades ou carregamentos podem exigir uma nova análise da estrutura.
+\section{Ferramentas computacionais aplicadas à análise estrutural}
+\label{sec:ferramentas-computacionais}
 
-Além da obtenção dos resultados numéricos, ferramentas computacionais podem contribuir para a visualização do comportamento da estrutura. Diagramas de esforços, deformadas e reações de apoio permitem relacionar os valores obtidos no processo de cálculo à posição dos elementos no modelo estrutural.
+O emprego de ferramentas computacionais permite automatizar etapas da análise estrutural e facilita a avaliação de diferentes modelos. Alterações na geometria, nos carregamentos ou nas propriedades da estrutura podem exigir a repetição dos cálculos, de modo que a utilização de programas específicos reduz o trabalho operacional associado a essas modificações.
 
-No ensino de Engenharia, esse tipo de ferramenta também pode complementar os procedimentos analíticos tradicionais. \citeonline{maciel2022ftool} abordam a utilização de ferramentas computacionais de análise de estruturas bidimensionais como apoio à compreensão de conceitos tratados em disciplinas relacionadas à mecânica dos sólidos e à resistência dos materiais.
+Além da execução dos cálculos, a representação gráfica dos resultados contribui para a interpretação do comportamento estrutural. Diagramas de esforços, configurações deformadas e reações de apoio permitem relacionar valores numéricos aos elementos que compõem o modelo.
 
-\section{FTOOL}
-\label{sec:ftool}
+No contexto do ensino, \citeonline{branchier2020softwares} analisam a utilização de ferramentas computacionais na aprendizagem de análise e cálculo estrutural. Os autores apontam que o uso de softwares pode contribuir para relacionar conceitos e métodos teóricos a representações e simulações dos problemas estudados.
 
-O FTOOL é um programa gráfico-interativo destinado à modelagem e à análise de estruturas planas. A ferramenta permite definir a geometria da estrutura, as propriedades dos materiais e das seções, os apoios e os carregamentos, além de apresentar graficamente resultados relacionados ao comportamento estrutural \cite{ftoolSobre}.
+Entre as ferramentas empregadas para esse propósito encontram-se programas com interface gráfica, como o FTOOL, e bibliotecas de programação que disponibilizam rotinas de análise estrutural, como a anaStruct.
 
-Entre os resultados disponibilizados pelo programa estão diagramas de esforços internos, reações de apoio e configurações deformadas. Essas características possibilitam sua utilização tanto para fins de análise quanto como recurso didático no ensino de comportamento estrutural \cite{maciel2022ftool,martha2022ftool}.
+\subsection{FTOOL}
+\label{subsec:ftool}
 
-Segundo \citeonline{martha2022ftool}, o desenvolvimento do FTOOL está relacionado à busca por uma ferramenta com interface gráfica que facilitasse a criação e a análise de modelos estruturais bidimensionais. Ao longo de sua evolução, o programa incorporou recursos voltados à modelagem, à análise e à visualização dos resultados, mantendo forte aplicação no contexto educacional.
+O FTOOL é um programa gráfico-interativo voltado à modelagem e à análise de estruturas planas. A ferramenta permite definir a geometria do modelo, propriedades dos materiais e das seções, condições de apoio e carregamentos, apresentando como resultados diagramas de esforços internos e configurações deformadas, entre outras informações \cite{ftoolSobre}.
 
-Os modelos criados no FTOOL podem ser armazenados em arquivos com extensão \texttt{.ftl}. Esses arquivos preservam informações associadas ao modelo estrutural, permitindo que uma estrutura previamente elaborada seja posteriormente aberta e analisada no próprio programa.
+A utilização do FTOOL no ensino de análise estrutural é abordada em diferentes trabalhos. \citeonline{maciel2022ftool} apresentam o programa como ferramenta para análise de modelos bidimensionais, incluindo vigas, pórticos e treliças, associando sua utilização a conteúdos de Mecânica dos Sólidos e Resistência dos Materiais.
 
-\section{anaStruct}
-\label{sec:anastruct}
+O histórico e a aplicação educacional da ferramenta também são discutidos por \citeonline{martha2022ftool}, que apresentam a evolução do programa ao longo de décadas de utilização no ensino de análise estrutural. Mais recentemente, \citeonline{passinho2025ftool} empregaram o FTOOL em atividades relacionadas a vigas e treliças, combinando a resolução de problemas com procedimentos manuais e computacionais.
 
-A anaStruct é uma biblioteca desenvolvida em Python voltada à análise de estruturas bidimensionais. A biblioteca permite representar elementos estruturais, apoios e carregamentos e obter resultados como reações, deslocamentos e esforços internos.
+No fluxo adotado neste trabalho, o FTOOL é utilizado como ferramenta de pré-processamento do modelo estrutural. Nele são definidos elementos como a geometria da treliça, as propriedades dos materiais e das seções, as condições de apoio e os carregamentos. Essas informações são armazenadas no arquivo \texttt{.ftl}, que posteriormente é interpretado pela ferramenta desenvolvida. A partir desse modelo, são realizadas a análise estrutural, o pré-dimensionamento das barras e a apresentação dos resultados.
 
-\citeonline{dumka2025anastruct} empregaram a anaStruct na modelagem e resolução de problemas de treliças planas e compararam os resultados produzidos pela biblioteca com problemas de referência presentes na literatura. Os autores apresentam a utilização de Python e da biblioteca como uma alternativa para automatizar procedimentos de análise estrutural e facilitar a visualização dos resultados.
+\subsection{anaStruct}
+\label{subsec:anastruct}
 
-A disponibilidade de uma interface programática permite que rotinas de análise estrutural sejam integradas a outras aplicações computacionais. Dessa forma, os dados de um modelo podem ser transformados em uma representação estrutural, processados pela biblioteca e posteriormente utilizados em outras etapas de cálculo ou apresentação de resultados.
+A anaStruct é uma biblioteca para a linguagem Python destinada à análise de estruturas bidimensionais \cite{vink2026anastruct}. Diferentemente de programas centrados em uma interface gráfica, uma biblioteca desse tipo permite que a criação do modelo, a execução da análise e a obtenção dos resultados sejam realizadas por meio de código, possibilitando sua integração a outras aplicações computacionais.
 
-\section{Pré-dimensionamento de elementos de palitos}
-\label{sec:predimensionamento}
+\citeonline{dumka2025anastruct} apresentam a aplicação da anaStruct à modelagem e à resolução de sistemas de treliças bidimensionais em Python. O uso de uma interface programável permite representar nós, elementos, apoios e carregamentos e posteriormente recuperar os resultados produzidos pela análise.
 
-A análise estrutural determina as solicitações impostas aos elementos, mas não define, isoladamente, a quantidade de material necessária para que cada barra resista aos esforços obtidos. Para isso, os esforços precisam ser relacionados às propriedades mecânicas do material, à geometria da seção e às condições consideradas no dimensionamento.
+Essa característica é relevante para aplicações que necessitam incorporar a análise estrutural a um fluxo computacional mais amplo. Em vez de exigir que cada etapa seja executada manualmente em programas distintos, os resultados da análise podem ser processados por outras rotinas, utilizados em verificações adicionais ou apresentados em interfaces desenvolvidas para um problema específico.
 
-Em elementos submetidos à tração, a solicitação pode ser relacionada à área resistente da seção e à resistência à tração adotada para o material. Para barras comprimidas, além da resistência do material, a geometria e o comprimento do elemento exercem influência sobre seu comportamento devido à possibilidade de instabilidade por flambagem.
+\section{Pré-dimensionamento de barras de palitos}
+\label{sec:fund-pre-dimensionamento}
 
-No caso de estruturas construídas com palitos, a composição de uma barra por diferentes quantidades de elementos modifica sua área e suas propriedades geométricas. Assim, o pré-dimensionamento pode ser utilizado para estimar uma configuração de seção capaz de atender à solicitação calculada para cada barra.
+Os esforços obtidos durante a análise estrutural indicam as solicitações atuantes nos elementos, mas não determinam diretamente a quantidade de material necessária para sua construção. Para isso, é necessário relacionar as solicitações às propriedades mecânicas do material e às características geométricas da seção resistente.
 
-Entretanto, essa estimativa depende diretamente das propriedades atribuídas aos palitos, das hipóteses adotadas para o comportamento dos elementos e das condições construtivas consideradas. Variações naturais da madeira, características das ligações, propriedades da cola, imperfeições geométricas e condições de montagem podem produzir diferenças entre o comportamento previsto pelo modelo e o observado experimentalmente. Por esse motivo, o pré-dimensionamento deve ser entendido como uma ferramenta de apoio ao projeto, e não como uma previsão exata da capacidade resistente da ponte.
+No caso de pontes de palitos, essa etapa pode ser utilizada para estimar a composição necessária às barras da estrutura. \citeonline{silva2024metodologia} relacionam o dimensionamento dos elementos ao processo de desenvolvimento das pontes utilizadas na CP3, associando os resultados da análise às propriedades do material e à configuração adotada na construção.
+
+O comportamento das barras depende também do tipo de solicitação predominante. Elementos submetidos à tração e elementos submetidos à compressão requerem verificações distintas, motivo pelo qual esses casos são apresentados separadamente nas subseções seguintes.
+
+Para fins deste trabalho, considera-se o palito como um elemento de seção retangular, com largura \(b\), espessura \(h\) e comprimento comercial \(L_p\), sendo a direção longitudinal do palito associada à direção das fibras da madeira. As barras podem ser formadas pela sobreposição de camadas, admitindo-se ligação entre suas faces e comportamento conjunto.
+
+Uma camada representa uma faixa longitudinal de palitos com seção transversal \(b \times h\). Dessa forma, para \(n\) camadas justapostas pela espessura, a seção considerada possui área
+
+\begin{equation}
+    A = n\times b\times h.
+\end{equation}
+
+Quando o comprimento da barra excede o comprimento comercial de um palito, mais de um palito físico pode ser necessário ao longo da mesma camada. Assim, o número de camadas da seção transversal e a quantidade física de palitos empregada ao longo da barra representam grandezas distintas.
+
+\subsection{Elementos submetidos à tração}
+\label{subsec:tracao}
+
+Nos elementos submetidos à tração, o esforço axial provoca uma solicitação normal na seção transversal da barra. A avaliação desses elementos relaciona a magnitude da força atuante, a área resistente disponível e a resistência adotada para o material.
+
+Em uma barra composta por palitos, alterações na composição da seção modificam a área disponível para resistir ao esforço. Dessa forma, o pré-dimensionamento busca estabelecer uma configuração compatível com a solicitação obtida na análise estrutural, considerando as propriedades mecânicas adotadas para os palitos.
+
+Entretanto, as propriedades da madeira não devem ser interpretadas como valores invariáveis. Características do material, condições de construção e hipóteses utilizadas no modelo influenciam a correspondência entre a estimativa teórica e o comportamento do protótipo. Por esse motivo, o resultado do pré-dimensionamento deve ser compreendido como uma estimativa de apoio ao projeto.
+
+\subsection{Elementos submetidos à compressão}
+\label{subsec:compressao}
+
+Nas barras submetidas à compressão, a avaliação não se restringe à resistência do material. Elementos comprimidos podem apresentar perda de estabilidade, e o comportamento associado à flambagem assume importância especialmente em elementos esbeltos \cite{souza2015flambagem}.
+
+A estabilidade de barras comprimidas depende de fatores relacionados às propriedades do material, à geometria da seção e ao comprimento considerado para o elemento. Em estruturas construídas com palitos, as características da montagem e as imperfeições do protótipo também podem influenciar seu comportamento.
+
+\citeonline{silva2026ruptura} apresentam uma metodologia para estimar a carga de ruptura de pontes de palitos considerando cenários de perda de estabilidade de barras comprimidas. A abordagem utiliza critérios da ABNT NBR 7190-1 \cite{abnt2022nbr7190} e considera fatores relacionados à esbeltez e às imperfeições geométricas dos elementos. Os autores também comparam a estimativa teórica a um ensaio experimental de uma ponte construída para competição.
+
+Essa relação entre análise teórica e resultado experimental evidencia uma limitação importante do pré-dimensionamento computacional: a consistência matemática do cálculo não implica, isoladamente, que o protótipo físico apresentará exatamente o comportamento previsto. O resultado depende da representatividade das propriedades do material, das hipóteses adotadas e das condições de construção.
+
+\section{Considerações sobre o modelo teórico}
+\label{sec:consideracoes-modelo-teorico}
+
+Os conceitos apresentados neste capítulo estabelecem a base para aferramenta desenvolvida neste trabalho. O FTOOL é empregado na etapa de pré-processamento, fornecendo a representação do modelo estrutural. A ferramenta desenvolvida interpreta essa representação e reconstrói o modelo utilizado na análise numérica. A partir desse modelo, são obtidos os esforços internos, as reações de apoio e os deslocamentos, que posteriormente são utilizados nas verificações de pré-dimensionamento.
+
+Entretanto, é necessário distinguir a análise do modelo computacional do comportamento da estrutura física. A madeira apresenta variabilidade, e elementos construídos artesanalmente podem apresentar diferenças geométricas, ligações e imperfeições que não são integralmente representadas no modelo. Assim, os resultados obtidos devem ser interpretados como apoio à tomada de decisão durante o projeto da ponte, e não como garantia da capacidade resistente do protótipo.
+
+Essa distinção orienta tanto a implementação da ferramenta quanto a avaliação de seus resultados, apresentadas nos capítulos seguintes.
