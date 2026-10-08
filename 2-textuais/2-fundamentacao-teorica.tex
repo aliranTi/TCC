@@ -12,7 +12,7 @@ No contexto das pontes construídas com palitos de picolé, o processo envolve n
 
 O desenvolvimento desse tipo de estrutura também é apresentado por \citeonline{lamberti2025ponte}, que descrevem etapas de projeto estrutural, análise de resistência e estabilidade, construção e ensaio de carga de uma ponte treliçada de palitos. Dessa forma, a atividade permite relacionar o modelo estrutural empregado durante o projeto ao comportamento observado no protótipo construído.
 
-Essas características tornam as pontes de palitos um problema adequado à aplicação de ferramentas computacionais de análise. A possibilidade de modificar a geometria e a composição dos elementos durante o processo de projeto faz com que diferentes alternativas possam ser avaliadas antes da etapa de construção do protótipo.
+Nesse contexto, ferramentas computacionais de análise podem ser empregadas para avaliar diferentes configurações estruturais antes da construção do protótipo. A possibilidade de modificar a geometria e a composição dos elementos durante o processo de projeto faz com que diferentes alternativas possam ser avaliadas antes da etapa de construção do protótipo.
 
 \section{Análise estrutural de treliças}
 \label{sec:analise-estrutural-trelicas}
@@ -25,7 +25,7 @@ A representação computacional de treliças envolve a descrição de elementos 
 
 Em pontes de palitos, os resultados dessa análise constituem uma etapa intermediária do projeto. Conhecer o esforço atuante em cada barra possibilita avaliar quais elementos estão mais solicitados e fornece dados para as verificações utilizadas no pré-dimensionamento da composição das barras.
 
-A representação adotada neste trabalho é bidimensional. Dessa forma, a análise estrutural considera o comportamento da estrutura no plano definido no \gls{FTOOL} e não representa diretamente seu comportamento tridimensional, como a torção e a instabilidade global fora do plano. Essa limitação não se confunde com a verificação individual de estabilidade das barras comprimidas nos dois eixos da seção, realizada na etapa de pré-dimensionamento. A distinção deve ser considerada na interpretação dos resultados obtidos.
+A representação considerada é bidimensional e descreve o comportamento da estrutura no plano do modelo. Dessa forma, fenômenos associados ao comportamento tridimensional da ponte, como torção e instabilidade global fora do plano, não são diretamente representados. Essa simplificação deve ser considerada na interpretação dos resultados da análise.
 
 \section{Ferramentas computacionais aplicadas à análise estrutural}
 \label{sec:ferramentas-computacionais}
@@ -47,7 +47,7 @@ A utilização do \gls{FTOOL} no ensino de análise estrutural é abordada em di
 
 O histórico e a aplicação educacional da ferramenta também são discutidos por \citeonline{martha2022ftool}, que apresentam a evolução do programa ao longo de décadas de utilização no ensino de análise estrutural. Mais recentemente, \citeonline{passinho2025ftool} empregaram o \gls{FTOOL} em atividades relacionadas a vigas e treliças, combinando a resolução de problemas com procedimentos manuais e computacionais.
 
-No fluxo adotado neste trabalho, o \gls{FTOOL} é utilizado como ferramenta de pré-processamento do modelo estrutural. Nele são definidos elementos como a geometria da treliça, as propriedades dos materiais e das seções, as condições de apoio e os carregamentos. Essas informações são armazenadas no arquivo \texttt{.ftl}, que posteriormente é interpretado pela ferramenta desenvolvida. A partir desse modelo, são realizadas a análise estrutural, o pré-dimensionamento das barras e a apresentação dos resultados.
+Além da análise realizada pelo próprio programa, o \gls{FTOOL} pode ser utilizado como ferramenta de pré-processamento de um modelo estrutural. A geometria, as propriedades dos materiais e das seções, as condições de apoio e os carregamentos definidos pelo usuário podem ser armazenados em arquivos \texttt{.ftl}. Esse arquivo preserva informações necessárias à representação do modelo e possibilita seu posterior processamento por outras rotinas computacionais.
 
 \subsection{anaStruct}
 \label{subsec:anastruct}
@@ -57,6 +57,12 @@ A anaStruct é uma biblioteca para a linguagem Python destinada à análise de e
 \citeonline{dumka2025anastruct} apresentam a aplicação da anaStruct à modelagem e à resolução de sistemas de treliças bidimensionais em Python. O uso de uma interface programável permite representar nós, elementos, apoios e carregamentos e posteriormente recuperar os resultados produzidos pela análise.
 
 Essa característica é relevante para aplicações que necessitam incorporar a análise estrutural a um fluxo computacional mais amplo. Em vez de exigir que cada etapa seja executada manualmente em programas distintos, os resultados da análise podem ser processados por outras rotinas, utilizados em verificações adicionais ou apresentados em interfaces desenvolvidas para um problema específico.
+
+A construção de um modelo na anaStruct é realizada a partir da classe \texttt{SystemElements}, que representa o sistema estrutural a ser analisado. Elementos de treliça podem ser adicionados por meio da função \texttt{add\_truss\_element()}, enquanto elementos com rigidez à flexão podem ser definidos por \texttt{add\_element()}. Entre as informações fornecidas encontram-se as coordenadas das extremidades dos elementos e suas propriedades de rigidez.
+
+As condições de contorno são definidas por funções específicas para os diferentes tipos de apoio, como \texttt{add\_support\_fixed()}, \texttt{add\_support\_hinged()} e \texttt{add\_support\_roll()}. Os carregamentos nodais podem ser aplicados por funções como \texttt{point\_load()} e \texttt{moment\_load()}.
+
+Após a definição dos elementos, apoios e carregamentos, o método \texttt{solve()} realiza a solução do sistema estrutural. Os resultados dos elementos podem ser consultados por meio de \texttt{get\_element\_results()}, enquanto a biblioteca também disponibiliza informações relativas aos nós, deslocamentos e reações de apoio. Dessa forma, suas entradas compreendem a representação geométrica e mecânica da estrutura e seus carregamentos, enquanto as saídas incluem grandezas associadas ao comportamento estrutural obtido após a solução.
 
 \section{Pré-dimensionamento de barras de palitos}
 \label{sec:fund-pre-dimensionamento}
@@ -72,7 +78,7 @@ Para fins deste trabalho, considera-se o palito como um elemento de seção reta
 Uma camada representa uma faixa longitudinal de palitos com seção transversal \(b \times h\). Dessa forma, para \(n\) camadas justapostas pela espessura, a seção considerada possui área
 
 \begin{equation}
-    A = n\times b\times h.
+    A = nbh.
 \end{equation}
 
 Quando o comprimento da barra excede o comprimento comercial de um palito, mais de um palito físico pode ser necessário ao longo da mesma camada. Assim, o número de camadas da seção transversal e a quantidade física de palitos empregada ao longo da barra representam grandezas distintas.
@@ -80,28 +86,104 @@ Quando o comprimento da barra excede o comprimento comercial de um palito, mais 
 \subsection{Elementos submetidos à tração}
 \label{subsec:tracao}
 
-Nos elementos submetidos à tração, o esforço axial provoca uma solicitação normal na seção transversal da barra. A avaliação desses elementos relaciona a magnitude da força atuante, a área resistente disponível e a resistência adotada para o material.
+Nos elementos submetidos à tração, o esforço axial atua no sentido de alongar a barra, produzindo tensões normais em sua seção transversal. Para uma distribuição uniforme de tensões, a tensão normal de tração pode ser expressa por
 
-Em uma barra composta por palitos, alterações na composição da seção modificam a área disponível para resistir ao esforço. Dessa forma, o pré-dimensionamento busca estabelecer uma configuração compatível com a solicitação obtida na análise estrutural, considerando as propriedades mecânicas adotadas para os palitos.
+\begin{equation}
+\sigma_t = \frac{N_t}{A},
+\end{equation}
 
-Entretanto, as propriedades da madeira não devem ser interpretadas como valores invariáveis. Características do material, condições de construção e hipóteses utilizadas no modelo influenciam a correspondência entre a estimativa teórica e o comportamento do protótipo. Por esse motivo, o resultado do pré-dimensionamento deve ser compreendido como uma estimativa de apoio ao projeto.
+em que \(N_t\) representa a força normal de tração, \(A\) corresponde à área resistente da seção transversal e \(\sigma_t\) é a tensão normal atuante.
+
+Considerando uma barra composta por \(n\) camadas de palitos de seção retangular, com largura \(b\) e espessura \(h\), a área resistente pode ser representada por
+
+\begin{equation}
+A = nbh.
+\end{equation}
+
+Consequentemente, a tensão de tração pode ser escrita como
+
+\begin{equation}
+\sigma_t = \frac{N_t}{nbh}.
+\end{equation}
+
+A verificação do elemento consiste em comparar a tensão solicitante com a resistência à tração adotada para o material, de modo que a condição resistente possa ser expressa, de forma geral, por
+
+\begin{equation}
+\sigma_t \leq f_t,
+\end{equation}
+
+em que \(f_t\) representa a resistência à tração considerada no modelo de cálculo.
+
+Em aplicações computacionais, a força normal \(N_t\) pode ser obtida a partir da análise estrutural do modelo, enquanto as propriedades geométricas e resistentes são utilizadas posteriormente na verificação da seção. Dessa forma, a análise estrutural e o pré-dimensionamento constituem etapas distintas, embora relacionadas, do processo de avaliação das barras.
 
 \subsection{Elementos submetidos à compressão}
 \label{subsec:compressao}
 
-Nas barras submetidas à compressão, a avaliação não se restringe à resistência do material. Elementos comprimidos podem apresentar perda de estabilidade, e o comportamento associado à flambagem assume importância especialmente em elementos esbeltos \cite{souza2015flambagem}.
+Nos elementos submetidos à compressão, o esforço axial atua no sentido de encurtar a barra. A tensão normal de compressão pode ser expressa, em termos de sua magnitude, por
 
-A estabilidade de barras comprimidas depende de fatores relacionados às propriedades do material, à geometria da seção e ao comprimento considerado para o elemento. Em estruturas construídas com palitos, as características da montagem e as imperfeições do protótipo também podem influenciar seu comportamento.
+\begin{equation}
+\sigma_c = \frac{N_c}{A},
+\end{equation}
 
-\citeonline{silva2026ruptura} apresentam uma metodologia para estimar a carga de ruptura de pontes de palitos considerando cenários de perda de estabilidade de barras comprimidas. A abordagem utiliza critérios da norma \acrshort{NBR}~7190-1, da \gls{ABNT} \cite{abnt2022nbr7190} e considera fatores relacionados à esbeltez e às imperfeições geométricas dos elementos. Os autores também comparam a estimativa teórica a um ensaio experimental de uma ponte construída para competição.
+em que \(N_c\) representa a força normal de compressão, \(A\) corresponde à área resistente da seção transversal e \(\sigma_c\) é a tensão normal de compressão.
 
-Essa relação entre análise teórica e resultado experimental evidencia uma limitação importante do pré-dimensionamento computacional: a consistência matemática do cálculo não implica, isoladamente, que o protótipo físico apresentará exatamente o comportamento previsto. O resultado depende da representatividade das propriedades do material, das hipóteses adotadas e das condições de construção.
+Para uma barra formada por \(n\) camadas de palitos de largura \(b\) e espessura \(h\), a área resistente é dada por
+
+\begin{equation}
+A = nbh.
+\end{equation}
+
+Entretanto, diferentemente do caso de tração, a verificação de elementos comprimidos não depende apenas da resistência do material. Barras esbeltas podem perder estabilidade por flambagem antes que a tensão resistente do material seja atingida \cite{souza2015flambagem,silva2026ruptura}.
+
+A suscetibilidade à flambagem pode ser relacionada ao índice de esbeltez do elemento, definido por
+
+\begin{equation}
+\lambda = \frac{L_e}{i},
+\end{equation}
+
+em que \(L_e\) é o comprimento efetivo de flambagem e \(i\) é o raio de giração da seção transversal. O raio de giração é determinado por
+
+\begin{equation}
+i = \sqrt{\frac{I}{A}},
+\end{equation}
+
+sendo \(I\) o momento de inércia da seção em relação ao eixo considerado.
+
+Como uma seção retangular apresenta propriedades distintas em seus dois eixos principais, a verificação da estabilidade deve considerar os respectivos momentos de inércia e raios de giração. Para uma seção retangular de largura \(b\) e altura \(H\), os momentos de inércia podem ser expressos por
+
+\begin{equation}
+I_x = \frac{bH^3}{12}
+\end{equation}
+
+e
+
+\begin{equation}
+I_y = \frac{Hb^3}{12}.
+\end{equation}
+
+No caso de uma seção formada por \(n\) camadas sobrepostas pela espessura, considera-se \(H = nh\). Consequentemente, a estabilidade do elemento pode ser diferente em cada eixo, sendo necessária a avaliação da condição mais desfavorável.
+
+Para elementos comprimidos de madeira, a resistência disponível pode ser reduzida em função da esbeltez e das imperfeições consideradas no modelo. A condição resistente pode ser representada, de forma geral, por
+
+\begin{equation}
+N_c \leq N_{c,R},
+\end{equation}
+
+em que \(N_{c,R}\) representa a força resistente de compressão após a consideração dos critérios de estabilidade adotados.
+
+Em formulações que utilizam um fator redutor de estabilidade \(\chi\), essa resistência pode ser representada por
+
+\begin{equation}
+N_{c,R} = \chi A f_c,
+\end{equation}
+
+em que \(f_c\) é a resistência à compressão considerada para o material e \(\chi\) representa a redução decorrente dos efeitos de estabilidade. Valores menores de \(\chi\) indicam maior influência da esbeltez sobre a capacidade resistente do elemento.
+
+A metodologia apresentada por \citeonline{silva2026ruptura} aplica critérios da \gls{ABNT} \gls{NBR} 7190-1 ao estudo de barras comprimidas em pontes de palitos, considerando a esbeltez relativa e imperfeições geométricas na estimativa da capacidade resistente. Dessa forma, a verificação da compressão exige a consideração conjunta da solicitação axial, das propriedades do material, da geometria da seção e do comprimento do elemento.
 
 \section{Considerações sobre o modelo teórico}
 \label{sec:consideracoes-modelo-teorico}
 
-Os conceitos apresentados neste capítulo estabelecem a base para a ferramenta desenvolvida neste trabalho. O \gls{FTOOL} é empregado na etapa de pré-processamento, fornecendo a representação do modelo estrutural. A ferramenta desenvolvida interpreta essa representação e reconstrói o modelo utilizado na análise numérica. A partir desse modelo, são obtidos os esforços internos, as reações de apoio e os deslocamentos, que posteriormente são utilizados nas verificações de pré-dimensionamento.
+Os conceitos apresentados neste capítulo estabelecem a base para a representação e a análise das estruturas consideradas neste trabalho. O modelo estrutural é definido a partir de sua geometria, propriedades dos elementos, condições de apoio e carregamentos, permitindo determinar esforços internos, reações e deslocamentos utilizados posteriormente nas verificações de pré-dimensionamento.
 
 Entretanto, é necessário distinguir a análise do modelo computacional do comportamento da estrutura física. A madeira apresenta variabilidade, e elementos construídos artesanalmente podem apresentar diferenças geométricas, ligações e imperfeições que não são integralmente representadas no modelo. Assim, os resultados obtidos devem ser interpretados como apoio à tomada de decisão durante o projeto da ponte, e não como garantia da capacidade resistente do protótipo.
-
-Essa distinção orienta tanto a implementação da ferramenta quanto a avaliação de seus resultados, apresentadas nos capítulos seguintes.
