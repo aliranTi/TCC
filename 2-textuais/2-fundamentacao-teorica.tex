@@ -73,7 +73,7 @@ No caso de pontes de palitos, essa etapa pode ser utilizada para estimar a compo
 
 O comportamento das barras depende também do tipo de solicitação predominante. Elementos submetidos à tração e elementos submetidos à compressão requerem verificações distintas, motivo pelo qual esses casos são apresentados separadamente nas subseções seguintes.
 
-Para fins deste trabalho, considera-se o palito como um elemento de seção retangular, com largura \(b\), espessura \(h\) e comprimento comercial \(L_p\), sendo a direção longitudinal do palito associada à direção das fibras da madeira. As barras podem ser formadas pela sobreposição de camadas, admitindo-se ligação entre suas faces e comportamento conjunto.
+Para fins deste trabalho, considera-se o palito como um elemento de seção retangular, com largura \(b\), espessura \(h\) e comprimento comercial \(L_p\), sendo a direção longitudinal do palito associada à direção das fibras da madeira. As barras podem ser formadas pela sobreposição de camadas, sendo admitido, como hipótese simplificadora do modelo teórico, comportamento conjunto entre as camadas.
 
 Uma camada representa uma faixa longitudinal de palitos com seção transversal \(b \times h\). Dessa forma, para \(n\) camadas justapostas pela espessura, a seção considerada possui área
 
@@ -201,7 +201,7 @@ A resistência de cálculo à compressão paralela às fibras pode ser expressa 
 
 em que \(k_{mod}\) representa o coeficiente de modificação das propriedades resistentes e \(\gamma_w\) o coeficiente de minoração da resistência.
 
-Quando os efeitos de estabilidade precisam ser considerados, a \gls{ABNT} \gls{NBR} 7190-1:2022 emprega coeficientes redutores associados a cada direção principal da seção. Esses coeficientes podem ser determinados por
+Quando os efeitos de estabilidade precisam ser considerados, a \gls{ABNT} \gls{NBR} 7190-1:2022 emprega coeficientes redutores associados a cada direção principal da seção \cite{abnt2022nbr7190}. Esses coeficientes podem ser determinados por
 
 \begin{equation}
     k_{cx}
@@ -241,7 +241,7 @@ e
     \right].
 \end{equation}
 
-Para peças que atendem aos limites de desalinhamento considerados pela \gls{ABNT} \gls{NBR} 7190-1:2022, adota-se \(\beta_c=0,2\) para madeira maciça serrada e peças roliças e \(\beta_c=0,1\) para os produtos de madeira lamelada ou laminada especificados pela norma \cite{abnt2022nbr7190}. A aplicação desses fatores reduz a resistência disponível à compressão à medida que os efeitos de instabilidade se tornam mais relevantes.
+Para peças que atendem aos limites de desalinhamento considerados pela \gls{ABNT} \gls{NBR} 7190-1:2022, adota-se \(\beta_c=0,2\) para madeira maciça serrada e peças roliças e \(\beta_c=0,1\) para os produtos de madeira lamelada ou laminada especificados pela norma \cite{abnt2022nbr7190}. Os coeficientes redutores \(k_{cx}\) e \(k_{cy}\), determinados a partir da esbeltez relativa e do parâmetro \(\beta_c\), reduzem a resistência considerada à compressão à medida que os efeitos de instabilidade se tornam mais relevantes.
 
 Considerando apenas a solicitação axial de compressão, a verificação em cada direção pode ser representada por
 

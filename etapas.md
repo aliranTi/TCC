@@ -747,3 +747,9 @@ Se um trecho não responder claramente a nenhuma dessas perguntas, verificar se 
 - A conferência das afirmações normativas, das condições de aplicação das equações e dos metadados bibliográficos permanece pendente. A prioridade de escrita continua no Capítulo 3.
 - Atualizada a redação do limite de esbeltez e dos parâmetros de compressão, com notação `gamma_w`, explicitação dos valores de `beta_c` e uso das siglas cadastradas para ABNT e NBR. A conferência direta desses critérios na norma permanece pendente.
 - Verificação: documento compilado com bibliografia e siglas atualizadas, sem erros ou referências indefinidas no log final; PDF com 35 páginas.
+- Explicitado o comportamento conjunto das camadas como hipótese simplificadora e esclarecido o papel dos coeficientes redutores de estabilidade, com citação da norma no trecho correspondente.
+
+### Ponto de retomada após o encerramento da semana
+
+- Iniciar o Capítulo 3 pela seleção e leitura dos trabalhos candidatos, registrando objetivo, método, validação, resultados e diferenças em relação ao TCC.
+- Manter abertas as pendências de revisão técnica e bibliográfica da fundamentação. A redação atual não representa conclusão dessas verificações.
