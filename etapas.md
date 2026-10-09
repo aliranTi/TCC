@@ -745,4 +745,5 @@ Se um trecho não responder claramente a nenhuma dessas perguntas, verificar se 
 - Acrescentada a referência de Hibbeler à discussão da tensão normal em elementos tracionados.
 - Ampliada a discussão de compressão com limite de esbeltez, esbeltez relativa, resistência de cálculo e fatores redutores de estabilidade nos dois eixos.
 - A conferência das afirmações normativas, das condições de aplicação das equações e dos metadados bibliográficos permanece pendente. A prioridade de escrita continua no Capítulo 3.
+- Atualizada a redação do limite de esbeltez e dos parâmetros de compressão, com notação `gamma_w`, explicitação dos valores de `beta_c` e uso das siglas cadastradas para ABNT e NBR. A conferência direta desses critérios na norma permanece pendente.
 - Verificação: documento compilado com bibliografia e siglas atualizadas, sem erros ou referências indefinidas no log final; PDF com 35 páginas.

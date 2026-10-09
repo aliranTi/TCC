@@ -163,13 +163,13 @@ I_y = \frac{Hb^3}{12}.
 
 No caso de uma seção formada por \(n\) camadas sobrepostas pela espessura, considera-se \(H = nh\). Consequentemente, a estabilidade do elemento pode ser diferente em cada eixo, sendo necessária a avaliação da condição mais desfavorável.
 
-Além da determinação do índice de esbeltez em cada direção, deve ser observado o limite aplicável às peças comprimidas. Conforme a ABNT NBR 7190-1:2022, o índice de esbeltez das peças submetidas à compressão axial ou à flexocompressão não deve ser superior a 140 \cite{abnt2022nbr7190}. Assim, a condição
+Além da determinação do índice de esbeltez em cada direção, deve ser observado o limite aplicável às peças comprimidas. Conforme a \gls{ABNT} \gls{NBR} 7190-1:2022, o índice de esbeltez das peças submetidas à compressão axial ou à flexocompressão não deve ser superior a 140 \cite{abnt2022nbr7190}. Assim, para as peças submetidas à compressão axial ou à flexocompressão consideradas por esse critério, deve ser atendida a condição
 
 \begin{equation}
-    \lambda \leq 140
+    \lambda \leq 140.
 \end{equation}
 
-constitui um limite geométrico para a aplicação da verificação.
+Esse valor estabelece o limite de esbeltez admitido para esses elementos segundo o critério normativo adotado.
 
 Para considerar conjuntamente a esbeltez do elemento e as propriedades mecânicas da madeira, são definidos os índices de esbeltez relativa nas duas direções principais da seção:
 
@@ -191,17 +191,17 @@ e
 
 em que \(f_{c0,k}\) representa a resistência característica à compressão paralela às fibras e \(E_{0,05}\) corresponde ao valor característico do módulo de elasticidade na direção paralela às fibras \cite{abnt2022nbr7190}.
 
-A resistência de cálculo à compressão paralela às fibras pode ser expressa por
+A resistência de cálculo à compressão paralela às fibras pode ser expressa por \cite{abnt2022nbr7190}
 
 \begin{equation}
     f_{c0,d}
     =
-    \frac{k_{mod} f_{c0,k}}{\gamma_m},
+    \frac{k_{mod} f_{c0,k}}{\gamma_w},
 \end{equation}
 
-em que \(k_{mod}\) representa o coeficiente de modificação das propriedades resistentes e \(\gamma_m\) o coeficiente de minoração da resistência.
+em que \(k_{mod}\) representa o coeficiente de modificação das propriedades resistentes e \(\gamma_w\) o coeficiente de minoração da resistência.
 
-Quando os efeitos de estabilidade precisam ser considerados, a ABNT NBR 7190-1:2022 emprega coeficientes redutores associados a cada direção principal da seção. Esses coeficientes podem ser determinados por
+Quando os efeitos de estabilidade precisam ser considerados, a \gls{ABNT} \gls{NBR} 7190-1:2022 emprega coeficientes redutores associados a cada direção principal da seção. Esses coeficientes podem ser determinados por
 
 \begin{equation}
     k_{cx}
@@ -241,7 +241,7 @@ e
     \right].
 \end{equation}
 
-O coeficiente \(\beta_c\) está relacionado às imperfeições consideradas para o elemento estrutural. A aplicação desses fatores reduz a resistência disponível à compressão à medida que os efeitos de instabilidade se tornam mais relevantes.
+Para peças que atendem aos limites de desalinhamento considerados pela \gls{ABNT} \gls{NBR} 7190-1:2022, adota-se \(\beta_c=0,2\) para madeira maciça serrada e peças roliças e \(\beta_c=0,1\) para os produtos de madeira lamelada ou laminada especificados pela norma \cite{abnt2022nbr7190}. A aplicação desses fatores reduz a resistência disponível à compressão à medida que os efeitos de instabilidade se tornam mais relevantes.
 
 Considerando apenas a solicitação axial de compressão, a verificação em cada direção pode ser representada por
 
