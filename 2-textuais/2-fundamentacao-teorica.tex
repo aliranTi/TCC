@@ -12,7 +12,7 @@ No contexto das pontes construídas com palitos de picolé, o processo envolve n
 
 O desenvolvimento desse tipo de estrutura também é apresentado por \citeonline{lamberti2025ponte}, que descrevem etapas de projeto estrutural, análise de resistência e estabilidade, construção e ensaio de carga de uma ponte treliçada de palitos. Dessa forma, a atividade permite relacionar o modelo estrutural empregado durante o projeto ao comportamento observado no protótipo construído.
 
-Nesse contexto, ferramentas computacionais de análise podem ser empregadas para avaliar diferentes configurações estruturais antes da construção do protótipo. A possibilidade de modificar a geometria e a composição dos elementos durante o processo de projeto faz com que diferentes alternativas possam ser avaliadas antes da etapa de construção do protótipo.
+Nesse contexto, ferramentas computacionais de análise podem ser empregadas durante o processo de projeto para avaliar diferentes configurações estruturais, incluindo alterações na geometria e na composição dos elementos, antes da construção do protótipo.
 
 \section{Análise estrutural de treliças}
 \label{sec:analise-estrutural-trelicas}
@@ -58,7 +58,7 @@ A anaStruct é uma biblioteca para a linguagem Python destinada à análise de e
 
 Essa característica é relevante para aplicações que necessitam incorporar a análise estrutural a um fluxo computacional mais amplo. Em vez de exigir que cada etapa seja executada manualmente em programas distintos, os resultados da análise podem ser processados por outras rotinas, utilizados em verificações adicionais ou apresentados em interfaces desenvolvidas para um problema específico.
 
-A construção de um modelo na anaStruct é realizada a partir da classe \texttt{SystemElements}, que representa o sistema estrutural a ser analisado. Elementos de treliça podem ser adicionados por meio da função \texttt{add\_truss\_element()}, enquanto elementos com rigidez à flexão podem ser definidos por \texttt{add\_element()}. Entre as informações fornecidas encontram-se as coordenadas das extremidades dos elementos e suas propriedades de rigidez.
+A construção de um modelo na anaStruct é realizada a partir da classe \texttt{SystemElements}, que representa o sistema estrutural a ser analisado. Elementos de treliça podem ser adicionados por meio da função \texttt{add\_truss\_element()}, enquanto elementos com rigidez à flexão podem ser definidos por \texttt{add\_element()}. Entre os dados de entrada encontram-se as coordenadas das extremidades dos elementos e suas propriedades de rigidez.
 
 As condições de contorno são definidas por funções específicas para os diferentes tipos de apoio, como \texttt{add\_support\_fixed()}, \texttt{add\_support\_hinged()} e \texttt{add\_support\_roll()}. Os carregamentos nodais podem ser aplicados por funções como \texttt{point\_load()} e \texttt{moment\_load()}.
 
@@ -86,7 +86,7 @@ Quando o comprimento da barra excede o comprimento comercial de um palito, mais 
 \subsection{Elementos submetidos à tração}
 \label{subsec:tracao}
 
-Nos elementos submetidos à tração, o esforço axial atua no sentido de alongar a barra, produzindo tensões normais em sua seção transversal. Para uma distribuição uniforme de tensões, a tensão normal de tração pode ser expressa por
+Nos elementos submetidos à tração, o esforço axial atua no sentido de alongar a barra, produzindo tensões normais em sua seção transversal. Para elementos submetidos a carregamento axial centrado, a tensão normal média é determinada pela relação entre a força normal interna e a área da seção transversal \cite{hibbeler2018resistencia}.
 
 \begin{equation}
 \sigma_t = \frac{N_t}{A},
@@ -163,23 +163,99 @@ I_y = \frac{Hb^3}{12}.
 
 No caso de uma seção formada por \(n\) camadas sobrepostas pela espessura, considera-se \(H = nh\). Consequentemente, a estabilidade do elemento pode ser diferente em cada eixo, sendo necessária a avaliação da condição mais desfavorável.
 
-Para elementos comprimidos de madeira, a resistência disponível pode ser reduzida em função da esbeltez e das imperfeições consideradas no modelo. A condição resistente pode ser representada, de forma geral, por
+Além da determinação do índice de esbeltez em cada direção, deve ser observado o limite aplicável às peças comprimidas. Conforme a ABNT NBR 7190-1:2022, o índice de esbeltez das peças submetidas à compressão axial ou à flexocompressão não deve ser superior a 140 \cite{abnt2022nbr7190}. Assim, a condição
 
 \begin{equation}
-N_c \leq N_{c,R},
+    \lambda \leq 140
 \end{equation}
 
-em que \(N_{c,R}\) representa a força resistente de compressão após a consideração dos critérios de estabilidade adotados.
+constitui um limite geométrico para a aplicação da verificação.
 
-Em formulações que utilizam um fator redutor de estabilidade \(\chi\), essa resistência pode ser representada por
+Para considerar conjuntamente a esbeltez do elemento e as propriedades mecânicas da madeira, são definidos os índices de esbeltez relativa nas duas direções principais da seção:
 
 \begin{equation}
-N_{c,R} = \chi A f_c,
+    \lambda_{rel,x}
+    =
+    \frac{\lambda_x}{\pi}
+    \sqrt{\frac{f_{c0,k}}{E_{0,05}}},
 \end{equation}
 
-em que \(f_c\) é a resistência à compressão considerada para o material e \(\chi\) representa a redução decorrente dos efeitos de estabilidade. Valores menores de \(\chi\) indicam maior influência da esbeltez sobre a capacidade resistente do elemento.
+e
 
-A metodologia apresentada por \citeonline{silva2026ruptura} aplica critérios da \gls{ABNT} \gls{NBR} 7190-1 ao estudo de barras comprimidas em pontes de palitos, considerando a esbeltez relativa e imperfeições geométricas na estimativa da capacidade resistente. Dessa forma, a verificação da compressão exige a consideração conjunta da solicitação axial, das propriedades do material, da geometria da seção e do comprimento do elemento.
+\begin{equation}
+    \lambda_{rel,y}
+    =
+    \frac{\lambda_y}{\pi}
+    \sqrt{\frac{f_{c0,k}}{E_{0,05}}},
+\end{equation}
+
+em que \(f_{c0,k}\) representa a resistência característica à compressão paralela às fibras e \(E_{0,05}\) corresponde ao valor característico do módulo de elasticidade na direção paralela às fibras \cite{abnt2022nbr7190}.
+
+A resistência de cálculo à compressão paralela às fibras pode ser expressa por
+
+\begin{equation}
+    f_{c0,d}
+    =
+    \frac{k_{mod} f_{c0,k}}{\gamma_m},
+\end{equation}
+
+em que \(k_{mod}\) representa o coeficiente de modificação das propriedades resistentes e \(\gamma_m\) o coeficiente de minoração da resistência.
+
+Quando os efeitos de estabilidade precisam ser considerados, a ABNT NBR 7190-1:2022 emprega coeficientes redutores associados a cada direção principal da seção. Esses coeficientes podem ser determinados por
+
+\begin{equation}
+    k_{cx}
+    =
+    \frac{1}
+    {k_x+\sqrt{k_x^2-\lambda_{rel,x}^2}},
+\end{equation}
+
+e
+
+\begin{equation}
+    k_{cy}
+    =
+    \frac{1}
+    {k_y+\sqrt{k_y^2-\lambda_{rel,y}^2}},
+\end{equation}
+
+sendo
+
+\begin{equation}
+    k_x =
+    \frac{1}{2}
+    \left[
+        1+\beta_c(\lambda_{rel,x}-0,3)
+        +\lambda_{rel,x}^{2}
+    \right],
+\end{equation}
+
+e
+
+\begin{equation}
+    k_y =
+    \frac{1}{2}
+    \left[
+        1+\beta_c(\lambda_{rel,y}-0,3)
+        +\lambda_{rel,y}^{2}
+    \right].
+\end{equation}
+
+O coeficiente \(\beta_c\) está relacionado às imperfeições consideradas para o elemento estrutural. A aplicação desses fatores reduz a resistência disponível à compressão à medida que os efeitos de instabilidade se tornam mais relevantes.
+
+Considerando apenas a solicitação axial de compressão, a verificação em cada direção pode ser representada por
+
+\begin{equation}
+    \frac{\sigma_c}{k_{cx}f_{c0,d}} \leq 1
+\end{equation}
+
+e
+
+\begin{equation}
+    \frac{\sigma_c}{k_{cy}f_{c0,d}} \leq 1.
+\end{equation}
+
+Dessa forma, a condição mais desfavorável entre os dois eixos da seção deve governar a verificação do elemento. A metodologia apresentada por \citeonline{silva2026ruptura} aplica esse tipo de abordagem ao estudo de barras comprimidas de pontes de palitos, considerando a influência da esbeltez relativa e das imperfeições geométricas na estimativa da capacidade resistente.
 
 \section{Considerações sobre o modelo teórico}
 \label{sec:consideracoes-modelo-teorico}

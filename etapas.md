@@ -1,6 +1,6 @@
 # Etapas do TCC
 
-Última atualização: 07/10/2026.
+Última atualização: 09/10/2026.
 
 Este arquivo serve como roteiro de execução do TCC. A ideia é consultar esta página antes de começar uma nova sessão de escrita para saber **o que fazer agora**, **o que ainda falta** e **quando uma etapa pode ser considerada concluída**.
 
@@ -240,7 +240,7 @@ Explicar que:
 
 A versão atual já contém as seções de pontes treliçadas, análise estrutural, ferramentas computacionais (FTOOL e anaStruct), pré-dimensionamento, tração, compressão e considerações sobre o modelo. As equações de tensão normal e de área da seção composta também foram incluídas. A existência dessas seções não encerra sua revisão.
 
-- [ ] Adicionar uma referência clássica de Análise Estrutural ou Resistência dos Materiais.
+- [x] Adicionar uma referência clássica de Análise Estrutural ou Resistência dos Materiais: Hibbeler, cadastrado como `hibbeler2018resistencia`.
 - [ ] Consolidar a seção de treliças.
 - [ ] Consolidar análise estrutural.
 - [ ] Consolidar FTOOL.
@@ -626,7 +626,7 @@ Arquivo:
 - [ ] Corrigir o sobrenome de Pedro Cesar Miranda e Silva em `lamberti2025ponte`.
 - [ ] Completar páginas/ISSN de `martha2022ftool`.
 - [x] Confirmar o DOI de `silva2026ruptura` diretamente na fonte oficial: `10.37702/REE2236-0158.v45p389-402.2026`, conferido no artigo integral em 06/10/2026 e incluído no `.bib`.
-- [ ] Adicionar um livro clássico de Análise Estrutural ou Resistência dos Materiais.
+- [x] Adicionar um livro clássico de Análise Estrutural ou Resistência dos Materiais: `hibbeler2018resistencia`.
 - [ ] Fazer nova conferência de todas as chaves ao final do Capítulo 2.
 - [ ] Fazer conferência final entre todas as `\cite{}` e o arquivo `.bib`.
 
@@ -739,3 +739,10 @@ Se um trecho não responder claramente a nenhuma dessas perguntas, verificar se 
 - Alterada a prioridade para o Capítulo 3 — Trabalhos relacionados, conforme orientação do autor. Próxima atividade: selecionar os trabalhos e conferir suas contribuições nas fontes originais. As revisões ainda pendentes da fundamentação foram preservadas no checklist do Capítulo 2.
 - Ampliadas as subseções de tração e compressão com equações de tensão, área resistente, esbeltez, raio de giração, momentos de inércia e resistência reduzida por estabilidade. A conferência técnica e bibliográfica dessas formulações permanece pendente; o foco seguinte continua no Capítulo 3.
 - Verificada a versão atual com pdfLaTeX, BibTeX e geração das siglas: PDF com 34 páginas, sem erros de compilação, referências indefinidas ou avisos de comandos inválidos em modo matemático no log final.
+
+## 09/10/2026 — Ampliação da fundamentação
+
+- Acrescentada a referência de Hibbeler à discussão da tensão normal em elementos tracionados.
+- Ampliada a discussão de compressão com limite de esbeltez, esbeltez relativa, resistência de cálculo e fatores redutores de estabilidade nos dois eixos.
+- A conferência das afirmações normativas, das condições de aplicação das equações e dos metadados bibliográficos permanece pendente. A prioridade de escrita continua no Capítulo 3.
+- Verificação: documento compilado com bibliografia e siglas atualizadas, sem erros ou referências indefinidas no log final; PDF com 35 páginas.
