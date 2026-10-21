@@ -1,2 +1,81 @@
 \chapter{Trabalhos Relacionados}
 \label{cap:trabalhos-relacionados}
+
+Este capítulo apresenta trabalhos relacionados aos principais aspectos abordados nesta pesquisa. Inicialmente, são discutidos estudos voltados ao projeto, à análise e ao dimensionamento de pontes construídas com palitos de picolé, com atenção especial à utilização do FTOOL e aos procedimentos empregados na avaliação das barras. Em seguida, são apresentados trabalhos que utilizam ferramentas computacionais para análise e otimização de estruturas treliçadas, incluindo aplicações desenvolvidas em Python e disponibilizadas em ambiente web. Por fim, é realizada uma síntese comparativa, buscando identificar as aproximações e diferenças entre as soluções existentes e a proposta deste trabalho.
+
+\section{Trabalhos relacionados a pontes de palitos}
+\label{sec:trabalhos-pontes-palitos}
+
+\citeonline{silva2024metodologia} apresentam uma metodologia para o desenvolvimento de protótipos de pontes de palitos de picolé no contexto da Competição de Pontes de Palito de Picolé (CP3), realizada na Universidade Federal Rural do Semi-Árido. O trabalho organiza em sequência as atividades envolvidas no desenvolvimento da ponte e relaciona essas etapas a conhecimentos de Resistência dos Materiais e propriedades da madeira. A proposta possui caráter predominantemente metodológico e educacional, estabelecendo um procedimento para auxiliar os participantes durante a concepção e a construção dos protótipos.
+
+Esse trabalho se aproxima da presente pesquisa por abordar diretamente o processo de desenvolvimento de pontes destinadas à CP3 e por relacionar a análise estrutural às características dos elementos construídos com palitos. Entretanto, a proposta de \citeonline{silva2024metodologia} está concentrada na sistematização do processo de projeto e construção. O presente trabalho, por sua vez, concentra-se na automatização computacional de parte desse processo, utilizando como entrada o modelo estrutural previamente definido pelo usuário no FTOOL.
+
+\citeonline{lamberti2025ponte} desenvolveram, dimensionaram e construíram uma ponte treliçada de palitos de picolé. O processo foi dividido em etapas que compreenderam a definição do projeto estrutural, a determinação dos esforços internos, o dimensionamento dos elementos, a montagem do protótipo e o ensaio de carga. O FTOOL foi utilizado para obtenção dos esforços internos das barras, que posteriormente serviram de base para os cálculos de resistência e estabilidade. Após a construção, cargas progressivas foram aplicadas ao protótipo até sua ruptura.
+
+A ponte analisada por \citeonline{lamberti2025ponte} apresentou ruptura sob uma carga de \(160\,\mathrm{kgf}\), valor aproximadamente \(20\%\) inferior à previsão teórica de \(200\,\mathrm{kgf}\). Essa diferença evidencia a influência de aspectos da estrutura física que não são integralmente representados pelo modelo utilizado durante o dimensionamento. Em relação à presente pesquisa, o trabalho possui proximidade por utilizar o FTOOL como parte do fluxo de análise de uma ponte de palitos. Entretanto, os resultados do FTOOL são empregados pelos autores em etapas posteriores de cálculo e construção, enquanto a proposta deste trabalho busca interpretar diretamente o arquivo produzido pelo programa e integrar a análise estrutural ao pré-dimensionamento das barras.
+
+Mais recentemente, \citeonline{silva2026ruptura} propuseram uma metodologia para estimar a carga de ruptura de pontes de palitos considerando situações de perda de estabilidade de barras comprimidas. A abordagem utiliza critérios baseados na ABNT NBR 7190-1:2022 e considera fatores relacionados à esbeltez relativa e às imperfeições geométricas dos elementos. A metodologia foi avaliada por meio de um estudo de caso envolvendo uma ponte do tipo Warren submetida a ensaio de ruptura.
+
+No experimento descrito por \citeonline{silva2026ruptura}, a ponte apresentou carga de ruptura de \(710\,\mathrm{N}\). Considerando ajustes relacionados à seção efetiva e ao módulo de elasticidade, a previsão teórica apresentou diferença de \(3,5\%\) em relação ao resultado experimental e permitiu prever o modo de instabilidade observado em uma das diagonais comprimidas. O trabalho apresenta relação direta com a etapa de pré-dimensionamento desta pesquisa, principalmente quanto à avaliação de barras comprimidas. Entretanto, sua finalidade principal é a estimativa da carga de ruptura e a comparação com o comportamento experimental, enquanto a presente proposta incorpora verificações de barras a um fluxo computacional iniciado pela interpretação do modelo estrutural.
+
+\section{Ferramentas computacionais e integração de modelos estruturais}
+\label{sec:trabalhos-ferramentas-computacionais}
+
+No campo da análise estrutural computacional, \citeonline{dumka2025anastruct} investigaram o emprego da biblioteca anaStruct na modelagem e solução de treliças bidimensionais utilizando Python. Os autores analisaram cinco problemas de complexidade crescente, representando diferentes configurações geométricas, carregamentos e condições de apoio. A biblioteca foi utilizada para automatizar a determinação dos esforços axiais nas barras e apresentar graficamente os resultados da análise.
+
+Os resultados obtidos com a anaStruct foram comparados pelos autores com soluções disponíveis na literatura, apresentando concordância nos casos analisados. Além disso, o trabalho incluiu uma avaliação com estudantes de análise estrutural, na qual foram observados benefícios relacionados à visualização e à automatização dos cálculos. Para a presente pesquisa, esse trabalho é particularmente relevante por utilizar a mesma biblioteca de análise estrutural. A principal diferença está no fluxo de entrada e processamento: \citeonline{dumka2025anastruct} constroem os modelos diretamente em Python, enquanto neste trabalho o modelo é inicialmente definido no FTOOL e posteriormente reconstruído computacionalmente a partir das informações armazenadas no arquivo \texttt{.ftl}.
+
+\citeonline{sanchez2026ftoolreverse} desenvolveu uma documentação técnica do formato de arquivos \texttt{.ftl} utilizado pelo FTOOL 4.01.00 por meio de um processo de engenharia reversa. O trabalho identifica a organização interna do arquivo e descreve a representação de informações como nós, barras, condições de apoio, carregamentos, materiais e seções. A partir dessa documentação, torna-se possível interpretar e gerar modelos \texttt{.ftl} programaticamente, permitindo a manipulação de projetos do FTOOL fora de sua interface gráfica.
+
+A investigação foi conduzida de forma experimental, por meio da criação de modelos incrementais no FTOOL e da comparação entre sucessivas versões dos arquivos gerados. O repositório também apresenta resultados obtidos a partir da análise do executável do programa, utilizados para confirmar a interpretação de determinados campos do formato. Entretanto, a documentação é direcionada especificamente à versão 4.01.00 e registra limitações e campos cuja semântica ainda não foi completamente determinada.
+
+Esse trabalho apresenta relação direta com a presente pesquisa por abordar a estrutura interna dos arquivos \texttt{.ftl}. Contudo, os objetivos das duas propostas são distintos. \citeonline{sanchez2026ftoolreverse} concentra-se na documentação e na manipulação programática do formato de arquivo, com destaque para a geração de modelos compatíveis com o FTOOL. Nesta pesquisa, por outro lado, o arquivo \texttt{.ftl} é utilizado como entrada para a reconstrução do modelo estrutural, que posteriormente é submetido à análise e ao pré-dimensionamento das barras de palitos.
+
+Outra abordagem é apresentada por \citeonline{fairclough2021layopt}, que desenvolveram o LayOpt, uma aplicação web interativa voltada à otimização do arranjo de treliças bidimensionais. A ferramenta recebe informações relacionadas ao domínio do problema, às condições de apoio e aos carregamentos e utiliza métodos de otimização de layout e de geometria para determinar configurações estruturais de menor volume. Após a otimização, o usuário pode ainda controlar o compromisso entre a complexidade geométrica da solução e seu volume estrutural.
+
+O LayOpt foi concebido para utilização diretamente pelo navegador em diferentes dispositivos, incluindo computadores, tablets e telefones celulares, com parte do processamento realizada por infraestrutura de computação em nuvem. Sua relação com a presente pesquisa encontra-se principalmente na disponibilização de operações sobre treliças por meio de uma interface web. Entretanto, o objetivo das ferramentas é distinto: o LayOpt busca gerar e otimizar configurações estruturais, enquanto a ferramenta desenvolvida neste trabalho parte de uma estrutura já definida pelo participante e realiza sua interpretação, análise e pré-dimensionamento.
+
+\citeonline{mandal2026truss} desenvolveu o Professional Truss Suite, uma aplicação web para análise de treliças bidimensionais baseada no método da rigidez direta. Desenvolvida em Python com o framework Streamlit, a aplicação apresenta não apenas os resultados finais da análise, mas também etapas intermediárias do procedimento numérico, como as matrizes de rigidez dos elementos, a montagem da matriz global e a determinação das forças locais. A proposta busca tornar visível ao usuário o processo matemático utilizado na solução da estrutura, em contraste com ferramentas que apresentam somente os resultados finais.
+
+A precisão da aplicação foi avaliada por \citeonline{mandal2026truss} utilizando uma treliça Pratt composta por nove barras submetida a carregamentos combinados. Os resultados numéricos foram comparados com valores teóricos de referência, não sendo observada diferença numérica no estudo de caso apresentado. Esse trabalho possui proximidade com a presente pesquisa por integrar análise de treliças e interface web. Contudo, a entrada estrutural é realizada na própria aplicação e o objetivo está centrado na exposição do método da rigidez direta para fins educacionais. Na proposta desta pesquisa, a geometria e as demais informações estruturais são provenientes de um modelo desenvolvido no FTOOL, e os resultados da análise são posteriormente utilizados também no pré-dimensionamento das barras de palitos.
+
+\section{Síntese comparativa}
+\label{sec:sintese-trabalhos-relacionados}
+
+Os trabalhos analisados abordam diferentes etapas relacionadas ao problema investigado nesta pesquisa. Os estudos de \citeonline{silva2024metodologia}, \citeonline{lamberti2025ponte} e \citeonline{silva2026ruptura} concentram-se nas pontes construídas com palitos, contemplando aspectos de projeto, dimensionamento, construção e avaliação experimental. Por outro lado, \citeonline{dumka2025anastruct}, \citeonline{fairclough2021layopt} e \citeonline{mandal2026truss} exploram diferentes formas de utilização de ferramentas computacionais em problemas envolvendo estruturas treliçadas.
+
+A Tabela~\ref{tab:comparacao-trabalhos} apresenta uma síntese das características consideradas mais relevantes para a comparação com este trabalho.
+
+\begin{table}[htb]
+    \centering
+    \caption{Comparação entre os trabalhos relacionados}
+    \label{tab:comparacao-trabalhos}
+    \small
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{lcccccc}
+        \hline
+        \textbf{Trabalho} &
+        \textbf{Palitos} &
+        \textbf{FTOOL} &
+        \textbf{Interpretação \texttt{.ftl}} &
+        \textbf{Análise} &
+        \textbf{Pré-dim.} &
+        \textbf{Web} \\
+        \hline
+        Silva et al. (2024)      & Sim & Sim & Não & Sim & Sim & Não \\
+        Lamberti et al. (2025)   & Sim & Sim & Não & Sim & Sim & Não \\
+        Silva et al. (2026)      & Sim & --  & Não & Sim & Sim & Não \\
+        Sanchez (2026)           & Não & Sim & Sim & Não & Não & Não \\
+        Dumka et al. (2025)      & Não & Não & Não & Sim & Não & Não \\
+        Fairclough et al. (2021) & Não & Não & Não & Sim & Não & Sim \\
+        Mandal (2026)            & Não & Não & Não & Sim & Não & Sim \\
+        Presente trabalho        & Sim & Sim & Sim & Sim & Sim & Sim \\
+        \hline
+    \end{tabular}%
+    }
+    \fonte{Elaborado pelo autor.}
+\end{table}
+
+Os trabalhos analisados abordam diferentes etapas relacionadas ao problema investigado nesta pesquisa. Os estudos de \citeonline{silva2024metodologia}, \citeonline{lamberti2025ponte} e \citeonline{silva2026ruptura} concentram-se nas pontes construídas com palitos, contemplando aspectos de projeto, dimensionamento, construção e avaliação experimental. \citeonline{sanchez2026ftoolreverse}, por sua vez, investiga especificamente a estrutura do formato \texttt{.ftl} e sua manipulação programática. Já \citeonline{dumka2025anastruct}, \citeonline{fairclough2021layopt} e \citeonline{mandal2026truss} exploram diferentes formas de utilização de ferramentas computacionais em problemas envolvendo estruturas treliçadas.
+
+Entre os trabalhos analisados, não foi identificada uma proposta que reúna simultaneamente a interpretação automática de modelos armazenados em arquivos \texttt{.ftl}, sua reconstrução como modelo estrutural, a análise computacional, o pré-dimensionamento de barras de palitos e a apresentação dos resultados em uma aplicação web voltada à CP3. Embora \citeonline{sanchez2026ftoolreverse} também investigue diretamente o formato \texttt{.ftl}, sua proposta concentra-se na documentação e na manipulação desse formato, não abrangendo as etapas subsequentes de análise e pré-dimensionamento consideradas nesta pesquisa.

@@ -1,6 +1,6 @@
 # Etapas do TCC
 
-Última atualização: 09/10/2026.
+Última atualização: 21/10/2026.
 
 Este arquivo serve como roteiro de execução do TCC. A ideia é consultar esta página antes de começar uma nova sessão de escrita para saber **o que fazer agora**, **o que ainda falta** e **quando uma etapa pode ser considerada concluída**.
 
@@ -36,7 +36,7 @@ O código é o meio utilizado para resolver o problema, não o objeto principal 
 - [x] Organização do trabalho adicionada à introdução.
 - [x] Bibliografia inicial criada e revisada.
 - [ ] Fundamentação teórica consolidada.
-- [ ] Trabalhos relacionados escritos.
+- [x] Trabalhos relacionados escritos; etapa de redação encerrada pelo autor em 21/10/2026.
 - [ ] Metodologia completa e alinhada ao código atual.
 - [ ] Plano de validação executado.
 - [ ] Resultados escritos.
@@ -46,9 +46,9 @@ O código é o meio utilizado para resolver o problema, não o objeto principal 
 
 ### Prioridade atual
 
-**Capítulo 3 — Trabalhos relacionados.**
+**Capítulo 4 — Metodologia.**
 
-A pedido do autor, iniciar os Trabalhos Relacionados a partir da versão atual da fundamentação. As pendências de revisão técnica e bibliográfica do Capítulo 2 permanecem abertas. Depois do Capítulo 3, consolidar a Metodologia.
+A redação do Capítulo 3 foi encerrada pelo autor. Próxima etapa: consolidar a Metodologia com base no código atual. As pendências de revisão técnica e bibliográfica permanecem abertas para a revisão final.
 
 ### Acompanhamento
 
@@ -298,10 +298,10 @@ A tabela deve ser acompanhada de análise textual. Não deixar a comparação ap
 
 ## Critério de conclusão
 
-- [ ] Pelo menos 4 trabalhos realmente comparados.
-- [ ] Diferenças entre eles e esta proposta explicitadas.
+- [x] Pelo menos 4 trabalhos realmente comparados: o capítulo apresenta sete trabalhos.
+- [x] Diferenças entre eles e esta proposta explicitadas.
 - [ ] Nenhum resultado atribuído a uma fonte sem confirmação.
-- [ ] Contribuição do TCC compreensível ao final do capítulo.
+- [x] Contribuição do TCC apresentada na síntese comparativa.
 
 ---
 
@@ -674,15 +674,15 @@ Executar nesta ordem:
 
 ## Agora
 
-1. [ ] selecionar pelo menos quatro trabalhos relevantes entre os candidatos do Capítulo 3;
-2. [ ] consultar as fontes e registrar objetivo, método, ferramentas, validação e resultados de cada trabalho;
-3. [ ] identificar as diferenças entre os trabalhos selecionados e a proposta deste TCC;
-4. [ ] organizar a comparação que sustentará a redação e a tabela do Capítulo 3.
+1. [ ] conferir o código atual e delimitar as funcionalidades descritas na Metodologia;
+2. [ ] organizar a caracterização do trabalho e a visão geral da solução;
+3. [ ] descrever a leitura dos arquivos e a reconstrução do modelo estrutural;
+4. [ ] detalhar análise, pré-dimensionamento, aplicação web e estratégia de verificação.
 
 ## Depois
 
-5. [ ] escrever o Capítulo 3 — Trabalhos Relacionados;
-6. [ ] montar a tabela comparativa dos trabalhos;
+5. [x] escrever o Capítulo 3 — Trabalhos Relacionados;
+6. [x] montar a tabela comparativa dos trabalhos;
 7. [ ] revisar o código atual do `ftool-parser-python`;
 8. [ ] reescrever o Capítulo 4 com base na implementação atual;
 9. [ ] definir os casos utilizados na verificação;
@@ -753,3 +753,10 @@ Se um trecho não responder claramente a nenhuma dessas perguntas, verificar se 
 
 - Iniciar o Capítulo 3 pela seleção e leitura dos trabalhos candidatos, registrando objetivo, método, validação, resultados e diferenças em relação ao TCC.
 - Manter abertas as pendências de revisão técnica e bibliográfica da fundamentação. A redação atual não representa conclusão dessas verificações.
+
+## 21/10/2026 — Encerramento dos Trabalhos Relacionados
+
+- Encerrada a redação do Capítulo 3 por orientação do autor, com sete trabalhos, discussão das diferenças em relação à proposta e tabela comparativa.
+- Acrescentadas as referências de Sanchez (2026) e Mandal (2026). Registradas também as considerações adicionadas à fundamentação sobre propriedades adotadas, ligações adesivas e limites da comparação computacional.
+- Próxima etapa: Metodologia, começando pela conferência do código atual. A conferência integral das fontes não foi refeita nesta etapa; permanece no roteiro de revisão bibliográfica.
+- Verificação: pdfLaTeX, BibTeX e geração das siglas concluídos sem erros; PDF com 40 páginas e sem referências indefinidas no log final.
