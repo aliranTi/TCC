@@ -1,5 +1,358 @@
 \chapter{Metodologia}
-\label{chap:metodologia}
 
-% Conteúdo realocado da introdução. Os procedimentos e critérios de verificação serão detalhados nesta etapa do trabalho.
-\lipsum[2]
+\section{Visão geral da metodologia}
+
+Este capítulo descreve os procedimentos empregados no desenvolvimento da ferramenta proposta. O processo foi organizado de modo a integrar a modelagem estrutural realizada no FTOOL à interpretação computacional do arquivo \texttt{.ftl}, à análise da estrutura e ao pré-dimensionamento das barras de palitos. Por fim, essas etapas foram integradas a uma aplicação web destinada à apresentação dos resultados ao usuário.
+
+O FTOOL é empregado como ferramenta de pré-processamento. Nele, o usuário define previamente a geometria da estrutura, as propriedades dos materiais e das seções, as condições de apoio e os carregamentos. Essas informações são armazenadas em um arquivo \texttt{.ftl}, utilizado como dado de entrada pela ferramenta desenvolvida neste trabalho.
+
+A partir desse arquivo, o sistema interpreta as informações armazenadas e reconstrói computacionalmente a topologia da estrutura. O modelo resultante é então convertido para uma representação compatível com a biblioteca anaStruct, responsável pela solução do sistema estrutural e pela obtenção dos esforços internos, deslocamentos e reações de apoio.
+
+Os esforços axiais obtidos nessa etapa são posteriormente utilizados pelas rotinas de pré-dimensionamento. Para cada barra, são avaliadas separadamente as solicitações de tração e compressão, conforme os critérios apresentados na Fundamentação Teórica. A partir dessas verificações, estima-se a quantidade de camadas necessária à composição da seção e, considerando o comprimento de cada elemento, a quantidade física de palitos necessária para sua construção.
+
+Todo o processamento foi integrado a uma aplicação web. O arquivo \texttt{.ftl} é lido e processado no próprio navegador, e os resultados são apresentados por meio de representações gráficas, tabelas e um relatório de pré-dimensionamento. Dessa forma, o fluxo adotado pode ser sintetizado pelas etapas de pré-processamento no FTOOL, interpretação do arquivo, análise estrutural, pré-dimensionamento e apresentação dos resultados.
+
+\section{Pré-processamento do modelo no FTOOL}
+\label{sec:metodologia-ftool}
+
+A primeira etapa do procedimento consiste na elaboração do modelo estrutural no FTOOL. Nesta pesquisa, o programa é utilizado como ferramenta de pré-processamento, isto é, como ambiente no qual são definidas as informações necessárias à representação da estrutura antes de seu processamento pela ferramenta desenvolvida.
+
+No FTOOL, o usuário define a geometria da ponte por meio da criação dos elementos estruturais e de suas conexões. Também são atribuídas as propriedades dos materiais e das seções transversais, as condições de apoio e os carregamentos correspondentes ao modelo analisado. Ao salvar o projeto, essas informações são registradas no arquivo textual \texttt{.ftl}.
+
+Dessa forma, não é necessário reconstruir manualmente a geometria da ponte na aplicação desenvolvida. O arquivo produzido pelo FTOOL constitui a entrada do processo computacional subsequente, cabendo à ferramenta interpretar as informações armazenadas, reconstruir o modelo e prosseguir com a análise estrutural e o pré-dimensionamento.
+
+A abordagem mantém separadas as etapas de definição e processamento do modelo: o FTOOL é utilizado para a preparação das informações estruturais, enquanto o processamento numérico e o pós-processamento de interesse deste trabalho são realizados pela ferramenta desenvolvida.
+
+\section{Interpretação do arquivo FTL}
+
+\subsection{Leitura e identificação das informações}
+\label{sec:metodologia-parser}
+
+Após a definição do modelo no FTOOL, o arquivo \texttt{.ftl} é submetido ao módulo responsável por sua interpretação. Foi desenvolvido, em Python, um parser capaz de processar arquivos correspondentes às versões 4.00 e 4.01 do formato e transformar as informações textuais em objetos utilizados nas etapas posteriores da aplicação.
+
+A implementação do parser foi desenvolvida a partir da análise de arquivos produzidos pelo FTOOL e das informações disponíveis na documentação comunitária de engenharia reversa do formato apresentada por \citeonline{sanchez2026ftoolreverse}. Como o formato não representa todos os componentes estruturais da mesma maneira que são visualizados na interface do programa, foi necessário estabelecer procedimentos específicos para a identificação e reconstrução dessas informações.
+
+Durante a leitura, são identificados dados referentes aos materiais, às seções transversais, às barras, às condições de apoio e aos carregamentos nodais. A partir desses dados, é construído um modelo intermediário que preserva a geometria e as relações de conectividade necessárias à posterior conversão para o sistema de análise estrutural.
+
+\subsection{Reconstrução da topologia estrutural}
+\label{subsec:reconstrucao-topologia}
+
+Uma das etapas necessárias à interpretação do arquivo consiste na reconstrução da topologia estrutural. No formato analisado, a conectividade não é obtida simplesmente a partir de uma relação independente de nós e barras. Parte das informações relativas aos nós encontra-se associada aos próprios blocos que representam os elementos estruturais.
+
+O parser identifica as extremidades das barras e utiliza suas coordenadas para reconstruir o conjunto de nós da estrutura. Extremidades geometricamente coincidentes são associadas a um mesmo nó, evitando a criação de entidades duplicadas. Na implementação foi adotada uma tolerância geométrica de \(1\,\mathrm{mm}\) para essa associação.
+
+Também são preservadas as relações entre cada barra e seus nós de extremidade, bem como as informações de apoio e carregamento nodal identificadas durante a leitura. Como resultado dessa etapa, obtém-se uma representação explícita da estrutura contendo nós, barras e suas respectivas relações de conectividade.
+
+\subsection{Normalização das unidades}
+\label{subsec:normalizacao-unidades}
+
+Durante a interpretação, as grandezas extraídas do arquivo são normalizadas antes de serem utilizadas pelas demais etapas da aplicação. O modelo interno adota o Sistema Internacional de Unidades, utilizando metros para comprimentos, newtons para forças, pascals para módulo de elasticidade e as grandezas derivadas correspondentes.
+
+Assim, valores de força e de propriedades armazenados no arquivo em unidades baseadas em quilonewtons são convertidos para suas respectivas unidades de base. Essa normalização permite que a conversão para o sistema de análise e as rotinas posteriores de cálculo utilizem uma convenção única de unidades, reduzindo a necessidade de conversões distribuídas ao longo da implementação.
+
+\section{Análise estrutural}
+\label{sec:metodologia-analise}
+
+Após a interpretação do arquivo \texttt{.ftl} e a reconstrução da topologia, o modelo obtido é convertido para uma representação compatível com a biblioteca anaStruct. Essa etapa tem como objetivo utilizar as informações extraídas do FTOOL para montar e resolver computacionalmente o sistema estrutural.
+
+A conversão utiliza a geometria das barras, as propriedades dos materiais e das seções, as condições de apoio e os carregamentos previamente identificados pelo parser. Como essas informações já foram normalizadas para o Sistema Internacional de Unidades, elas podem ser transferidas diretamente para o modelo de análise.
+
+A anaStruct é responsável pela solução numérica da estrutura. Os resultados obtidos nessa etapa incluem esforços internos, deslocamentos e reações de apoio. Particularmente, os esforços axiais das barras são posteriormente utilizados pelas rotinas de pré-dimensionamento desenvolvidas neste trabalho. Dessa forma, a biblioteca é empregada como mecanismo de análise estrutural, enquanto as verificações relacionadas à quantidade de palitos são realizadas em uma etapa posterior pela própria ferramenta.
+
+\subsection{Conversão para o modelo da anaStruct}
+\label{subsec:conversao-anastruct}
+
+A conversão é realizada a partir do modelo intermediário produzido pelo parser. Inicialmente, é criado um sistema estrutural por meio da classe \texttt{SystemElements} da anaStruct. Em seguida, cada barra do modelo é adicionada ao sistema utilizando suas coordenadas de extremidade e suas propriedades de rigidez.
+
+Para cada elemento são determinadas as rigidezes axial e à flexão a partir das propriedades do material e da seção transversal. A rigidez axial é calculada pelo produto
+
+\begin{equation}
+    EA = E A,
+\end{equation}
+
+enquanto a rigidez à flexão é representada por
+
+\begin{equation}
+    EI = E I,
+\end{equation}
+
+em que \(E\) corresponde ao módulo de elasticidade do material, \(A\) à área da seção transversal e \(I\) ao momento de inércia da seção.
+
+Os elementos identificados como barras de treliça são adicionados ao modelo por meio da função \texttt{add\_truss\_element()}. Quando o elemento apresenta rigidez à flexão, utiliza-se \texttt{add\_element()}, permitindo também a representação das liberações rotacionais identificadas nas extremidades da barra.
+
+Após a criação dos elementos, os nós reconstruídos pelo parser são associados aos nós gerados pela anaStruct a partir de suas coordenadas. Essa correspondência é mantida durante o processamento para permitir relacionar os resultados produzidos pela biblioteca aos identificadores da estrutura original.
+
+As condições de apoio são então convertidas de acordo com os graus de liberdade restringidos em cada nó. Apoios engastados, articulados, móveis e restrições elásticas são representados pelas funções correspondentes disponibilizadas pela biblioteca. De modo semelhante, os carregamentos nodais são transferidos para o modelo por meio das componentes de força horizontal, força vertical e momento, quando presentes.
+
+\subsection{Obtenção dos resultados}
+\label{subsec:obtencao-resultados}
+
+Após a montagem completa do sistema, a análise é executada pelo método \texttt{solve()} da anaStruct. A solução fornece as grandezas associadas ao comportamento do modelo estrutural, que são posteriormente recuperadas e organizadas pela ferramenta desenvolvida.
+
+Para os nós, são obtidos os deslocamentos e, nos casos em que existem restrições de apoio, as respectivas reações. Para as barras são recuperados os resultados dos elementos, com destaque para os esforços normais utilizados na etapa de pré-dimensionamento.
+
+A ferramenta mantém uma correspondência entre os identificadores gerados durante a interpretação do arquivo FTL e os identificadores utilizados internamente pela anaStruct. Dessa forma, os resultados podem ser novamente associados às barras e aos nós do modelo original, permitindo sua posterior apresentação ao usuário e utilização nas demais rotinas do sistema.
+
+Para cada barra, são considerados os valores mínimo e máximo do esforço axial obtidos na análise. Adota-se a convenção de sinal na qual valores positivos representam tração e valores negativos representam compressão. Dessa forma, a solicitação de tração de cada elemento é obtida a partir da parcela positiva do esforço axial, enquanto a solicitação de compressão é determinada a partir da magnitude da parcela negativa.
+
+Os resultados obtidos na análise estrutural são utilizados como dados de entrada para o pré-dimensionamento das barras. A partir dos esforços determinados e das propriedades geométricas e mecânicas adotadas para os palitos, são realizadas as verificações necessárias para estimar a composição de cada elemento da estrutura.
+
+\section{Pré-dimensionamento das barras}
+\label{sec:metodologia-pre-dimensionamento}
+
+Após a análise estrutural, os esforços axiais obtidos para cada barra são utilizados nas rotinas de pré-dimensionamento. Nessa etapa, a anaStruct não realiza o dimensionamento dos elementos, sendo responsável apenas pela determinação das solicitações. As verificações apresentadas nesta seção foram implementadas em rotinas próprias da ferramenta desenvolvida.
+
+Para cada elemento, são considerados os valores mínimo e máximo do esforço axial fornecidos pela análise. Conforme a convenção adotada, valores positivos correspondem à tração e valores negativos à compressão. Dessa forma, as solicitações utilizadas no pré-dimensionamento são determinadas por
+
+\begin{equation}
+    N_t = \max(0,N_{\max}),
+\end{equation}
+
+para a tração, e
+
+\begin{equation}
+    N_c = \max(0,-N_{\min}),
+\end{equation}
+
+para a compressão.
+
+As dimensões da seção dos palitos são obtidas, sempre que disponíveis, a partir da seção definida no modelo importado do FTOOL. Para a composição das barras, considera-se que a adição de camadas ocorre pela espessura do palito, de forma que uma seção composta por \(n\) camadas apresenta largura \(b\), altura \(H=nh\) e área \(A=nbh\).
+
+As verificações de tração e compressão são realizadas independentemente. Quando uma barra apresenta solicitações relevantes nos dois sentidos, é adotada a quantidade de camadas correspondente à condição mais restritiva. Além dos critérios resistentes, foi estabelecido um número mínimo de três camadas para todas as barras, conforme o padrão construtivo adotado neste trabalho.
+
+\subsection{Barras submetidas à tração}
+\label{subsec:metodologia-tracao}
+
+Para as barras submetidas à tração, a magnitude da solicitação é determinada a partir do maior esforço axial positivo obtido na análise estrutural. A verificação é realizada de forma iterativa, avaliando diferentes quantidades de camadas até que seja encontrada uma seção capaz de atender ao critério de resistência adotado.
+
+Para uma seção composta por \(n\) camadas, a área resistente é calculada por
+
+\begin{equation}
+    A = nbh,
+\end{equation}
+
+e a tensão normal correspondente é determinada por
+
+\begin{equation}
+    \sigma_t = \frac{N_t}{A}.
+\end{equation}
+
+A tensão calculada é então comparada à resistência à tração paralela às fibras adotada no modelo. A seção é considerada suficiente quando a tensão atuante não supera a resistência estabelecida. Caso a condição não seja atendida, o número de camadas é incrementado e a verificação é repetida.
+
+O procedimento resulta na menor quantidade de camadas que satisfaz o critério de tração. Posteriormente, esse valor é comparado à quantidade requerida pela verificação à compressão e ao número mínimo estabelecido pelo critério construtivo.
+
+\subsection{Barras submetidas à compressão}
+\label{subsec:metodologia-compressao}
+
+Para as barras comprimidas, a solicitação utilizada corresponde à magnitude do menor esforço axial obtido na análise. Diferentemente da verificação à tração, o procedimento considera não apenas a tensão normal, mas também os efeitos relacionados à estabilidade do elemento.
+
+A quantidade necessária de camadas é determinada por um processo iterativo. Para cada valor de \(n\), são inicialmente calculadas as propriedades geométricas da seção composta. Considerando \(H=nh\), obtêm-se a área e os momentos de inércia em relação aos dois eixos principais:
+
+\begin{equation}
+    A = bH,
+\end{equation}
+
+\begin{equation}
+    I_x = \frac{bH^3}{12},
+\end{equation}
+
+e
+
+\begin{equation}
+    I_y = \frac{Hb^3}{12}.
+\end{equation}
+
+A partir dessas propriedades são calculados os raios de giração e os índices de esbeltez nos dois eixos. O comprimento efetivo é determinado a partir do comprimento da barra e do fator de comprimento efetivo adotado no modelo.
+
+Na sequência, são calculados os índices de esbeltez relativa e os respectivos coeficientes redutores de estabilidade \(k_{cx}\) e \(k_{cy}\), conforme a formulação apresentada na Fundamentação Teórica. Esses valores são utilizados para determinar as resistências efetivas consideradas em cada direção.
+
+Para avaliar a seção, são calculados os índices de utilização
+
+\begin{equation}
+    \eta_x =
+    \frac{\sigma_c}{k_{cx}f_{c0,d}}
+\end{equation}
+
+e
+
+\begin{equation}
+    \eta_y =
+    \frac{\sigma_c}{k_{cy}f_{c0,d}}.
+\end{equation}
+
+A condição mais desfavorável entre os dois eixos é adotada como governante, sendo definido
+
+\begin{equation}
+    \eta = \max(\eta_x,\eta_y).
+\end{equation}
+
+Uma configuração é considerada satisfatória quando o índice de utilização não é superior à unidade e quando os índices de esbeltez nos dois eixos respeitam o limite apresentado na Fundamentação Teórica:
+
+\begin{equation}
+    \eta \leq 1,
+    \qquad
+    \lambda_x \leq 140,
+    \qquad
+    \lambda_y \leq 140.
+\end{equation}
+
+Caso alguma dessas condições não seja atendida, uma nova camada é adicionada à seção e todo o procedimento é repetido. O processo continua até que seja encontrada a menor quantidade de camadas capaz de satisfazer simultaneamente os critérios de resistência e estabilidade.
+
+O parâmetro \(\beta_c\), utilizado no cálculo dos coeficientes redutores, é mantido configurável na implementação. A configuração padrão da ferramenta utiliza \(\beta_c=0,1\). Entretanto, esse valor é tratado neste trabalho como uma hipótese de cálculo e não como enquadramento das barras de palitos na categoria de madeira lamelada ou laminada definida pela ABNT NBR 7190-1:2022. A colagem dos palitos, isoladamente, não é suficiente para demonstrar o atendimento aos requisitos aplicáveis a esses produtos.
+
+O cálculo das propriedades geométricas considera as camadas como integralmente solidárias, de modo que a seção composta é representada como uma única seção retangular de altura \(H=nh\). Dessa forma, não são considerados possíveis deslizamentos relativos entre os palitos ou reduções de rigidez decorrentes de imperfeições na colagem. Essa condição constitui uma hipótese simplificadora do modelo de pré-dimensionamento.
+
+\subsection{Critério construtivo e estimativa da quantidade de palitos}
+\label{subsec:metodologia-quantidade-palitos}
+
+Após as verificações de tração e compressão, a quantidade de camadas necessária para cada barra é definida pela condição mais restritiva. No entanto, além dos critérios resistentes, foi estabelecido um mínimo de três camadas por barra como padrão construtivo.
+
+A adoção desse mínimo está relacionada principalmente às barras cujo comprimento é superior ao comprimento comercial de um único palito. A utilização de três camadas permite distribuir as emendas ao longo do elemento e evitar que todas as descontinuidades coincidam em uma mesma seção, facilitando a montagem e a colagem da barra. Dessa forma, mesmo quando os critérios de resistência indicam uma ou duas camadas, são adotadas pelo menos três camadas.
+
+Esse limite constitui uma decisão construtiva adotada neste trabalho e não um requisito proveniente diretamente das equações de resistência ou da norma utilizada como referência.
+
+Definido o número de camadas, a ferramenta estima também a quantidade física de palitos necessária para cada barra. Essa etapa considera o comprimento \(L\) do elemento e o comprimento comercial \(L_p\) de um palito. Quando
+
+\begin{equation}
+    L \leq L_p,
+\end{equation}
+
+é necessário um único palito por camada. Quando o comprimento da barra ultrapassa \(L_p\), mais de um palito é utilizado longitudinalmente para completar cada camada.
+
+Considerando uma sobreposição \(L_s\) nas emendas, o incremento de comprimento proporcionado por cada novo palito é dado por
+
+\begin{equation}
+    L_{\mathrm{inc}} = L_p - L_s.
+\end{equation}
+
+Assim, a quantidade de palitos necessária ao longo de uma camada pode ser estimada por
+
+\begin{equation}
+    n_p =
+    1+
+    \left\lceil
+    \frac{L-L_p}{L_p-L_s}
+    \right\rceil,
+    \qquad L>L_p,
+\end{equation}
+
+em que \(\lceil \cdot \rceil\) representa o arredondamento para o inteiro imediatamente superior.
+
+Por fim, a quantidade física estimada de palitos de uma barra é obtida por
+
+\begin{equation}
+    N_p = n\,n_p,
+\end{equation}
+
+em que \(n\) corresponde à quantidade de camadas definida pelo pré-dimensionamento.
+
+Essa distinção permite separar a quantidade de camadas presentes na seção transversal da quantidade efetiva de palitos comerciais utilizada ao longo do comprimento do elemento.
+
+\section{Aplicação web e integração dos módulos}
+\label{sec:metodologia-aplicacao-web}
+
+As rotinas de interpretação do arquivo \texttt{.ftl}, análise estrutural e pré-dimensionamento foram integradas a uma aplicação web desenvolvida para permitir a utilização da ferramenta diretamente pelo navegador. A interface foi construída utilizando Next.js, React e TypeScript, enquanto as rotinas de processamento estrutural permaneceram implementadas em Python.
+
+Essa separação permite manter em Python as etapas relacionadas à interpretação do modelo, à comunicação com a anaStruct e ao pré-dimensionamento, enquanto a aplicação web é responsável pela interação com o usuário e pela apresentação dos resultados.
+
+A execução do código Python no navegador é realizada por meio do Pyodide, que possibilita a utilização de módulos Python em ambiente WebAssembly. Dessa forma, o processamento do arquivo estrutural ocorre no próprio dispositivo do usuário, sem a necessidade de envio do arquivo \texttt{.ftl} para um servidor da aplicação.
+
+Para evitar o bloqueio da interface durante as operações de leitura, análise e geração dos resultados, o ambiente Python é executado em um \textit{Web Worker}. A comunicação entre a interface e as rotinas Python é realizada por meio de mensagens contendo dados serializados em JSON.
+
+\subsection{Integração entre a interface e o código Python}
+\label{subsec:integracao-pyodide}
+
+A integração entre os componentes da aplicação foi definida por meio de uma interface de comunicação baseada em JSON. O conteúdo textual do arquivo \texttt{.ftl} é enviado ao módulo Python acompanhado da operação que deve ser executada. Após o processamento, os resultados são convertidos para estruturas serializáveis e retornados à aplicação web.
+
+Foram definidas operações distintas para as principais etapas do sistema. A operação de interpretação realiza somente a leitura do arquivo e a reconstrução do modelo estrutural, sendo utilizada para produzir a visualização preliminar da ponte. As operações posteriores incorporam a análise estrutural, o pré-dimensionamento e a geração das informações necessárias à apresentação dos resultados.
+
+Essa interface evita que objetos específicos do ambiente Python sejam manipulados diretamente pelos componentes JavaScript. Dessa forma, a comunicação entre as duas partes da aplicação permanece limitada a estruturas de dados representadas em JSON, facilitando a separação entre a interface e as rotinas de cálculo.
+
+As dependências necessárias à análise estrutural são carregadas somente quando essa etapa é solicitada. Assim, a interpretação inicial do arquivo pode ser realizada sem carregar previamente todas as bibliotecas utilizadas nos cálculos e na geração das representações gráficas.
+
+\subsection{Fluxo de utilização}
+\label{subsec:fluxo-aplicacao}
+
+O fluxo de utilização da aplicação inicia-se com a seleção de um arquivo \texttt{.ftl} produzido pelo FTOOL. O arquivo é lido em memória pelo navegador e submetido inicialmente a verificações relacionadas à extensão, ao tamanho e à versão do formato.
+
+Após essa validação inicial, o parser interpreta o conteúdo do arquivo e reconstrói o modelo estrutural. A geometria obtida é apresentada ao usuário em uma visualização preliminar, permitindo verificar se a estrutura selecionada corresponde à ponte que se deseja analisar antes da execução das etapas de cálculo.
+
+Com a confirmação do modelo, a aplicação executa a análise estrutural e, posteriormente, as rotinas de pré-dimensionamento descritas nas seções anteriores. Os resultados são então organizados e apresentados pela interface, incluindo os esforços axiais das barras, a configuração deformada da estrutura e a quantidade estimada de palitos.
+
+Além das representações gráficas, são disponibilizados valores numéricos relativos aos esforços, às reações de apoio e ao pré-dimensionamento de cada elemento. Para cada barra, podem ser consultadas informações como comprimento, solicitação axial, quantidade de camadas e quantidade física estimada de palitos.
+
+Ao final do processamento, a aplicação disponibiliza também uma visualização consolidada dos resultados, reunindo os gráficos, o resumo da quantidade de palitos e os dados das barras. Essa etapa constitui o pós-processamento do fluxo adotado, transformando os resultados numéricos produzidos pelas rotinas de análise e pré-dimensionamento em informações destinadas à interpretação pelo usuário.
+
+Dessa forma, a aplicação web atua como camada de integração entre as etapas do procedimento. O FTOOL permanece responsável pela preparação do modelo estrutural; o parser desenvolvido realiza sua interpretação; a anaStruct executa a análise numérica; as rotinas próprias efetuam o pré-dimensionamento; e a interface web organiza e apresenta os resultados ao usuário.
+
+\section{Verificação da ferramenta}
+\label{sec:metodologia-verificacao}
+
+A verificação da ferramenta foi realizada em diferentes níveis, buscando avaliar separadamente a interpretação dos arquivos \texttt{.ftl}, a conversão do modelo estrutural, os resultados fornecidos pela análise, as rotinas de pré-dimensionamento e a integração entre os módulos da aplicação.
+
+Para isso, foram utilizados arquivos de teste produzidos no FTOOL e casos estruturais com resultados conhecidos ou passíveis de determinação independente. Também foram implementados testes automatizados em Python, permitindo verificar o comportamento das rotinas após alterações no código e reduzir a ocorrência de regressões durante o desenvolvimento.
+
+\subsection{Verificação da interpretação do modelo}
+\label{subsec:verificacao-parser}
+
+A interpretação dos arquivos foi verificada por meio de modelos contendo diferentes geometrias, seções e condições estruturais. Os dados reconstruídos pelo parser foram avaliados quanto à quantidade de nós e barras, às coordenadas, à conectividade dos elementos e às propriedades das seções transversais.
+
+Também foi verificada a equivalência entre diferentes formas de entrada do mesmo arquivo. A leitura diretamente a partir do arquivo, a partir de seu conteúdo textual e a partir de sua representação em bytes deve produzir a mesma representação interna da estrutura. Essa verificação é particularmente relevante porque, na aplicação web, o conteúdo do arquivo é processado diretamente em memória.
+
+As propriedades geométricas das seções retangulares também foram verificadas independentemente. Para uma seção definida por largura \(b\) e altura \(h\), os valores produzidos pelo parser foram comparados às relações
+
+\begin{equation}
+    A = bh
+\end{equation}
+
+e
+
+\begin{equation}
+    I = \frac{bh^3}{12},
+\end{equation}
+
+permitindo verificar tanto a interpretação das dimensões quanto sua representação no Sistema Internacional de Unidades.
+
+\subsection{Verificação da análise estrutural}
+\label{subsec:verificacao-analise}
+
+A etapa de análise foi verificada por meio de relações de equilíbrio e de casos com solução analítica conhecida. Para os modelos analisados, foi avaliado o equilíbrio global entre as cargas externas aplicadas e as reações de apoio calculadas, considerando separadamente as componentes horizontal e vertical.
+
+Adicionalmente, foram empregados casos simplificados para verificar grandezas específicas produzidas pelo modelo. Entre eles, utilizou-se uma barra em balanço submetida a uma força concentrada na extremidade. O deslocamento calculado foi comparado ao valor obtido pela expressão analítica
+
+\begin{equation}
+    \delta =
+    \frac{PL^3}{3EI},
+\end{equation}
+
+em que \(P\) representa a força aplicada, \(L\) o comprimento do elemento, \(E\) o módulo de elasticidade e \(I\) o momento de inércia da seção.
+
+Para os modelos de treliça utilizados no desenvolvimento, também foram verificados valores de esforços axiais que podem ser obtidos a partir das condições de equilíbrio da estrutura. Dessa forma, buscou-se avaliar não apenas a execução da biblioteca anaStruct, mas também a correspondência entre o modelo reconstruído a partir do arquivo FTL e o sistema efetivamente submetido à análise.
+
+\subsection{Verificação do pré-dimensionamento}
+\label{subsec:verificacao-pre-dimensionamento}
+
+As rotinas de pré-dimensionamento foram verificadas por meio de casos controlados nos quais as condições de resistência e de esbeltez poderiam ser avaliadas individualmente. Para elementos comprimidos, foram testadas configurações em que a resistência à compressão era satisfeita, mas o limite de esbeltez era ultrapassado. Nesses casos, a seção deve ser rejeitada mesmo quando seu índice de utilização resistente é inferior à unidade.
+
+Também foi verificado o comportamento da rotina no limite
+
+\begin{equation}
+    \lambda = 140,
+\end{equation}
+
+de modo a assegurar que valores iguais ao limite sejam aceitos e valores superiores sejam rejeitados. A busca iterativa pelo número de camadas foi avaliada verificando-se se novas camadas são adicionadas enquanto os critérios de resistência ou estabilidade não são atendidos.
+
+O critério construtivo de três camadas mínimas também foi incluído nos testes. Assim, mesmo em barras com esforços reduzidos ou nulos, a quantidade resultante não deve ser inferior ao mínimo estabelecido para a composição construtiva adotada neste trabalho.
+
+Para modelos completos, foram verificadas ainda a quantidade de camadas obtida para cada elemento, a quantidade física de palitos calculada a partir dos comprimentos das barras e a aprovação das verificações correspondentes. Esses valores são mantidos como referências em testes de regressão, permitindo identificar alterações inesperadas nos resultados após modificações na implementação.
+
+\subsection{Verificação da integração}
+\label{subsec:verificacao-integracao}
+
+Por fim, foram realizados testes sobre a comunicação entre as rotinas Python e a camada utilizada pela aplicação web. A representação obtida pela leitura em memória foi comparada à produzida pelo parser utilizado diretamente em Python, verificando-se a equivalência entre os dois fluxos de execução.
+
+Também foi verificado se as operações de análise, pré-dimensionamento e geração do relatório retornam estruturas JSON válidas e coerentes entre si. Os resultados numéricos utilizados no relatório são comparados aos resultados obtidos pelas operações individuais de análise e dimensionamento, evitando que diferentes etapas da interface apresentem informações provenientes de processamentos distintos.
+
+As representações gráficas de esforços axiais e deslocamentos também foram submetidas a testes específicos. Essas verificações avaliam, entre outros aspectos, a correspondência entre as barras do modelo e os valores apresentados, a convenção de sinais e o comportamento da escala utilizada para representar a configuração deformada.
+
+As verificações descritas avaliam a consistência da implementação e a correspondência entre os modelos de entrada, as formulações adotadas e os resultados computacionais. Entretanto, elas não representam, por si só, uma validação experimental do comportamento físico de uma ponte construída. As hipóteses relacionadas às propriedades da madeira, à solidarização entre camadas, às emendas e às condições reais de fabricação permanecem limitações do modelo de pré-dimensionamento e devem ser consideradas na interpretação dos resultados.

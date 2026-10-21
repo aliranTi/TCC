@@ -313,7 +313,7 @@ Arquivo:
 
 ## Estado
 
-**Redação pendente.** O arquivo contém o título e um parágrafo provisório gerado por `\lipsum[2]`. Esse conteúdo não representa a metodologia do trabalho e deverá ser substituído após a consolidação dos capítulos anteriores.
+**Redação em progresso.** O capítulo contém uma versão inicial com pré-processamento no FTOOL, interpretação dos arquivos FTL, análise estrutural, pré-dimensionamento, aplicação web e procedimentos de verificação. A próxima etapa é conferir essas descrições com o código atual e com os resultados dos testes, ajustando o texto conforme as evidências encontradas.
 
 ## Regra principal
 
@@ -760,3 +760,8 @@ Se um trecho não responder claramente a nenhuma dessas perguntas, verificar se 
 - Acrescentadas as referências de Sanchez (2026) e Mandal (2026). Registradas também as considerações adicionadas à fundamentação sobre propriedades adotadas, ligações adesivas e limites da comparação computacional.
 - Próxima etapa: Metodologia, começando pela conferência do código atual. A conferência integral das fontes não foi refeita nesta etapa; permanece no roteiro de revisão bibliográfica.
 - Verificação: pdfLaTeX, BibTeX e geração das siglas concluídos sem erros; PDF com 40 páginas e sem referências indefinidas no log final.
+
+## 21/10/2026 — Redação inicial da Metodologia
+
+- Substituído o texto provisório por uma versão inicial do capítulo, abrangendo o fluxo de processamento, as hipóteses de pré-dimensionamento, a aplicação web e os procedimentos de verificação.
+- Em progresso: revisão da metodologia. Conferir as funcionalidades e os critérios descritos no código atual e confrontar as verificações relatadas com os resultados dos testes antes de encerrar o capítulo.
