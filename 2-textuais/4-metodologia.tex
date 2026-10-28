@@ -74,7 +74,7 @@ Assim, valores de força e de propriedades armazenados no arquivo em unidades ba
 
 Após a interpretação do arquivo \texttt{.ftl} e a reconstrução da topologia, o modelo obtido é convertido para uma representação compatível com a biblioteca anaStruct. Essa etapa tem como objetivo utilizar as informações extraídas do FTOOL para montar e resolver computacionalmente o sistema estrutural.
 
-A conversão utiliza a geometria das barras, as propriedades dos materiais e das seções, as condições de apoio e os carregamentos previamente identificados pelo parser. Como essas informações já foram normalizadas para o Sistema Internacional de Unidades, elas podem ser transferidas diretamente para o modelo de análise.
+A conversão utiliza a geometria das barras, as propriedades dos materiais e das seções, as condições de apoio e os carregamentos previamente identificados pelo parser. Como essas informações já foram normalizadas para o Sistema Internacional de Unidades, elas podem ser utilizadas no modelo de análise. Na aplicação web, antes da solução, o usuário também pode editar parâmetros de seções e materiais inicialmente obtidos do arquivo, conforme descrito na Seção~\ref{subsec:parametros-web}. Nesse caso, a conversão utiliza os valores ajustados para a execução corrente, preservando o arquivo \texttt{.ftl} original.
 
 A anaStruct é responsável pela solução numérica da estrutura. Os resultados obtidos nessa etapa incluem esforços internos, deslocamentos e reações de apoio. Particularmente, os esforços axiais das barras são posteriormente utilizados pelas rotinas de pré-dimensionamento desenvolvidas neste trabalho. Dessa forma, a biblioteca é empregada como mecanismo de análise estrutural, enquanto as verificações relacionadas à quantidade de palitos são realizadas em uma etapa posterior pela própria ferramenta.
 
@@ -135,7 +135,7 @@ para a tração, e
 
 para a compressão.
 
-Por padrão, as dimensões da seção dos palitos são obtidas da seção retangular associada a cada barra no modelo importado do FTOOL. Quando essa opção está habilitada, uma seção sem dimensões retangulares válidas impede o pré-dimensionamento da barra; alternativamente, é possível configurar dimensões nominais independentes do arquivo. Na configuração padrão, essas dimensões são largura de \(8,58\,\mathrm{mm}\), espessura de \(1,94\,\mathrm{mm}\) e comprimento comercial de \(115\,\mathrm{mm}\). Esses valores são parâmetros adotados para o cálculo, não medições experimentais das amostras utilizadas. Para a composição das barras, considera-se que a adição de camadas ocorre pela espessura do palito, de forma que uma seção composta por \(n\) camadas apresenta largura \(b\), altura \(H=nh\) e área \(A=nbh\).
+Por padrão, as dimensões da seção dos palitos são obtidas da seção retangular associada a cada barra no modelo importado do FTOOL. Quando essa opção está habilitada, uma seção sem dimensões retangulares válidas impede o pré-dimensionamento da barra; alternativamente, é possível configurar dimensões nominais independentes do arquivo. Na configuração padrão, essas dimensões são largura de \(8,58\,\mathrm{mm}\), espessura de \(1,94\,\mathrm{mm}\) e comprimento comercial de \(115\,\mathrm{mm}\). Esses valores são parâmetros adotados para o cálculo, não medições experimentais das amostras utilizadas. Na interface web, parâmetros de seção e de material podem ser ajustados para cada execução, assim como as propriedades e os critérios adotados nas verificações de resistência e estabilidade. Os valores utilizados no pré-dimensionamento, portanto, correspondem à configuração aplicada ao modelo após a interpretação, e não necessariamente aos valores originalmente armazenados no arquivo. Para a composição das barras, considera-se que a adição de camadas ocorre pela espessura do palito, de forma que uma seção composta por \(n\) camadas apresenta largura \(b\), altura \(H=nh\) e área \(A=nbh\).
 
 As verificações de tração e compressão são realizadas independentemente. Quando uma barra apresenta solicitações relevantes nos dois sentidos, é adotada a quantidade de camadas correspondente à condição mais restritiva. Além dos critérios resistentes, foi estabelecido um número mínimo de três camadas para todas as barras, conforme o padrão construtivo adotado neste trabalho.
 
@@ -302,6 +302,17 @@ Essa interface evita que objetos específicos do ambiente Python sejam manipulad
 
 As dependências necessárias à análise estrutural são carregadas somente quando essa etapa é solicitada. Assim, a interpretação inicial do arquivo pode ser realizada sem carregar previamente todas as bibliotecas utilizadas nos cálculos e na geração das representações gráficas.
 
+\subsection{Configuração dos parâmetros de análise e pré-dimensionamento}
+\label{subsec:parametros-web}
+
+Após a interpretação do arquivo \texttt{.ftl}, a interface apresenta os parâmetros identificados no modelo e os valores padrão das rotinas de pré-dimensionamento. Esses dados são organizados em grupos para permitir sua consulta e edição antes da execução dos cálculos. As alterações se aplicam somente à análise em andamento e não modificam o arquivo original produzido no FTOOL.
+
+No modelo estrutural, podem ser ajustadas as dimensões das seções retangulares, a área e o momento de inércia utilizados na análise, além do módulo de elasticidade dos materiais. Quando a largura ou a espessura de uma seção é alterada, sua área e seu momento de inércia são recalculados pelas relações geométricas de uma seção retangular. Caso o usuário também forneça diretamente novos valores de área ou de inércia, esses valores prevalecem na montagem do modelo de análise. Assim, a geometria empregada na estimativa de camadas pode ser distinta das propriedades de rigidez definidas explicitamente para a solução estrutural.
+
+As configurações do pré-dimensionamento incluem a resistência característica à compressão, o módulo médio de elasticidade utilizado na avaliação da estabilidade, os coeficientes de modificação e de segurança, o parâmetro \(\beta_c\), a resistência média à tração paralela às fibras e os fatores aplicados aos esforços solicitantes. Também podem ser ajustados o fator de comprimento efetivo, o mínimo construtivo de camadas, o comprimento comercial dos palitos e a sobreposição considerada nas emendas. O módulo de elasticidade do material usado na análise estrutural e o módulo médio adotado na verificação de flambagem são parâmetros independentes.
+
+As edições são verificadas quanto ao tipo numérico e aos intervalos admitidos antes da execução. Os valores alterados são enviados às rotinas Python por meio da interface JSON. Para cada solicitação, o arquivo é interpretado novamente, os parâmetros são aplicados ao modelo reconstruído e, em seguida, são executadas a análise estrutural e as verificações de pré-dimensionamento. A interface permite restaurar os valores iniciais e, quando algum parâmetro é modificado após um cálculo, os resultados anteriores são descartados até que uma nova análise seja executada.
+
 \subsection{Fluxo de utilização}
 \label{subsec:fluxo-aplicacao}
 
@@ -309,7 +320,7 @@ O fluxo de utilização da aplicação inicia-se com a seleção de um arquivo \
 
 Após essa validação inicial, o parser interpreta o conteúdo do arquivo e reconstrói o modelo estrutural. A geometria obtida é apresentada ao usuário em uma visualização preliminar, permitindo verificar se a estrutura selecionada corresponde à ponte que se deseja analisar antes da execução das etapas de cálculo.
 
-Com a confirmação do modelo, a aplicação executa a análise estrutural e, posteriormente, as rotinas de pré-dimensionamento descritas nas seções anteriores. Os resultados são então organizados e apresentados pela interface, incluindo os esforços axiais das barras, a configuração deformada da estrutura e a quantidade estimada de palitos.
+Após examinar a prévia, o usuário pode manter ou modificar os parâmetros de análise estrutural e de pré-dimensionamento, incluindo propriedades dos materiais, seções e critérios de verificação. Com a confirmação da ponte e dos parâmetros selecionados, a aplicação executa a análise estrutural e, posteriormente, as rotinas de pré-dimensionamento descritas nas seções anteriores. Os resultados são então organizados e apresentados pela interface, incluindo os esforços axiais das barras, a configuração deformada da estrutura e a quantidade estimada de palitos.
 
 Além das representações gráficas, são disponibilizados valores numéricos relativos aos esforços, às reações de apoio e ao pré-dimensionamento de cada elemento. Para cada barra, podem ser consultadas informações como comprimento, solicitação axial, quantidade de camadas e quantidade física estimada de palitos.
 
