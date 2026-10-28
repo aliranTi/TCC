@@ -135,7 +135,7 @@ para a tração, e
 
 para a compressão.
 
-As dimensões da seção dos palitos são obtidas, sempre que disponíveis, a partir da seção definida no modelo importado do FTOOL. Para a composição das barras, considera-se que a adição de camadas ocorre pela espessura do palito, de forma que uma seção composta por \(n\) camadas apresenta largura \(b\), altura \(H=nh\) e área \(A=nbh\).
+Por padrão, as dimensões da seção dos palitos são obtidas da seção retangular associada a cada barra no modelo importado do FTOOL. Quando essa opção está habilitada, uma seção sem dimensões retangulares válidas impede o pré-dimensionamento da barra; alternativamente, é possível configurar dimensões nominais independentes do arquivo. Na configuração padrão, essas dimensões são largura de \(8,58\,\mathrm{mm}\), espessura de \(1,94\,\mathrm{mm}\) e comprimento comercial de \(115\,\mathrm{mm}\). Esses valores são parâmetros adotados para o cálculo, não medições experimentais das amostras utilizadas. Para a composição das barras, considera-se que a adição de camadas ocorre pela espessura do palito, de forma que uma seção composta por \(n\) camadas apresenta largura \(b\), altura \(H=nh\) e área \(A=nbh\).
 
 As verificações de tração e compressão são realizadas independentemente. Quando uma barra apresenta solicitações relevantes nos dois sentidos, é adotada a quantidade de camadas correspondente à condição mais restritiva. Além dos critérios resistentes, foi estabelecido um número mínimo de três camadas para todas as barras, conforme o padrão construtivo adotado neste trabalho.
 
@@ -150,13 +150,15 @@ Para uma seção composta por \(n\) camadas, a área resistente é calculada por
     A = nbh,
 \end{equation}
 
+em que \(h\) representa a espessura de um palito e \(H=nh\) representa a altura total da seção composta.
+
 e a tensão normal correspondente é determinada por
 
 \begin{equation}
     \sigma_t = \frac{N_t}{A}.
 \end{equation}
 
-A tensão calculada é então comparada à resistência à tração paralela às fibras adotada no modelo. A seção é considerada suficiente quando a tensão atuante não supera a resistência estabelecida. Caso a condição não seja atendida, o número de camadas é incrementado e a verificação é repetida.
+A tensão calculada é então comparada à resistência à tração paralela às fibras adotada no modelo. Na implementação, a solicitação de tração é multiplicada por um fator configurável, de valor padrão \(1,0\), antes do cálculo da tensão. A seção é considerada suficiente quando a tensão atuante é estritamente inferior à resistência estabelecida (\(\sigma_t<f_{t0}\)). Caso a condição não seja atendida, o número de camadas é incrementado e a verificação é repetida.
 
 O procedimento resulta na menor quantidade de camadas que satisfaz o critério de tração. Posteriormente, esse valor é comparado à quantidade requerida pela verificação à compressão e ao número mínimo estabelecido pelo critério construtivo.
 
@@ -181,7 +183,7 @@ e
     I_y = \frac{Hb^3}{12}.
 \end{equation}
 
-A partir dessas propriedades são calculados os raios de giração e os índices de esbeltez nos dois eixos. O comprimento efetivo é determinado a partir do comprimento da barra e do fator de comprimento efetivo adotado no modelo.
+A partir dessas propriedades são calculados os raios de giração e os índices de esbeltez nos dois eixos. A força de compressão utilizada na tensão de cálculo também é multiplicada por um fator configurável, igual a \(1,0\) na configuração padrão. O comprimento efetivo é determinado a partir do comprimento da barra e do fator de comprimento efetivo adotado no modelo.
 
 Na sequência, são calculados os índices de esbeltez relativa e os respectivos coeficientes redutores de estabilidade \(k_{cx}\) e \(k_{cy}\), conforme a formulação apresentada na Fundamentação Teórica. Esses valores são utilizados para determinar as resistências efetivas consideradas em cada direção.
 
@@ -255,7 +257,7 @@ Assim, a quantidade de palitos necessária ao longo de uma camada pode ser estim
     \qquad L>L_p,
 \end{equation}
 
-em que \(\lceil \cdot \rceil\) representa o arredondamento para o inteiro imediatamente superior.
+em que \(\lceil \cdot \rceil\) representa o arredondamento para o inteiro imediatamente superior. Na implementação, a sobreposição é configurável e seu valor padrão é \(L_s=0\,\mathrm{mm}\). Portanto, a estimativa padrão considera a continuidade longitudinal sem perda de comprimento por sobreposição; para representar emendas sobrepostas, é necessário informar explicitamente um valor positivo de \(L_s\).
 
 Por fim, a quantidade física estimada de palitos de uma barra é obtida por
 
@@ -265,7 +267,7 @@ Por fim, a quantidade física estimada de palitos de uma barra é obtida por
 
 em que \(n\) corresponde à quantidade de camadas definida pelo pré-dimensionamento.
 
-Essa distinção permite separar a quantidade de camadas presentes na seção transversal da quantidade efetiva de palitos comerciais utilizada ao longo do comprimento do elemento.
+Essa distinção permite separar a quantidade de camadas presentes na seção transversal da quantidade efetiva de palitos comerciais utilizada ao longo do comprimento do elemento. O total calculado corresponde às barras representadas no modelo analisado. A saída da implementação também apresenta uma estimativa para duas faces idênticas da ponte, obtida pela duplicação desse total; essa estimativa pressupõe que as duas faces possuam a mesma composição e não inclui, por si só, palitos adicionais de travamento ou ligação transversal.
 
 \section{Aplicação web e integração dos módulos}
 \label{sec:metodologia-aplicacao-web}
