@@ -1,0 +1,53 @@
+\begin{tikzpicture}[
+    node distance=0.9cm,
+    every node/.style={font=\small}
+]
+
+\node[blocoPequeno] (ftl) {
+    Arquivo \texttt{.ftl}
+};
+
+\node[blocoPequeno, below=of ftl] (leitura) {
+    Leitura do arquivo e\\
+    identificação da versão
+};
+
+\node[blocoPequeno, below=of leitura] (dados) {
+    Identificação de materiais,\\
+    seções e carregamentos
+};
+
+\node[blocoPequeno, below=of dados] (barras) {
+    Identificação das barras\\
+    e de suas extremidades
+};
+
+\node[blocoPequeno, below=of barras] (nos) {
+    Reconstrução e\\
+    deduplicação dos nós
+};
+
+\node[blocoPequeno, below=of nos] (associacao) {
+    Associação de apoios,\\
+    cargas e conectividade
+};
+
+\node[blocoPequeno, below=of associacao] (unidades) {
+    Normalização das unidades\\
+    para o Sistema Internacional
+};
+
+\node[blocoPequeno, below=of unidades] (modelo) {
+    Modelo estrutural\\
+    reconstruído
+};
+
+\draw[fluxo] (ftl) -- (leitura);
+\draw[fluxo] (leitura) -- (dados);
+\draw[fluxo] (dados) -- (barras);
+\draw[fluxo] (barras) -- (nos);
+\draw[fluxo] (nos) -- (associacao);
+\draw[fluxo] (associacao) -- (unidades);
+\draw[fluxo] (unidades) -- (modelo);
+
+\end{tikzpicture}

@@ -1,6 +1,6 @@
 # Etapas do TCC
 
-Última atualização: 21/10/2026.
+Última atualização: 28/10/2026.
 
 Este arquivo serve como roteiro de execução do TCC. A ideia é consultar esta página antes de começar uma nova sessão de escrita para saber **o que fazer agora**, **o que ainda falta** e **quando uma etapa pode ser considerada concluída**.
 
@@ -765,3 +765,9 @@ Se um trecho não responder claramente a nenhuma dessas perguntas, verificar se 
 
 - Substituído o texto provisório por uma versão inicial do capítulo, abrangendo o fluxo de processamento, as hipóteses de pré-dimensionamento, a aplicação web e os procedimentos de verificação.
 - Em progresso: revisão da metodologia. Conferir as funcionalidades e os critérios descritos no código atual e confrontar as verificações relatadas com os resultados dos testes antes de encerrar o capítulo.
+
+## 28/10/2026 — Diagramas da Metodologia
+
+- Acrescentados os diagramas do fluxo geral de processamento, da interpretação dos arquivos FTL e da arquitetura da aplicação web.
+- Centralizadas as equações do documento e incluído o suporte aos diagramas em TikZ.
+- Em progresso: revisão da metodologia. Conferir os fluxos apresentados com a implementação atual e verificar as evidências dos testes descritos no capítulo.

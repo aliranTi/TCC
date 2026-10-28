@@ -1,0 +1,38 @@
+\begin{tikzpicture}[node distance=1.2cm]
+
+\node[blocoPequeno] (ftool) {
+    FTOOL\\
+    Pré-processamento
+};
+
+\node[blocoPequeno, below=of ftool] (ftl) {
+    Arquivo \texttt{.ftl}
+};
+
+\node[blocoPequeno, below=of ftl] (parser) {
+    Interpretação e reconstrução\\
+    do modelo estrutural
+};
+
+\node[blocoPequeno, below=of parser] (analise) {
+    Análise estrutural\\
+    anaStruct
+};
+
+\node[blocoPequeno, below=of analise] (predim) {
+    Pré-dimensionamento\\
+    das barras
+};
+
+\node[blocoPequeno, below=of predim] (web) {
+    Apresentação dos resultados\\
+    na aplicação web
+};
+
+\draw[fluxo] (ftool) -- (ftl);
+\draw[fluxo] (ftl) -- (parser);
+\draw[fluxo] (parser) -- (analise);
+\draw[fluxo] (analise) -- (predim);
+\draw[fluxo] (predim) -- (web);
+
+\end{tikzpicture}

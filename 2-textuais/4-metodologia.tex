@@ -10,7 +10,16 @@ A partir desse arquivo, o sistema interpreta as informações armazenadas e reco
 
 Os esforços axiais obtidos nessa etapa são posteriormente utilizados pelas rotinas de pré-dimensionamento. Para cada barra, são avaliadas separadamente as solicitações de tração e compressão, conforme os critérios apresentados na Fundamentação Teórica. A partir dessas verificações, estima-se a quantidade de camadas necessária à composição da seção e, considerando o comprimento de cada elemento, a quantidade física de palitos necessária para sua construção.
 
+
 Todo o processamento foi integrado a uma aplicação web. O arquivo \texttt{.ftl} é lido e processado no próprio navegador, e os resultados são apresentados por meio de representações gráficas, tabelas e um relatório de pré-dimensionamento. Dessa forma, o fluxo adotado pode ser sintetizado pelas etapas de pré-processamento no FTOOL, interpretação do arquivo, análise estrutural, pré-dimensionamento e apresentação dos resultados.
+
+\begin{figure}[H]
+    \centering
+    \caption{Fluxo geral de processamento adotado na ferramenta desenvolvida.}
+    \input{lib/figuras/fluxo-metodologia}
+    \label{fig:fluxo-metodologia}
+    \fonte{Elaborado pelo autor.}
+\end{figure}
 
 \section{Pré-processamento do modelo no FTOOL}
 \label{sec:metodologia-ftool}
@@ -23,6 +32,7 @@ Dessa forma, não é necessário reconstruir manualmente a geometria da ponte na
 
 A abordagem mantém separadas as etapas de definição e processamento do modelo: o FTOOL é utilizado para a preparação das informações estruturais, enquanto o processamento numérico e o pós-processamento de interesse deste trabalho são realizados pela ferramenta desenvolvida.
 
+
 \section{Interpretação do arquivo FTL}
 
 \subsection{Leitura e identificação das informações}
@@ -31,6 +41,15 @@ A abordagem mantém separadas as etapas de definição e processamento do modelo
 Após a definição do modelo no FTOOL, o arquivo \texttt{.ftl} é submetido ao módulo responsável por sua interpretação. Foi desenvolvido, em Python, um parser capaz de processar arquivos correspondentes às versões 4.00 e 4.01 do formato e transformar as informações textuais em objetos utilizados nas etapas posteriores da aplicação.
 
 A implementação do parser foi desenvolvida a partir da análise de arquivos produzidos pelo FTOOL e das informações disponíveis na documentação comunitária de engenharia reversa do formato apresentada por \citeonline{sanchez2026ftoolreverse}. Como o formato não representa todos os componentes estruturais da mesma maneira que são visualizados na interface do programa, foi necessário estabelecer procedimentos específicos para a identificação e reconstrução dessas informações.
+
+O processo de interpretação do arquivo e reconstrução do modelo estrutural é apresentado de forma resumida na Figura~\ref{fig:fluxo-parser-ftl}.
+\begin{figure}[H]
+    \centering
+    \caption{Fluxo de interpretação e reconstrução do modelo a partir do arquivo \texttt{.ftl}.}
+    \label{fig:fluxo-parser-ftl}
+    \input{lib/figuras/fluxo-parser.tex}
+    \fonte{Elaborado pelo autor.}
+\end{figure}
 
 Durante a leitura, são identificados dados referentes aos materiais, às seções transversais, às barras, às condições de apoio e aos carregamentos nodais. A partir desses dados, é construído um modelo intermediário que preserva a geometria e as relações de conectividade necessárias à posterior conversão para o sistema de análise estrutural.
 
@@ -255,7 +274,18 @@ As rotinas de interpretação do arquivo \texttt{.ftl}, análise estrutural e pr
 
 Essa separação permite manter em Python as etapas relacionadas à interpretação do modelo, à comunicação com a anaStruct e ao pré-dimensionamento, enquanto a aplicação web é responsável pela interação com o usuário e pela apresentação dos resultados.
 
-A execução do código Python no navegador é realizada por meio do Pyodide, que possibilita a utilização de módulos Python em ambiente WebAssembly. Dessa forma, o processamento do arquivo estrutural ocorre no próprio dispositivo do usuário, sem a necessidade de envio do arquivo \texttt{.ftl} para um servidor da aplicação.
+A arquitetura adotada para a integração entre a interface web e os módulos de processamento é apresentada na Figura~\ref{fig:arquitetura-web}.
+
+\begin{figure}[H]
+    \centering
+    \caption{Arquitetura de integração entre a interface web e os módulos de processamento executados no navegador.}
+    \label{fig:arquitetura-web}
+    \input{lib/figuras/arquitetura-web}
+    \fonte{Elaborado pelo autor.}
+\end{figure}
+
+
+A execução do código Python no navegador é realizada por meio do Pyodide, que possibilita a utilização de módulos Python em ambiente \textit{WebAssembly}. Dessa forma, o processamento do arquivo estrutural ocorre no próprio dispositivo do usuário, sem a necessidade de envio do arquivo \texttt{.ftl} para um servidor da aplicação.
 
 Para evitar o bloqueio da interface durante as operações de leitura, análise e geração dos resultados, o ambiente Python é executado em um \textit{Web Worker}. A comunicação entre a interface e as rotinas Python é realizada por meio de mensagens contendo dados serializados em JSON.
 

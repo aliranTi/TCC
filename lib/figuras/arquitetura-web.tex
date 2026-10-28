@@ -1,0 +1,71 @@
+\begin{tikzpicture}[
+    node distance=0.75cm,
+    every node/.style={font=\small}
+]
+
+% Entrada
+\node[blocoPequeno] (entrada) {
+    Arquivo \texttt{.ftl}
+};
+
+% Interface
+\node[bloco, below=of entrada] (interface) {
+    Interface web\\
+    Next.js / React / TypeScript
+};
+
+% Título do ambiente de processamento
+\node[
+    below=1.5cm of interface,
+    font=\small\bfseries
+] (workertitle) {
+    Web Worker + Pyodide
+};
+
+% Módulos internos
+\node[blocoPequeno, below=0.45cm of workertitle] (parser) {
+    Parser FTL
+};
+
+\node[blocoPequeno, below=of parser] (anastruct) {
+    Análise estrutural\\
+    anaStruct
+};
+
+\node[blocoPequeno, below=of anastruct] (predim) {
+    Pré-dimensionamento
+};
+
+\node[blocoPequeno, below=of predim] (geracao) {
+    Geração de gráficos, tabelas\\
+    e relatório
+};
+
+% Caixa externa
+\node[
+    draw,
+    rounded corners=3pt,
+    fit=(workertitle)(parser)(anastruct)(predim)(geracao),
+    inner xsep=0.7cm,
+    inner ysep=0.35cm
+] (workerbox) {};
+
+% Saída
+\node[bloco, below=1.0cm of workerbox] (saida) {
+    Resultados apresentados ao usuário
+};
+
+% Setas
+\draw[fluxo] (entrada) -- (interface);
+
+\draw[fluxo] (interface) --
+    node[right, font=\scriptsize] {JSON}
+    (workerbox.north);
+
+\draw[fluxo] (parser) -- (anastruct);
+\draw[fluxo] (anastruct) -- (predim);
+\draw[fluxo] (predim) -- (geracao);
+
+\draw[fluxo] (workerbox.south) -- (saida);
+
+\end{tikzpicture}
