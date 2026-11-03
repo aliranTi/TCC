@@ -326,21 +326,21 @@ Na sequência, a segunda análise produziu um resultado de aproximadamente 1298,
 
 Para a mesma barra, a ferramenta desenvolvida estimou 18 camadas. Essa diferença está associada às formulações empregadas pelos procedimentos. Enquanto a planilha combina estimativas intermediárias, a ferramenta realiza verificações iterativas de resistência e estabilidade, considerando a geometria da seção composta, os esforços solicitantes e os critérios de esbeltez adotados.
 
-As diferenças também se manifestam na estimativa da quantidade total de palitos. Na cópia examinada, embora o parâmetro nominal de comprimento comercial tenha sido atualizado para 115 mm, as fórmulas de contabilização dos palitos ainda dividem o comprimento acumulado das camadas pelo valor fixo de 12 cm. Posteriormente, é acrescentada uma margem de 10\%. Portanto, os totais apresentados pela planilha refletem esse divisor ainda não atualizado, e não uma contagem integralmente padronizada para 115 mm. Para uma face da ponte, o procedimento é representado pela Equação~\ref{eq:total-planilha}.
+As diferenças também se manifestam na estimativa da quantidade total de palitos. Na cópia corrigida da planilha, o comprimento acumulado das camadas é dividido pelo comprimento comercial de 11,5 cm, correspondente a 115 mm, utilizando uma referência ao parâmetro configurado. Posteriormente, é acrescentada uma margem de 10\% ao total estimado. Para uma face da ponte, o procedimento é representado pela Equação~\ref{eq:total-planilha}.
 
 \begin{equation}
     P_p =
     1,10
     \left(
         \frac{\displaystyle\sum_{i=1}^{19}L_i n_{p,i}}
-        {12}
+        {11,5}
     \right)
     \label{eq:total-planilha}
 \end{equation}
 
 \noindent em que $P_p$ representa a estimativa total de palitos para uma face, $L_i$ corresponde ao comprimento da barra $i$, em centímetros, e $n_{p,i}$ representa a quantidade de camadas atribuída ao elemento pela planilha.
 
-A ferramenta desenvolvida, por sua vez, estima a quantidade inteira de palitos necessários em cada barra, considerando seu comprimento, o número de camadas e a configuração adotada para as emendas. Na configuração padrão utilizada nesta avaliação, o comprimento comercial corresponde a 115 mm, com sobreposição nula nas emendas. Embora o campo de comprimento da planilha também indique 115 mm, as fórmulas responsáveis pelos totais ainda utilizam 12 cm; a comparação dos valores globais preserva os resultados efetivamente calculados nessa versão da planilha.
+A ferramenta desenvolvida, por sua vez, estima a quantidade inteira de palitos necessários em cada barra, considerando seu comprimento, o número de camadas e a configuração adotada para as emendas. Na configuração padrão utilizada nesta avaliação, o comprimento comercial corresponde a 115 mm, com sobreposição nula nas emendas. A cópia corrigida da planilha também utiliza 115 mm na contabilização, mas mantém suas próprias regras para cálculo de camadas, estimativa contínua de palitos e acréscimo de 10\% ao total.
 
 A Tabela~\ref{tab:comparacao-totais} sintetiza os resultados globais apresentados pelos dois procedimentos.
 
@@ -357,15 +357,15 @@ A Tabela~\ref{tab:comparacao-totais} sintetiza os resultados globais apresentado
         \hline
         Barras analisadas & 19 & 19 \\
         Palitos estimados para uma face
-            & 8286,21 & 430 \\
+            & 8646,48 & 430 \\
         Palitos estimados para duas faces
-            & 16572,43 & 860 \\
+            & 17292,97 & 860 \\
         \hline
     \end{tabular}
     \fonte{Elaborado pelo autor.}
 \end{table}
 
-Os valores apresentados demonstram diferenças expressivas entre as estimativas. Entretanto, essas quantidades não representam uma comparação sob condições integralmente equivalentes: além das diferenças nos critérios de dimensionamento, nas propriedades geométricas e resistentes e nas regras de contabilização do material, o divisor usado nas fórmulas de totalização da planilha ainda corresponde a 12 cm. Assim, a diferença entre os totais não pode ser atribuída exclusivamente à formulação da área da seção transversal.
+Os valores apresentados demonstram diferenças expressivas entre as estimativas, mesmo após a padronização do comprimento comercial de 115 mm. Entretanto, as quantidades não representam uma comparação sob condições integralmente equivalentes, pois persistem diferenças nos critérios de dimensionamento, nas propriedades geométricas e resistentes e nas regras de contabilização do material. Assim, a diferença entre os totais não pode ser atribuída exclusivamente à formulação da área da seção transversal.
 
 Além disso, os valores fracionários obtidos pela planilha representam uma estimativa contínua do comprimento total de palitos, enquanto os valores da ferramenta correspondem à soma de quantidades inteiras estimadas para cada barra. Dessa forma, a diferença entre os totais não deve ser interpretada isoladamente como medida de precisão ou de eficiência estrutural.
 
