@@ -1,6 +1,6 @@
 # Etapas do TCC
 
-Última atualização: 28/10/2026.
+Última atualização: 03/11/2026.
 
 Este arquivo serve como roteiro de execução do TCC. A ideia é consultar esta página antes de começar uma nova sessão de escrita para saber **o que fazer agora**, **o que ainda falta** e **quando uma etapa pode ser considerada concluída**.
 
@@ -46,9 +46,9 @@ O código é o meio utilizado para resolver o problema, não o objeto principal 
 
 ### Prioridade atual
 
-**Capítulo 4 — Metodologia.**
+**Capítulo 5 — Resultados e discussão.**
 
-A redação do Capítulo 3 foi encerrada pelo autor. Próxima etapa: consolidar a Metodologia com base no código atual. As pendências de revisão técnica e bibliográfica permanecem abertas para a revisão final.
+A redação do Capítulo 5 está em progresso. A próxima etapa é conferir os resultados apresentados com os arquivos de referência, os testes e a planilha utilizada na comparação. As pendências de revisão técnica e bibliográfica permanecem abertas para a revisão final.
 
 ### Acompanhamento
 
@@ -771,3 +771,9 @@ Se um trecho não responder claramente a nenhuma dessas perguntas, verificar se 
 - Acrescentados os diagramas do fluxo geral de processamento, da interpretação dos arquivos FTL e da arquitetura da aplicação web.
 - Centralizadas as equações do documento e incluído o suporte aos diagramas em TikZ.
 - Em progresso: revisão da metodologia. Conferir os fluxos apresentados com a implementação atual e verificar as evidências dos testes descritos no capítulo.
+
+## 03/11/2026 — Redação dos Resultados
+
+- Acrescentados os resultados da interpretação FTL, da análise estrutural, do pré-dimensionamento e da aplicação web, com figuras e tabelas comparativas.
+- Incluída a comparação com a planilha de dimensionamento original e descrito o procedimento correspondente na metodologia.
+- Em progresso: revisão do Capítulo 5. Conferir valores, unidades e correspondência das barras com os arquivos de referência e a planilha; confrontar as afirmações sobre testes com seus resultados e manter explícitas as diferenças entre a análise de uma face e o ensaio da ponte completa.

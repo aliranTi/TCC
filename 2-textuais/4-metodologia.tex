@@ -10,7 +10,6 @@ A partir desse arquivo, o sistema interpreta as informações armazenadas e reco
 
 Os esforços axiais obtidos nessa etapa são posteriormente utilizados pelas rotinas de pré-dimensionamento. Para cada barra, são avaliadas separadamente as solicitações de tração e compressão, conforme os critérios apresentados na Fundamentação Teórica. A partir dessas verificações, estima-se a quantidade de camadas necessária à composição da seção e, considerando o comprimento de cada elemento, a quantidade física de palitos necessária para sua construção.
 
-
 Todo o processamento foi integrado a uma aplicação web. O arquivo \texttt{.ftl} é lido e processado no próprio navegador, e os resultados são apresentados por meio de representações gráficas, tabelas e um relatório de pré-dimensionamento. Dessa forma, o fluxo adotado pode ser sintetizado pelas etapas de pré-processamento no FTOOL, interpretação do arquivo, análise estrutural, pré-dimensionamento e apresentação dos resultados.
 
 \begin{figure}[H]
@@ -31,7 +30,6 @@ No FTOOL, o usuário define a geometria da ponte por meio da criação dos eleme
 Dessa forma, não é necessário reconstruir manualmente a geometria da ponte na aplicação desenvolvida. O arquivo produzido pelo FTOOL constitui a entrada do processo computacional subsequente, cabendo à ferramenta interpretar as informações armazenadas, reconstruir o modelo e prosseguir com a análise estrutural e o pré-dimensionamento.
 
 A abordagem mantém separadas as etapas de definição e processamento do modelo: o FTOOL é utilizado para a preparação das informações estruturais, enquanto o processamento numérico e o pós-processamento de interesse deste trabalho são realizados pela ferramenta desenvolvida.
-
 
 \section{Interpretação do arquivo FTL}
 
@@ -286,7 +284,6 @@ A arquitetura adotada para a integração entre a interface web e os módulos de
     \fonte{Elaborado pelo autor.}
 \end{figure}
 
-
 A execução do código Python no navegador é realizada por meio do Pyodide, que possibilita a utilização de módulos Python em ambiente \textit{WebAssembly}. Dessa forma, o processamento do arquivo estrutural ocorre no próprio dispositivo do usuário, sem a necessidade de envio do arquivo \texttt{.ftl} para um servidor da aplicação.
 
 Para evitar o bloqueio da interface durante as operações de leitura, análise e geração dos resultados, o ambiente Python é executado em um \textit{Web Worker}. A comunicação entre a interface e as rotinas Python é realizada por meio de mensagens contendo dados serializados em JSON.
@@ -399,3 +396,16 @@ Também foi verificado se as operações de análise, pré-dimensionamento e ger
 As representações gráficas de esforços axiais e deslocamentos também foram submetidas a testes específicos. Essas verificações avaliam, entre outros aspectos, a correspondência entre as barras do modelo e os valores apresentados, a convenção de sinais e o comportamento da escala utilizada para representar a configuração deformada.
 
 As verificações descritas avaliam a consistência da implementação e a correspondência entre os modelos de entrada, as formulações adotadas e os resultados computacionais. Entretanto, elas não representam, por si só, uma validação experimental do comportamento físico de uma ponte construída. As hipóteses relacionadas às propriedades da madeira, à solidarização entre camadas, às emendas e às condições reais de fabricação permanecem limitações do modelo de pré-dimensionamento e devem ser consideradas na interpretação dos resultados.
+
+\section{Procedimento de comparação com a planilha de pré-dimensionamento}
+\label{sec:metodologia-comparacao-planilha}
+
+Como procedimento complementar de avaliação, foi utilizada uma planilha eletrônica preexistente, empregada no pré-dimensionamento de uma ponte treliçada de palitos de picolé construída anteriormente ao desenvolvimento da ferramenta proposta. A planilha foi utilizada como referência de um procedimento de cálculo anterior, não constituindo um componente do software desenvolvido.
+
+O documento contém campos para inserção dos comprimentos e esforços axiais das barras, além de fórmulas destinadas à estimativa da quantidade de camadas e palitos necessários à composição dos elementos estruturais. Os cálculos são realizados a partir de parâmetros geométricos e resistentes previamente estabelecidos na planilha.
+
+Para realizar a comparação, foi utilizada uma cópia da planilha, na qual foram inseridos os comprimentos e esforços axiais correspondentes às 19 barras do modelo estrutural apresentado neste trabalho. Dessa forma, buscou-se utilizar informações de entrada equivalentes às empregadas pela ferramenta desenvolvida.
+
+Os procedimentos foram examinados quanto aos critérios utilizados para determinação das camadas, às estimativas de quantidade de palitos e às hipóteses consideradas nas verificações dos elementos estruturais. Também foram observadas as diferenças entre os parâmetros adotados e as formas de contabilização do material.
+
+A comparação foi conduzida com caráter descritivo e quantitativo, buscando identificar as diferenças entre as estimativas produzidas pelos dois procedimentos. Ressalta-se que a utilização de esforços e comprimentos equivalentes não implica a adoção de modelos de cálculo idênticos, sendo necessário considerar as particularidades de cada abordagem na interpretação dos resultados.
