@@ -4,9 +4,8 @@
 %%             Definicoes              %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Importa o arquivo com as entradas do glassario
+% Importa somente as siglas para a lista de abreviaturas
 \input{1-pre-textuais/lista-de-abreviaturas-e-siglas}
-\input{3-pos-textuais/glossario}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1025,38 +1024,8 @@
 	\input{#1}
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%              Glossario              %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% Glossario desenvolvido para a UFERSA
+% Configuração de espaçamento para listas.
 \setlist{nosep}
-\newglossarystyle{glossario-ufersa}{%
-	%
-	\renewenvironment{theglossary}%
-	{\vspace{-0.3cm}\begin{description}[leftmargin=0cm]\itemsep -1pt}{\end{description}}%
-	%
-	\renewcommand*{\glossaryheader}{}%
-	
-	% indicate what to do at the start of each logical group
-	
-	\renewcommand*{\glsgroupheading}[1]{%
-		\vspace{0cm}\item[{\glsgetgrouptitle{##1}}] \vspace{\onelineskip}		
-	}
-	%
-	\renewcommand*{\glsgroupskip}{}%
-	% Depois da palavra, colocar o ":" e no fim o ponto final "."
-	\renewcommand*{\glossaryentryfield}[5]{%
-		\item[\glstarget{##1}{##2}:] ##3.%
-	}%
-}
-
-\newcommand{\imprimirglossario}{ %
-	\glossarystyle{glossario-ufersa} %	
-	\printglossary[type=main,title=GLOSSÁRIO,toctitle=GLOSSÁRIO] %
-	\addcontentsline{toc}{chapter}{GLOSSÁRIO}
-}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%               Referencias           %%
