@@ -5,7 +5,7 @@ As competições de pontes de palitos de picolé aproximam os conceitos de anál
 
 O projeto dessas pontes envolve a definição da geometria, dos carregamentos e dos apoios, além da análise dos esforços e da escolha da composição das barras \cite{silva2024metodologia}. Para apoiar a análise estrutural, o \gls{FTOOL} permite modelar estruturas planas e obter esforços internos e deslocamentos, recursos que auxiliam na compreensão do comportamento estrutural \cite{ftoolSobre}. Seu uso no ensino de Engenharia também é abordado por \citeonline{maciel2022ftool} e \citeonline{martha2022ftool}.
 
-A partir dos esforços calculados, o pré-dimensionamento relaciona as solicitações das barras às propriedades do material e à seção adotada. No caso das pontes de palitos, essa etapa fornece uma estimativa da quantidade de material necessária à construção \cite{silva2024metodologia}. Entretanto, a utilização dos resultados da análise estrutural no pré-dimensionamento exige etapas adicionais de interpretação e cálculo, que precisam ser revistas quando ocorrem alterações no modelo da estrutura. A integração computacional dessas etapas pode reduzir a repetição de cálculos e facilitar a avaliação de diferentes configurações estruturais durante o processo de projeto.
+A partir dos esforços calculados, o pré-dimensionamento\footnote{Etapa de estimativa inicial das dimensões e da composição de elementos estruturais, considerando solicitações, propriedades dos materiais e critérios de verificação.} relaciona as solicitações das barras às propriedades do material e à seção adotada. No caso das pontes de palitos, essa etapa fornece uma estimativa da quantidade de material necessária à construção \cite{silva2024metodologia}. Entretanto, a utilização dos resultados da análise estrutural no pré-dimensionamento exige etapas adicionais de interpretação e cálculo, que precisam ser revistas quando ocorrem alterações no modelo da estrutura. A integração computacional dessas etapas pode reduzir a repetição de cálculos e facilitar a avaliação de diferentes configurações estruturais durante o processo de projeto.
 
 Diante desse cenário, este trabalho propõe uma ferramenta web capaz de interpretar arquivos \texttt{.ftl} do \gls{FTOOL}, realizar a análise estrutural e auxiliar no pré-dimensionamento de estruturas treliçadas de palitos. A proposta reúne a leitura e a reconstrução computacional do modelo estrutural, a obtenção dos resultados da análise, a estimativa da quantidade de palitos e a apresentação das informações em um ambiente acessível pelo navegador, com aplicação voltada aos participantes da \gls{CP3}. As estimativas obtidas constituem apoio ao processo de projeto e dependem das hipóteses de cálculo e das propriedades adotadas para o material.
 
@@ -22,7 +22,7 @@ Nesse sentido, estabelece-se a seguinte questão de pesquisa: \textit{Como integ
 \subsection{Objetivo geral}
 \label{subsec:objetivo-geral}
 
-Desenvolver uma ferramenta web capaz de interpretar modelos do \gls{FTOOL} e auxiliar na análise estrutural e no \gls{pre-dimensionamento} de estruturas treliçadas de palitos destinadas à \gls{CP3}.
+Desenvolver uma ferramenta web capaz de interpretar modelos do \gls{FTOOL} e auxiliar na análise estrutural e no pré-dimensionamento de estruturas treliçadas de palitos destinadas à \gls{CP3}.
 
 \subsection{Objetivos específicos}
 \label{subsec:objetivos-especificos}
