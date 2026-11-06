@@ -1,6 +1,6 @@
 # Etapas do TCC
 
-Última atualização: 03/11/2026.
+Última atualização: 06/11/2026.
 
 Este arquivo serve como roteiro de execução do TCC. A ideia é consultar esta página antes de começar uma nova sessão de escrita para saber **o que fazer agora**, **o que ainda falta** e **quando uma etapa pode ser considerada concluída**.
 
@@ -46,9 +46,9 @@ O código é o meio utilizado para resolver o problema, não o objeto principal 
 
 ### Prioridade atual
 
-**Capítulo 5 — Resultados e discussão.**
+**Capítulo 6 — Conclusões e trabalhos futuros.**
 
-A redação do Capítulo 5 está em progresso. A próxima etapa é conferir os resultados apresentados com os arquivos de referência, os testes e a planilha utilizada na comparação. As pendências de revisão técnica e bibliográfica permanecem abertas para a revisão final.
+A versão inicial do Capítulo 6 foi redigida e está em revisão. A próxima etapa é confrontar suas conclusões com os objetivos e com os resultados apresentados no Capítulo 5. A conferência dos valores, dos testes e da planilha, assim como as pendências de revisão técnica e bibliográfica, permanece aberta.
 
 ### Acompanhamento
 
@@ -777,3 +777,9 @@ Se um trecho não responder claramente a nenhuma dessas perguntas, verificar se 
 - Acrescentados os resultados da interpretação FTL, da análise estrutural, do pré-dimensionamento e da aplicação web, com figuras e tabelas comparativas.
 - Incluída a comparação com a planilha de dimensionamento original e descrito o procedimento correspondente na metodologia.
 - Em progresso: revisão do Capítulo 5. Conferir valores, unidades e correspondência das barras com os arquivos de referência e a planilha; confrontar as afirmações sobre testes com seus resultados e manter explícitas as diferenças entre a análise de uma face e o ensaio da ponte completa.
+
+## 06/11/2026 — Redação das Conclusões
+
+- Redigida a versão inicial das conclusões e dos trabalhos futuros, reunindo os resultados apresentados, as limitações e as possibilidades de continuidade.
+- Atualizadas a legenda do resultado de pré-dimensionamento e a imagem da planilha comparativa no Capítulo 5.
+- Em progresso: revisão das conclusões. Conferir a correspondência de cada afirmação com os objetivos e as evidências do Capítulo 5, incluindo os parâmetros utilizados na comparação com a planilha.
