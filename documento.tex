@@ -15,8 +15,7 @@
     sumario=tradicional,
 ]{abntex2}
 
-% Remover antes de escrever o TCC
-\usepackage{lipsum} 
+% O pacote lipsum foi utilizado apenas no template de exemplo.
 
 \input{lib/preambulo}
 
@@ -167,13 +166,10 @@
 	%Elementos pós-textuais	
  \bibliographystyle{lib/abntex2-alf}
 	\bibliography{3-pos-textuais/referencias}
-%	\imprimirglossario	
+\imprimirglossario	
 	 \imprimirapendices
 		% Adicione aqui os apendices do seu trabalho
 		\input{3-pos-textuais/apendices/apendice-a}
-	 \imprimiranexos
-		% Adicione aqui os anexos do seu trabalho
-		\input{3-pos-textuais/anexos/anexo-a}
-	\imprimirindice
+	% Anexos e índice devem ser habilitados somente quando houver conteúdo real.
 
 \end{document}
