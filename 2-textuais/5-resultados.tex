@@ -1,26 +1,26 @@
 \chapter{Resultados}
 \label{chap:resultados}
 
-Este capítulo apresenta e discute os resultados obtidos com o desenvolvimento da ferramenta proposta, considerando as etapas de interpretação dos arquivos FTL, análise estrutural, pré-dimensionamento das barras e integração dos módulos em uma aplicação web. A avaliação busca verificar a consistência dos resultados produzidos e demonstrar a aplicação da solução desenvolvida no contexto de pontes treliçadas de palitos de picolé.
+Este capítulo apresenta e discute os resultados obtidos com o desenvolvimento da ferramenta proposta, considerando as etapas de interpretação dos arquivos \texttt{.ftl}, análise estrutural, pré-dimensionamento das barras e integração dos módulos em uma aplicação web. A avaliação busca verificar a consistência dos resultados produzidos e demonstrar a aplicação da solução desenvolvida no contexto de pontes treliçadas de palitos de picolé.
 
-Inicialmente, são apresentados os resultados da interpretação dos arquivos produzidos pelo FTOOL, verificando a reconstrução das informações geométricas e estruturais. Em seguida, os resultados da análise estrutural são comparados com valores de referência, permitindo avaliar a correspondência entre os modelos processados e os esforços obtidos.
+Inicialmente, são apresentados os resultados da interpretação dos arquivos produzidos pelo \acrshort{FTOOL}, verificando a reconstrução das informações geométricas e estruturais. Em seguida, os resultados da análise estrutural são comparados com valores de referência, permitindo avaliar a correspondência entre os modelos processados e os esforços obtidos.
 
 Posteriormente, são apresentados os resultados do pré-dimensionamento, com destaque para as verificações de tração, compressão e estabilidade, bem como para a estimativa da quantidade de palitos necessária à composição das barras. Também são apresentados os resultados da integração dessas rotinas à aplicação web, incluindo as funcionalidades disponibilizadas ao usuário.
 
 Por fim, é apresentada uma comparação entre o procedimento de pré-dimensionamento da ferramenta desenvolvida e aquele empregado em uma planilha eletrônica preexistente. Essa avaliação discute as diferenças entre os critérios de cálculo e as estimativas de material, sendo seguida pela apresentação das principais limitações da abordagem adotada.
 
-\section{Verificação da interpretação dos arquivos FTL}
+\section{Verificação da interpretação dos arquivos \texttt{.ftl}}
 \label{sec:resultados-parser}
 
-A verificação da interpretação dos arquivos FTL foi realizada a partir de um modelo estrutural elaborado no FTOOL, denominado \texttt{ponte.ftl}. O modelo corresponde a uma ponte treliçada de palitos de picolé construída fisicamente e posteriormente submetida a ensaio de carregamento até a ruptura. Sua utilização permite manter uma referência comum entre as etapas de interpretação, análise estrutural e pré-dimensionamento, além de possibilitar, posteriormente, a discussão dos resultados experimentais.
+A verificação da interpretação dos arquivos \texttt{.ftl} foi realizada a partir de um modelo estrutural elaborado no \acrshort{FTOOL}, denominado \texttt{ponte.ftl}. O modelo corresponde a uma ponte treliçada de palitos de picolé construída fisicamente e posteriormente submetida a ensaio de carregamento até a ruptura. Sua utilização permite manter uma referência comum entre as etapas de interpretação, análise estrutural e pré-dimensionamento, além de possibilitar, posteriormente, a discussão dos resultados experimentais.
 
 Inicialmente, avaliou-se a capacidade do parser de identificar e reconstruir as informações armazenadas no arquivo, incluindo nós, barras, propriedades dos materiais e das seções transversais, condições de apoio e carregamentos. Para o modelo analisado, os testes automatizados estabelecem como referência a identificação de 10 nós e 19 barras.
 
-A Figura~\ref{fig:ponte-ftool} apresenta o modelo estrutural original no FTOOL. Nessa representação, observam-se a geometria geral da ponte, a disposição das barras e a configuração adotada para o modelo utilizado nesta pesquisa.
+A Figura~\ref{fig:ponte-ftool} apresenta o modelo estrutural original no \acrshort{FTOOL}. Nessa representação, observam-se a geometria geral da ponte, a disposição das barras e a configuração adotada para o modelo utilizado nesta pesquisa.
 
 \begin{figure}[H]
     \centering
-    \caption{Modelo estrutural da ponte no FTOOL.}
+    \caption{Modelo estrutural da ponte no \acrshort{FTOOL}.}
     \label{fig:ponte-ftool}
     \includegraphics[width=.85\textwidth]{lib/figuras/ponte-ftool}
     \fonte{Elaborado pelo autor.}
@@ -36,28 +36,28 @@ A Figura~\ref{fig:ponte-reconstruida} apresenta a geometria reconstruída pela f
     \fonte{Elaborado pelo autor.}
 \end{figure}
 
-A comparação entre as Figuras~\ref{fig:ponte-ftool} e \ref{fig:ponte-reconstruida} indica correspondência entre a geometria original definida no FTOOL e o modelo reconstruído pela ferramenta. Essa equivalência é observada na configuração global da estrutura, na disposição dos elementos e na conectividade entre os nós e as barras, evidenciando que a interpretação do arquivo fornece uma representação compatível com o modelo estrutural de origem.
+A comparação entre as Figuras~\ref{fig:ponte-ftool} e \ref{fig:ponte-reconstruida} indica correspondência entre a geometria original definida no \acrshort{FTOOL} e o modelo reconstruído pela ferramenta. Essa equivalência é observada na configuração global da estrutura, na disposição dos elementos e na conectividade entre os nós e as barras, evidenciando que a interpretação do arquivo fornece uma representação compatível com o modelo estrutural de origem.
 
 Além da reconstrução geométrica, foi verificada a equivalência entre diferentes formas de leitura do arquivo. O parser permite interpretar o modelo diretamente de um arquivo, de seu conteúdo textual ou de uma sequência de bytes. Os testes automatizados comparam as representações produzidas por essas três formas de entrada, verificando a consistência dos dados independentemente do procedimento de leitura.
 
-Essa verificação é particularmente relevante para a aplicação web, uma vez que o arquivo FTL é processado diretamente na memória do navegador, sem a necessidade de armazenamento temporário no dispositivo.
+Essa verificação é particularmente relevante para a aplicação web, uma vez que o arquivo \texttt{.ftl} é processado diretamente na memória do navegador, sem a necessidade de armazenamento temporário no dispositivo.
 
 Os resultados da interpretação são utilizados na etapa seguinte para a construção do modelo de análise estrutural. Dessa forma, a reconstrução da geometria, da conectividade e das propriedades dos elementos estabelece a base necessária para a determinação dos esforços internos, deslocamentos e reações de apoio, cujos resultados são apresentados na Seção~\ref{sec:resultados-analise}.
 
 \section{Verificação da análise estrutural}
 \label{sec:resultados-analise}
 
-A verificação da análise estrutural foi realizada por meio da comparação entre os esforços axiais obtidos no FTOOL e aqueles calculados pela ferramenta desenvolvida, utilizando a biblioteca anaStruct. Para essa avaliação, foi empregado o modelo da ponte apresentado na seção anterior, composto por 10 nós e 19 barras.
+A verificação da análise estrutural foi realizada por meio da comparação entre os esforços axiais obtidos no \acrshort{FTOOL} e aqueles calculados pela ferramenta desenvolvida, utilizando a biblioteca anaStruct. Para essa avaliação, foi empregado o modelo da ponte apresentado na seção anterior, composto por 10 nós e 19 barras.
 
 O modelo analisado representa uma única face da ponte treliçada, submetida a um carregamento vertical de 2,00 kN (2000 N). Portanto, os esforços axiais, deslocamentos e reações de apoio obtidos correspondem exclusivamente à face representada no modelo, não devendo ser interpretados como resultados da estrutura tridimensional completa.
 
 Para assegurar a comparabilidade, foram consideradas as mesmas condições de carregamento, apoio e propriedades estruturais nos dois ambientes de análise. A avaliação concentrou-se na correspondência entre os esforços axiais calculados, considerando tanto suas magnitudes quanto a identificação dos elementos tracionados e comprimidos.
 
-A Figura~\ref{fig:axial-ftool} apresenta o diagrama de esforços axiais obtido no FTOOL.
+A Figura~\ref{fig:axial-ftool} apresenta o diagrama de esforços axiais obtido no \acrshort{FTOOL}.
 
 \begin{figure}[H]
     \centering
-    \caption{Diagrama de esforços normais da ponte no FTOOL.}
+    \caption{Diagrama de esforços normais da ponte no \acrshort{FTOOL}.}
     \label{fig:axial-ftool}
     \includegraphics[width=0.85\textwidth]
         {lib/figuras/axial-ftool}
@@ -76,20 +76,20 @@ A Figura~\ref{fig:axial-ferramenta} apresenta o diagrama correspondente produzid
     \fonte{Elaborado pelo autor.}
 \end{figure}
 
-A comparação numérica foi realizada a partir dos esforços axiais apresentados pelos dois programas. Para cada barra, foi calculada a diferença absoluta entre o resultado obtido no FTOOL e aquele produzido pela ferramenta desenvolvida, conforme a Equação~\ref{eq:diferenca-esforco-axial}.
+A comparação numérica foi realizada a partir dos esforços axiais apresentados pelos dois programas. Para cada barra, foi calculada a diferença absoluta entre o resultado obtido no \acrshort{FTOOL} e aquele produzido pela ferramenta desenvolvida, conforme a Equação~\ref{eq:diferenca-esforco-axial}.
 
 \begin{equation}
     \Delta N = \left|N_{\mathrm{FTOOL}} - N_{\mathrm{ferramenta}}\right|
     \label{eq:diferenca-esforco-axial}
 \end{equation}
 
-\noindent em que \(N_{\mathrm{FTOOL}}\) representa o esforço axial obtido no FTOOL e \(N_{\mathrm{ferramenta}}\) corresponde ao resultado fornecido pela ferramenta desenvolvida.
+\noindent em que \(N_{\mathrm{FTOOL}}\) representa o esforço axial obtido no \acrshort{FTOOL} e \(N_{\mathrm{ferramenta}}\) corresponde ao resultado fornecido pela ferramenta desenvolvida.
 
 A Tabela~\ref{tab:comparacao-esforcos-axiais} apresenta os esforços axiais e suas diferenças absolutas para as 19 barras do modelo.
 
 \begin{table}[H]
     \centering
-    \caption{Comparação dos esforços axiais obtidos no FTOOL e na ferramenta desenvolvida.}
+    \caption{Comparação dos esforços axiais obtidos no \acrshort{FTOOL} e na ferramenta desenvolvida.}
     \label{tab:comparacao-esforcos-axiais}
     \small
     \begin{tabular}{crrr}
@@ -123,11 +123,11 @@ A Tabela~\ref{tab:comparacao-esforcos-axiais} apresenta os esforços axiais e su
     \fonte{Elaborado pelo autor.}
 \end{table}
 
-Os resultados da Tabela~\ref{tab:comparacao-esforcos-axiais} demonstram correspondência entre os esforços axiais calculados pelo FTOOL e pela ferramenta desenvolvida, tanto em magnitude quanto na identificação dos elementos tracionados e comprimidos.
+Os resultados da Tabela~\ref{tab:comparacao-esforcos-axiais} demonstram correspondência entre os esforços axiais calculados pelo \acrshort{FTOOL} e pela ferramenta desenvolvida, tanto em magnitude quanto na identificação dos elementos tracionados e comprimidos.
 
 As diferenças absolutas calculadas a partir dos valores apresentados não ultrapassaram 0,001 N, sendo observadas nas barras m86, m87, m88 e m89. Nas demais barras, os resultados coincidiram até a terceira casa decimal. As pequenas diferenças são compatíveis com arredondamentos na apresentação dos valores, embora sua origem exata não tenha sido investigada.
 
-Essa correspondência constitui uma evidência da consistência da interpretação do arquivo FTL e da conversão do modelo estrutural para a biblioteca anaStruct nas condições avaliadas. Ressalta-se que a comparação corresponde a uma única face da ponte submetida ao carregamento vertical de 2,00 kN. Portanto, os resultados não representam uma validação do comportamento tridimensional da ponte construída, nem permitem determinar sua carga de ruptura experimental.
+Essa correspondência constitui uma evidência da consistência da interpretação do arquivo \texttt{.ftl} e da conversão do modelo estrutural para a biblioteca anaStruct nas condições avaliadas. Ressalta-se que a comparação corresponde a uma única face da ponte submetida ao carregamento vertical de 2,00 kN. Portanto, os resultados não representam uma validação do comportamento tridimensional da ponte construída, nem permitem determinar sua carga de ruptura experimental.
 
 \section{Resultados do pré-dimensionamento}
 \label{sec:resultados-pre-dimensionamento}
@@ -194,7 +194,7 @@ A comparação entre esses resultados e as estimativas obtidas por meio da plani
 
 A integração das rotinas de interpretação, análise estrutural e pré-dimensionamento resultou em uma aplicação web que permite executar as principais funcionalidades da ferramenta diretamente pelo navegador. A interface reúne as etapas de processamento em um único ambiente, desde a importação do modelo estrutural até a apresentação dos resultados.
 
-A Figura~\ref{fig:web-interface-inicial} apresenta a página inicial da aplicação, na qual são disponibilizados o campo de importação dos arquivos FTL e uma descrição das principais etapas do processamento. A organização da interface busca orientar o usuário ao longo do procedimento, compreendendo a importação da estrutura, a análise dos esforços e o pré-dimensionamento das barras.
+A Figura~\ref{fig:web-interface-inicial} apresenta a página inicial da aplicação, na qual são disponibilizados o campo de importação dos arquivos \texttt{.ftl} e uma descrição das principais etapas do processamento. A organização da interface busca orientar o usuário ao longo do procedimento, compreendendo a importação da estrutura, a análise dos esforços e o pré-dimensionamento das barras.
 
 \begin{figure}[H]
     \centering
@@ -207,7 +207,7 @@ A Figura~\ref{fig:web-interface-inicial} apresenta a página inicial da aplicaç
 
 Após a seleção do arquivo, a ferramenta realiza sua interpretação e apresenta uma visualização preliminar da geometria estrutural, conforme demonstrado anteriormente na Figura~\ref{fig:ponte-reconstruida}. Essa etapa permite conferir o modelo antes da execução dos cálculos.
 
-Além da visualização inicial, a aplicação disponibiliza uma interface para configuração dos parâmetros utilizados na análise estrutural e no pré-dimensionamento. O usuário pode consultar e modificar propriedades dos materiais, características geométricas das seções e critérios empregados nas verificações de resistência e estabilidade. As alterações são aplicadas somente ao processamento corrente, sem modificar o arquivo FTL original.
+Além da visualização inicial, a aplicação disponibiliza uma interface para configuração dos parâmetros utilizados na análise estrutural e no pré-dimensionamento. O usuário pode consultar e modificar propriedades dos materiais, características geométricas das seções e critérios empregados nas verificações de resistência e estabilidade. As alterações são aplicadas somente ao processamento corrente, sem modificar o arquivo \texttt{.ftl} original.
 
 Após a confirmação do modelo e dos parâmetros selecionados, a aplicação executa as rotinas de análise estrutural e pré-dimensionamento. Os resultados são apresentados por meio de diagramas de esforços axiais, representação da configuração deformada e distribuição da quantidade estimada de palitos, além de informações numéricas relativas às barras e às reações de apoio.
 
@@ -227,7 +227,7 @@ O relatório reúne os resultados da análise e do pré-dimensionamento. Os indi
 
 Para o modelo \texttt{ponte.ftl}, o relatório apresentou uma estimativa de 430 palitos, 154 camadas somadas entre as barras e 19 elementos analisados, considerando uma face da estrutura. Esses valores correspondem aos resultados de pré-dimensionamento discutidos na Seção~\ref{sec:resultados-pre-dimensionamento}.
 
-A comunicação entre a interface web e as rotinas Python é realizada por meio do Pyodide, com o processamento executado em um Web Worker. Os resultados são transferidos entre os módulos por meio de estruturas serializadas em JSON, permitindo sua utilização pelos componentes responsáveis pela apresentação gráfica e numérica.
+A comunicação entre a interface web e as rotinas Python é realizada por meio do Pyodide, com o processamento executado em um Web Worker. Os resultados são transferidos entre os módulos por meio de estruturas serializadas em \gls{JSON}, permitindo sua utilização pelos componentes responsáveis pela apresentação gráfica e numérica.
 
 A implementação demonstra a integração das diferentes etapas computacionais em uma única aplicação, permitindo ao usuário importar modelos estruturais, configurar parâmetros e consultar os resultados sem a necessidade de executar diretamente as rotinas Python. Dessa forma, a ferramenta disponibiliza as funcionalidades desenvolvidas em uma interface destinada à análise e ao pré-dimensionamento de pontes treliçadas de palitos de picolé.
 
@@ -282,7 +282,7 @@ Em determinadas barras, a fórmula inclui ainda um acréscimo fixo de cinco unid
 
 \noindent em que $n_p$ representa a quantidade final de camadas estimada pela planilha e $n_2$ corresponde ao resultado da segunda análise, incluindo eventuais acréscimos estabelecidos na célula.
 
-A Tabela~\ref{tab:comparacao-camadas} apresenta os resultados de três barras comprimidas, selecionadas por apresentarem diferenças expressivas entre as estimativas dos dois procedimentos. Nesta comparação, a planilha e o relatório de pré-dimensionamento empregam a identificação sequencial de m1 a m19, enquanto a tabela de esforços axiais apresentada na Seção~\ref{sec:resultados-analise} conserva os identificadores originais dos elementos no FTOOL (m79 a m97).
+A Tabela~\ref{tab:comparacao-camadas} apresenta os resultados de três barras comprimidas, selecionadas por apresentarem diferenças expressivas entre as estimativas dos dois procedimentos. Nesta comparação, a planilha e o relatório de pré-dimensionamento empregam a identificação sequencial de m1 a m19, enquanto a tabela de esforços axiais apresentada na Seção~\ref{sec:resultados-analise} conserva os identificadores originais dos elementos no \acrshort{FTOOL} (m79 a m97).
 
 \begin{table}[H]
     \centering
@@ -398,7 +398,7 @@ A estimativa da quantidade de palitos constitui outra simplificação. O cálcul
 
 Também existem limitações relacionadas ao pré-dimensionamento dos elementos comprimidos. As verificações de estabilidade são realizadas a partir de propriedades geométricas equivalentes e parâmetros normativos adotados como referência. Entretanto, a aplicação desses critérios a elementos compostos por palitos colados envolve hipóteses simplificadoras, especialmente quanto à rigidez das ligações e ao comportamento conjunto das camadas.
 
-Quanto à interpretação dos arquivos FTL, a implementação foi desenvolvida e verificada para as versões e os componentes estruturais contemplados nos testes realizados. Desse modo, não é possível assegurar a compatibilidade com todas as funcionalidades do FTOOL ou com eventuais alterações futuras no formato de armazenamento dos arquivos.
+Quanto à interpretação dos arquivos \texttt{.ftl}, a implementação foi desenvolvida e verificada para as versões e os componentes estruturais contemplados nos testes realizados. Desse modo, não é possível assegurar a compatibilidade com todas as funcionalidades do \acrshort{FTOOL} ou com eventuais alterações futuras no formato de armazenamento dos arquivos.
 
 Por fim, as verificações realizadas neste trabalho concentram-se na consistência da interpretação, na correspondência dos resultados de análise estrutural e no comportamento das rotinas de pré-dimensionamento diante dos critérios implementados. Embora tenha sido apresentado um resultado experimental de uma ponte previamente construída, não foi realizada uma campanha de ensaios destinada à validação das estimativas de resistência ou à previsão da carga de ruptura das estruturas.
 

@@ -25,7 +25,7 @@
 
 % Módulos internos
 \node[blocoPequeno, below=0.45cm of workertitle] (parser) {
-    Parser FTL
+    Parser \texttt{.ftl}
 };
 
 \node[blocoPequeno, below=of parser] (anastruct) {
@@ -60,7 +60,7 @@
 \draw[fluxo] (entrada) -- (interface);
 
 \draw[fluxo] (interface) --
-    node[right, font=\scriptsize] {JSON}
+    node[right, font=\scriptsize] {\glsentryshort{JSON}}
     (workerbox.north);
 
 \draw[fluxo] (parser) -- (anastruct);
