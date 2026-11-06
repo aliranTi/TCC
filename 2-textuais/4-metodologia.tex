@@ -36,7 +36,7 @@ A abordagem mantém separadas as etapas de definição e processamento do modelo
 \subsection{Leitura e identificação das informações}
 \label{sec:metodologia-parser}
 
-Após a definição do modelo no \acrshort{FTOOL}, o arquivo \texttt{.ftl} é submetido ao módulo responsável por sua interpretação. Foi desenvolvido, em Python, um parser capaz de processar arquivos correspondentes às versões 4.00 e 4.01 do formato e transformar as informações textuais em objetos utilizados nas etapas posteriores da aplicação.
+Após a definição do modelo no \acrshort{FTOOL}, o arquivo \texttt{.ftl} é submetido ao módulo responsável por sua interpretação. Foi desenvolvido, em Python, um \gls{parser} capaz de processar arquivos correspondentes às versões 4.00 e 4.01 do formato e transformar as informações textuais em objetos utilizados nas etapas posteriores da aplicação.
 
 A implementação do parser foi desenvolvida a partir da análise de arquivos produzidos pelo \acrshort{FTOOL} e das informações disponíveis na documentação comunitária de engenharia reversa do formato apresentada por \citeonline{sanchez2026ftoolreverse}. Como o formato não representa todos os componentes estruturais da mesma maneira que são visualizados na interface do programa, foi necessário estabelecer procedimentos específicos para a identificação e reconstrução dessas informações.
 
@@ -54,7 +54,7 @@ Durante a leitura, são identificados dados referentes aos materiais, às seçõ
 \subsection{Reconstrução da topologia estrutural}
 \label{subsec:reconstrucao-topologia}
 
-Uma das etapas necessárias à interpretação do arquivo consiste na reconstrução da topologia estrutural. No formato analisado, a conectividade não é obtida simplesmente a partir de uma relação independente de nós e barras. Parte das informações relativas aos nós encontra-se associada aos próprios blocos que representam os elementos estruturais.
+Uma das etapas necessárias à interpretação do arquivo consiste na reconstrução da \gls{topologia-estrutural}. No formato analisado, a conectividade não é obtida simplesmente a partir de uma relação independente de nós e barras. Parte das informações relativas aos nós encontra-se associada aos próprios blocos que representam os elementos estruturais.
 
 O parser identifica as extremidades das barras e utiliza suas coordenadas para reconstruir o conjunto de nós da estrutura. Extremidades geometricamente coincidentes são associadas a um mesmo nó, evitando a criação de entidades duplicadas. Na implementação foi adotada uma tolerância geométrica de \(1\,\mathrm{mm}\) para essa associação.
 
@@ -163,7 +163,7 @@ O procedimento resulta na menor quantidade de camadas que satisfaz o critério d
 \subsection{Barras submetidas à compressão}
 \label{subsec:metodologia-compressao}
 
-Para as barras comprimidas, a solicitação utilizada corresponde à magnitude do menor esforço axial obtido na análise. Diferentemente da verificação à tração, o procedimento considera não apenas a tensão normal, mas também os efeitos relacionados à estabilidade do elemento.
+Para as barras comprimidas, a solicitação utilizada corresponde à magnitude do menor esforço axial obtido na análise. A verificação considera a possibilidade de \gls{flambagem} nos elementos esbeltos. Diferentemente da verificação à tração, o procedimento considera não apenas a tensão normal, mas também os efeitos relacionados à estabilidade do elemento.
 
 A quantidade necessária de camadas é determinada por um processo iterativo. Para cada valor de \(n\), são inicialmente calculadas as propriedades geométricas da seção composta. Considerando \(H=nh\), obtêm-se a área e os momentos de inércia em relação aos dois eixos principais:
 
@@ -181,7 +181,7 @@ e
     I_y = \frac{Hb^3}{12}.
 \end{equation}
 
-A partir dessas propriedades são calculados os raios de giração e os índices de esbeltez nos dois eixos. A força de compressão utilizada na tensão de cálculo também é multiplicada por um fator configurável, igual a \(1,0\) na configuração padrão. O comprimento efetivo é determinado a partir do comprimento da barra e do fator de comprimento efetivo adotado no modelo.
+A partir dessas propriedades são calculados os raios de giração e os índices de \gls{esbeltez} nos dois eixos. A força de compressão utilizada na tensão de cálculo também é multiplicada por um fator configurável, igual a \(1,0\) na configuração padrão. O comprimento efetivo é determinado a partir do comprimento da barra e do fator de comprimento efetivo adotado no modelo.
 
 Na sequência, são calculados os índices de esbeltez relativa e os respectivos coeficientes redutores de estabilidade \(k_{cx}\) e \(k_{cy}\), conforme a formulação apresentada na Fundamentação Teórica. Esses valores são utilizados para determinar as resistências efetivas consideradas em cada direção.
 
@@ -219,7 +219,7 @@ Caso alguma dessas condições não seja atendida, uma nova camada é adicionada
 
 O parâmetro \(\beta_c\), utilizado no cálculo dos coeficientes redutores, é mantido configurável na implementação. A configuração padrão da ferramenta utiliza \(\beta_c=0,1\). Entretanto, esse valor é tratado neste trabalho como uma hipótese de cálculo e não como enquadramento das barras de palitos na categoria de madeira lamelada ou laminada definida pela \acrshort{ABNT} \acrshort{NBR} 7190-1:2022. A colagem dos palitos, isoladamente, não é suficiente para demonstrar o atendimento aos requisitos aplicáveis a esses produtos.
 
-O cálculo das propriedades geométricas considera as camadas como integralmente solidárias, de modo que a seção composta é representada como uma única seção retangular de altura \(H=nh\). Dessa forma, não são considerados possíveis deslizamentos relativos entre os palitos ou reduções de rigidez decorrentes de imperfeições na colagem. Essa condição constitui uma hipótese simplificadora do modelo de pré-dimensionamento.
+O cálculo das propriedades geométricas considera as camadas como integralmente solidárias, representando uma \gls{secao-composta}, de modo que a seção composta é representada como uma única seção retangular de altura \(H=nh\). Dessa forma, não são considerados possíveis deslizamentos relativos entre os palitos ou reduções de rigidez decorrentes de imperfeições na colagem. Essa condição constitui uma hipótese simplificadora do modelo de pré-dimensionamento.
 
 \subsection{Critério construtivo e estimativa da quantidade de palitos}
 \label{subsec:metodologia-quantidade-palitos}
@@ -286,7 +286,7 @@ A arquitetura adotada para a integração entre a interface web e os módulos de
 
 A execução do código Python no navegador é realizada por meio do Pyodide, que possibilita a utilização de módulos Python em ambiente \textit{WebAssembly}. Dessa forma, o processamento do arquivo estrutural ocorre no próprio dispositivo do usuário, sem a necessidade de envio do arquivo \texttt{.ftl} para um servidor da aplicação.
 
-Para evitar o bloqueio da interface durante as operações de leitura, análise e geração dos resultados, o ambiente Python é executado em um \textit{Web Worker}. A comunicação entre a interface e as rotinas Python é realizada por meio de mensagens contendo dados serializados em \gls{JSON}.
+Para evitar o bloqueio da interface durante as operações de leitura, análise e geração dos resultados, o ambiente Python é executado em um \gls{web-worker}. A comunicação entre a interface e as rotinas Python é realizada por meio de mensagens contendo dados serializados em \gls{JSON}.
 
 \subsection{Integração entre a interface e o código Python}
 \label{subsec:integracao-pyodide}
