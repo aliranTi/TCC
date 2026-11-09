@@ -358,7 +358,7 @@ permitindo verificar tanto a interpretação das dimensões quanto sua represent
 
 A etapa de análise foi verificada por meio de relações de equilíbrio e de casos com solução analítica conhecida. Para os modelos analisados, foi avaliado o equilíbrio global entre as cargas externas aplicadas e as reações de apoio calculadas, considerando separadamente as componentes horizontal e vertical.
 
-Como verificação complementar do tratamento de elementos com rigidez à flexão, foi construído um modelo simplificado e independente de uma viga em balanço, com uma extremidade engastada e uma força concentrada aplicada na extremidade livre. Esse caso não representa a ponte analisada neste trabalho; sua finalidade é verificar a conversão e a análise de elementos do tipo viga pelo caminho que utiliza a função \texttt{add\_element()}. O deslocamento vertical na extremidade livre foi comparado ao valor obtido pela expressão analítica
+Como verificação complementar do tratamento de elementos com rigidez à flexão, foi implementado um caso de teste automatizado e independente, representando uma viga em balanço com uma extremidade engastada e uma força concentrada aplicada na extremidade livre. Esse caso não representa a ponte analisada neste trabalho; sua finalidade é verificar a conversão e a análise de elementos do tipo viga pelo caminho que utiliza a função \texttt{add\_element()}. O deslocamento vertical na extremidade livre foi comparado ao valor obtido pela expressão analítica
 
 \begin{equation}
     \delta =
