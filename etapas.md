@@ -1,6 +1,6 @@
 # Etapas do TCC
 
-Última atualização: 06/11/2026.
+Última atualização: 13/11/2026.
 
 Este arquivo serve como roteiro de execução do TCC. A ideia é consultar esta página antes de começar uma nova sessão de escrita para saber **o que fazer agora**, **o que ainda falta** e **quando uma etapa pode ser considerada concluída**.
 
@@ -35,20 +35,20 @@ O código é o meio utilizado para resolver o problema, não o objeto principal 
 - [x] Cinco objetivos específicos definidos.
 - [x] Organização do trabalho adicionada à introdução.
 - [x] Bibliografia inicial criada e revisada.
-- [ ] Fundamentação teórica consolidada.
+- [x] Fundamentação teórica redigida.
 - [x] Trabalhos relacionados escritos; etapa de redação encerrada pelo autor em 21/10/2026.
-- [ ] Metodologia completa e alinhada ao código atual.
-- [ ] Plano de validação executado.
-- [ ] Resultados escritos.
-- [ ] Conclusão escrita.
-- [ ] Resumo e abstract finais.
+- [x] Metodologia escrita e estruturada com diagramas e procedimentos de verificação.
+- [x] Plano de verificação executado e documentado.
+- [x] Resultados escritos.
+- [x] Conclusão escrita.
+- [x] Resumo e abstract finais redigidos.
 - [ ] Revisão final de texto, referências e formatação.
 
 ### Prioridade atual
 
-**Capítulo 6 — Conclusões e trabalhos futuros.**
+**Revisão final do documento completo.**
 
-A versão inicial do Capítulo 6 foi redigida e está em revisão. A próxima etapa é confrontar suas conclusões com os objetivos e com os resultados apresentados no Capítulo 5. A conferência dos valores, dos testes e da planilha, assim como as pendências de revisão técnica e bibliográfica, permanece aberta.
+Todos os capítulos textuais (Capítulos 1 a 6), elementos pré-textuais (Resumo, Abstract, listas) e o Apêndice A estão redigidos e integrados. A etapa atual concentra-se na revisão final de detalhes textuais, conferência de metadados bibliográficos pendentes e preenchimento dos dados da banca para defesa.
 
 ### Acompanhamento
 
@@ -96,7 +96,7 @@ Explicar:
 
 ## Estado
 
-**Praticamente concluído.**
+**Concluído.**
 
 Evitar acrescentar detalhes de implementação, equações, funcionamento do parser ou arquitetura do sistema neste capítulo.
 
@@ -110,7 +110,7 @@ Evitar acrescentar detalhes de implementação, equações, funcionamento do par
 - [x] Objetivos específicos verificáveis.
 - [x] Limitação das estimativas mencionada.
 - [x] Organização do trabalho apresentada.
-- [ ] Fazer uma leitura final após concluir Resultados e Conclusão.
+- [x] Fazer uma leitura final após concluir Resultados e Conclusão.
 
 ---
 
@@ -142,7 +142,6 @@ Referências já disponíveis:
 - `silva2024metodologia`
 - `lamberti2025ponte`
 - `rodriguessilva2022trelicadas`
-- `mendes2018analise`
 
 ### 2.2 Análise estrutural de treliças
 
@@ -241,12 +240,12 @@ Explicar que:
 A versão atual já contém as seções de pontes treliçadas, análise estrutural, ferramentas computacionais (FTOOL e anaStruct), pré-dimensionamento, tração, compressão e considerações sobre o modelo. As equações de tensão normal e de área da seção composta também foram incluídas. A existência dessas seções não encerra sua revisão.
 
 - [x] Adicionar uma referência clássica de Análise Estrutural ou Resistência dos Materiais: Hibbeler, cadastrado como `hibbeler2018resistencia`.
-- [ ] Consolidar a seção de treliças.
-- [ ] Consolidar análise estrutural.
-- [ ] Consolidar FTOOL.
-- [ ] Consolidar anaStruct.
-- [ ] Consolidar tração.
-- [ ] Consolidar compressão/flambagem.
+- [x] Consolidar a seção de treliças.
+- [x] Consolidar análise estrutural.
+- [x] Consolidar FTOOL.
+- [x] Consolidar anaStruct.
+- [x] Consolidar tração.
+- [x] Consolidar compressão/flambagem.
 - [ ] Revisar as afirmações normativas com a NBR 7190-1.
 - [ ] Conferir se toda afirmação técnica importante possui fonte adequada.
 
@@ -313,7 +312,7 @@ Arquivo:
 
 ## Estado
 
-**Redação em progresso.** O capítulo contém uma versão inicial com pré-processamento no FTOOL, interpretação dos arquivos FTL, análise estrutural, pré-dimensionamento, aplicação web e procedimentos de verificação. A próxima etapa é conferir essas descrições com o código atual e com os resultados dos testes, ajustando o texto conforme as evidências encontradas.
+**Redação concluída.** O capítulo contempla visão geral da metodologia, pré-processamento no FTOOL, interpretação dos arquivos FTL (com diagramas em TikZ), análise estrutural, pré-dimensionamento, aplicação web, procedimentos de verificação e comparação com a planilha preexistente.
 
 ## Regra principal
 
@@ -443,10 +442,10 @@ Comparar:
 - materiais;
 - seções.
 
-- [ ] Caso simples definido.
-- [ ] Resultado esperado registrado.
-- [ ] Resultado do parser registrado.
-- [ ] Diferenças analisadas.
+- [x] Caso simples definido.
+- [x] Resultado esperado registrado.
+- [x] Resultado do parser registrado.
+- [x] Diferenças analisadas.
 
 ## 8.2 Análise estrutural
 
@@ -463,11 +462,11 @@ Tabela sugerida:
 | Elemento | FTOOL | Ferramenta | Diferença absoluta | Diferença percentual |
 | --- | ---: | ---: | ---: | ---: |
 
-- [ ] Pelo menos um modelo simples.
-- [ ] Pelo menos um modelo representativo da CP3.
-- [ ] Convenção de sinais documentada.
-- [ ] Unidades documentadas.
-- [ ] Diferenças discutidas.
+- [x] Pelo menos um modelo simples.
+- [x] Pelo menos um modelo representativo da CP3.
+- [x] Convenção de sinais documentada.
+- [x] Unidades documentadas.
+- [x] Diferenças discutidas.
 
 ## 8.3 Pré-dimensionamento
 
@@ -477,14 +476,14 @@ Selecionar algumas barras e reproduzir o cálculo de forma independente.
 
 Verificar:
 
-- [ ] barra em tração;
-- [ ] barra em compressão;
-- [ ] área;
-- [ ] tensão;
-- [ ] esbeltez;
-- [ ] flambagem;
-- [ ] número de camadas;
-- [ ] quantidade física de palitos.
+- [x] barra em tração;
+- [x] barra em compressão;
+- [x] área;
+- [x] tensão;
+- [x] esbeltez;
+- [x] flambagem;
+- [x] número de camadas;
+- [x] quantidade física de palitos.
 
 ## 8.4 Python versus navegador
 
@@ -495,20 +494,20 @@ Executar o mesmo caso:
 
 Comparar os resultados numéricos.
 
-- [ ] Caso definido.
-- [ ] Resultados equivalentes.
-- [ ] Eventuais diferenças justificadas.
+- [x] Caso definido.
+- [x] Resultados equivalentes.
+- [x] Eventuais diferenças justificadas.
 
 ## 8.5 Relatório e interface
 
 Conferir se os dados exibidos correspondem aos dados calculados.
 
-- [ ] diagramas;
-- [ ] tabela por membro;
-- [ ] reações;
-- [ ] quantidade total;
-- [ ] unidades;
-- [ ] nomes/IDs das barras.
+- [x] diagramas;
+- [x] tabela por membro;
+- [x] reações;
+- [x] quantidade total;
+- [x] unidades;
+- [x] nomes/IDs das barras.
 
 ## 8.6 Validação experimental
 
@@ -623,12 +622,12 @@ Arquivo:
 
 ## Pendências atuais
 
-- [ ] Corrigir o sobrenome de Pedro Cesar Miranda e Silva em `lamberti2025ponte`.
-- [ ] Completar páginas/ISSN de `martha2022ftool`.
+- [x] Corrigir o sobrenome de Pedro Cesar Miranda e Silva em `lamberti2025ponte`.
+- [x] Completar páginas/ISSN de `martha2022ftool`.
 - [x] Confirmar o DOI de `silva2026ruptura` diretamente na fonte oficial: `10.37702/REE2236-0158.v45p389-402.2026`, conferido no artigo integral em 06/10/2026 e incluído no `.bib`.
 - [x] Adicionar um livro clássico de Análise Estrutural ou Resistência dos Materiais: `hibbeler2018resistencia`.
-- [ ] Fazer nova conferência de todas as chaves ao final do Capítulo 2.
-- [ ] Fazer conferência final entre todas as `\cite{}` e o arquivo `.bib`.
+- [x] Fazer nova conferência de todas as chaves ao final do Capítulo 2.
+- [x] Fazer conferência final entre todas as `\cite{}` e o arquivo `.bib`.
 
 ---
 
@@ -636,16 +635,16 @@ Arquivo:
 
 Planejar desde cedo:
 
-- [ ] diagrama geral da arquitetura/fluxo da ferramenta;
-- [ ] exemplo de estrutura no FTOOL;
-- [ ] representação do modelo interpretado;
-- [ ] diagrama axial;
+- [x] diagrama geral da arquitetura/fluxo da ferramenta;
+- [x] exemplo de estrutura no FTOOL;
+- [x] representação do modelo interpretado;
+- [x] diagrama axial;
 - [ ] deformada;
-- [ ] visualização do pré-dimensionamento;
-- [ ] captura da interface web;
-- [ ] tabela FTOOL versus ferramenta;
-- [ ] tabela de verificação manual do pré-dimensionamento;
-- [ ] tabela de trabalhos relacionados.
+- [x] visualização do pré-dimensionamento;
+- [x] captura da interface web;
+- [x] tabela FTOOL versus ferramenta;
+- [x] tabela de verificação manual do pré-dimensionamento;
+- [x] tabela de trabalhos relacionados.
 
 Toda figura deve ser mencionada e explicada no texto.
 
@@ -655,16 +654,16 @@ Toda figura deve ser mencionada e explicada no texto.
 
 Manter estas regras durante todo o trabalho:
 
-- [ ] Informar unidades sempre que necessário.
-- [ ] Informar convenção de sinais dos esforços.
-- [ ] Não confundir tração com compressão.
-- [ ] Não confundir camadas com palitos físicos.
-- [ ] Não apresentar valores padrão como propriedades medidas experimentalmente.
-- [ ] Não afirmar que o sistema prevê exatamente a ruptura real da ponte.
-- [ ] Separar correção do software de validade física do modelo.
-- [ ] Não descrever funcionalidades que não estejam implementadas.
-- [ ] Conferir o repositório do software antes de documentar arquitetura ou comportamento.
-- [ ] Diferenciar claramente FTOOL, anaStruct e resultados produzidos pela ferramenta.
+- [x] Informar unidades sempre que necessário.
+- [x] Informar convenção de sinais dos esforços.
+- [x] Não confundir tração com compressão.
+- [x] Não confundir camadas com palitos físicos.
+- [x] Não apresentar valores padrão como propriedades medidas experimentalmente.
+- [x] Não afirmar que o sistema prevê exatamente a ruptura real da ponte.
+- [x] Separar correção do software de validade física do modelo.
+- [x] Não descrever funcionalidades que não estejam implementadas.
+- [x] Conferir o repositório do software antes de documentar arquitetura ou comportamento.
+- [x] Diferenciar claramente FTOOL, anaStruct e resultados produzidos pela ferramenta.
 
 ---
 
@@ -674,31 +673,31 @@ Executar nesta ordem:
 
 ## Agora
 
-1. [ ] conferir o código atual e delimitar as funcionalidades descritas na Metodologia;
-2. [ ] organizar a caracterização do trabalho e a visão geral da solução;
-3. [ ] descrever a leitura dos arquivos e a reconstrução do modelo estrutural;
-4. [ ] detalhar análise, pré-dimensionamento, aplicação web e estratégia de verificação.
+1. [x] conferir o código atual e delimitar as funcionalidades descritas na Metodologia;
+2. [x] organizar a caracterização do trabalho e a visão geral da solução;
+3. [x] descrever a leitura dos arquivos e a reconstrução do modelo estrutural;
+4. [x] detalhar análise, pré-dimensionamento, aplicação web e estratégia de verificação.
 
 ## Depois
 
 5. [x] escrever o Capítulo 3 — Trabalhos Relacionados;
 6. [x] montar a tabela comparativa dos trabalhos;
-7. [ ] revisar o código atual do `ftool-parser-python`;
-8. [ ] reescrever o Capítulo 4 com base na implementação atual;
-9. [ ] definir os casos utilizados na verificação;
-10. [ ] executar as comparações e registrar os resultados;
-11. [ ] escrever o Capítulo 5;
-12. [ ] escrever o Capítulo 6.
+7. [x] revisar o código atual do `ftool-parser-python`;
+8. [x] reescrever o Capítulo 4 com base na implementação atual;
+9. [x] definir os casos utilizados na verificação;
+10. [x] executar as comparações e registrar os resultados;
+11. [x] escrever o Capítulo 5;
+12. [x] escrever o Capítulo 6.
 
 ## Por último
 
-13. [ ] revisar Introdução e objetivos com base nos resultados;
-14. [ ] escrever Resumo;
-15. [ ] escrever Abstract;
-16. [ ] definir o título final;
-17. [ ] revisar referências;
-18. [ ] revisar figuras e tabelas;
-19. [ ] revisar formatação;
+13. [x] revisar Introdução e objetivos com base nos resultados;
+14. [x] escrever Resumo;
+15. [x] escrever Abstract;
+16. [x] definir o título final;
+17. [x] revisar referências;
+18. [x] revisar figuras e tabelas;
+19. [x] revisar formatação;
 20. [ ] compilar e ler o PDF completo como se fosse o avaliador.
 
 ---
@@ -783,3 +782,11 @@ Se um trecho não responder claramente a nenhuma dessas perguntas, verificar se 
 - Redigida a versão inicial das conclusões e dos trabalhos futuros, reunindo os resultados apresentados, as limitações e as possibilidades de continuidade.
 - Atualizadas a legenda do resultado de pré-dimensionamento e a imagem da planilha comparativa no Capítulo 5.
 - Em progresso: revisão das conclusões. Conferir a correspondência de cada afirmação com os objetivos e as evidências do Capítulo 5, incluindo os parâmetros utilizados na comparação com a planilha.
+
+## 13/11/2026 — Definição do título e consolidação do roteiro
+
+- Definido o título final do trabalho e habilitados os agradecimentos em `documento.tex`.
+- Redigidas as versões finais de `dedicatoria.tex` e `agradecimentos.tex`.
+- Padronizada a sigla `CP3` como "Competição de Pontes com Palitos de Picolé" em `lista-de-abreviaturas-e-siglas.tex`.
+- Atualizados os metadados de `lamberti2025ponte` e `martha2022ftool` em `referencias.bib` e removidas as entradas não citadas (`mendes2018analise` e `martha2025ftool5`).
+- Atualizados os checklists de andamento após a conclusão da escrita de todos os capítulos textuais (Capítulos 1 a 6), do Resumo, do Abstract e do Apêndice A.
