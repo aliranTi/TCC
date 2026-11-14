@@ -10,17 +10,16 @@
     english,          % Hifenizacoes em ingles
     spanish,          % Hifenizacoes em espanhol
     brazil,           % Ultimo idioma eh o idioma padrao do documento
-    fleqn,            % Comente esta linha se quiser centralizar as equacoes. Comente também a linha 65 abaixo
+%    fleqn,            % Comente esta linha se quiser centralizar as equacoes. Comente também a linha 65 abaixo
     hyphens,
     sumario=tradicional,
 ]{abntex2}
 
-% Remover antes de escrever o TCC
-\usepackage{lipsum} 
+% O pacote lipsum foi utilizado apenas no template de exemplo.
 
 \input{lib/preambulo}
 
-\setlength{\mathindent}{0pt} %Complementa o alinhamento de equações para totalmente a esquerda.
+%\setlength{\mathindent}{0pt} %Complementa o alinhamento de equações para totalmente a esquerda.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                     ATENCAO                     %%
@@ -60,8 +59,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \autor{Antonio Joaquim de Lira Neto} 
-\titulo{Título do Trabalho: }
-\subtitulo{Subtítulo do Trabalho}
+\titulo{Aplicação web para interpretação de arquivos do FTOOL, análise estrutural e estimativa de material em pontes treliçadas de palitos}
+\subtitulo{}
 \data{2026}
 \local{Pau dos Ferros}
 
@@ -72,10 +71,10 @@
 %%           Informação sobre o Orientador         %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\orientador{MATHEUS FERNANDES DE ARAÚJO SILVA}
+\orientador{Matheus Fernandes de Araújo Silva}
 \titulacaoOrientador{Prof. Dr.}
 \orientadories{UFERSA}
-\orientadorcentro{)} % opcional
+\orientadorcentro{} % opcional
 \orientadorfeminino{nao} % Coloque 'sim' se for do sexo feminino
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -102,23 +101,23 @@
 % \membrodabancadoiscentro{CMPF}
 % \membrodabancadoisies{Universidade Federal Rural do Semi-Árido - UFERSA}
 
-\membrodabancadois{Xxxxxxx Xxxxxx Xxxxxxx}
-\titulacaoBancaDois{Prof. xx.}
-\membrodabancadoiscentro{}
-\membrodabancadoisies{SIGLA}
-\membrodabancatres{Xxxxxxx Xxxxxx Xxxxxxx}
-\titulacaoBancaTres{Prof. xx.}
+\membrodabancadois{Alysson Filgueira Milanez}
+\titulacaoBancaDois{Prof. Dr.}
+\membrodabancadoiscentro{CMPF}
+\membrodabancadoisies{Universidade Federal Rural do Semi-Árido - UFERSA}
+\membrodabancatres{}
+\titulacaoBancaTres{}
 \membrodabancatrescentro{}
-\membrodabancatresies{SIGLA}
+\membrodabancatresies{}
 \membrodabancaquatro{}
 \membrodabancaquatrocentro{}
 \membrodabancaquatroies{SIGLA}
-\membrodabancacinco{Prof. Dr. Xxxxxxx Xxxxxx Xxxxxxx}
-\membrodabancacincocentro{Teste}
-\membrodabancacincoies{Universidade do Membro da Banca Cinco (SIGLA)}
-\membrodabancaseis{Prof. Dr. Xxxxxxx Xxxxxx Xxxxxxx}
+\membrodabancacinco{}
+\membrodabancacincocentro{}
+\membrodabancacincoies{}
+\membrodabancaseis{}
 \membrodabancaseiscentro{}
-\membrodabancaseisies{Universidade do Membro da Banca Seis (SIGLA)}
+\membrodabancaseisies{}
 
 % Para espacaomento duplo nas referencias
 % \let\OLDthebibliography\thebibliography
@@ -150,7 +149,7 @@
 	%\imprimirlistadealgoritmos
 	%\imprimirlistadecodigosfonte
 	\imprimirlistadeabreviaturasesiglas
-	% \imprimirlistadesimbolos{1-pre-textuais/lista-de-simbolos}   
+	%\imprimirlistadesimbolos{1-pre-textuais/lista-de-simbolos}
 	\imprimirsumario
 	
 	\setcounter{table}{0}% Deixe este comando antes da primeira tabela.
@@ -167,13 +166,10 @@
 	%Elementos pós-textuais	
  \bibliographystyle{lib/abntex2-alf}
 	\bibliography{3-pos-textuais/referencias}
-%	\imprimirglossario	
+
 	 \imprimirapendices
 		% Adicione aqui os apendices do seu trabalho
 		\input{3-pos-textuais/apendices/apendice-a}
-	 \imprimiranexos
-		% Adicione aqui os anexos do seu trabalho
-		\input{3-pos-textuais/anexos/anexo-a}
-	\imprimirindice
+	% Anexos e índice devem ser habilitados somente quando houver conteúdo real.
 
 \end{document}

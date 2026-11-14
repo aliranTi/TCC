@@ -1,4 +1,18 @@
-\apendice{Exemplo de apêndice}
-\label{ap:A}
+\apendice{Roteiro de reprodução do estudo computacional}
+\label{ap:roteiro-reproducao}
 
-Um apêndice é um documento elaborado pelo autor, diferentemente do anexo. Geralmente, se coloca como apêndice, questionários, códigos de programação, tabelas que tomariam muito espaço no meio do trabalho. Artigos, resumos ou qualquer publicação relacionada ao trabalho podem ser utilizados como apêndice.
+Este apêndice apresenta uma sequência de operações para reproduzir, na ferramenta desenvolvida, a análise e o pré-dimensionamento do modelo descrito no Capítulo~\ref{chap:resultados}. O roteiro se refere à avaliação bidimensional de uma face da ponte e não constitui um procedimento de ensaio físico.
+
+\begin{enumerate}
+    \item Preparar no FTOOL o modelo correspondente a uma face da ponte e salvá-lo como \texttt{ponte.ftl}, preservando a geometria, os apoios, as propriedades estruturais e o carregamento vertical de \(2\,\mathrm{kN}\) utilizados no estudo.
+    \item Abrir a aplicação web e selecionar o arquivo \texttt{ponte.ftl} para importação.
+    \item Conferir a prévia da geometria reconstruída, verificando a identificação de 10 nós e 19 barras.
+    \item Conferir as propriedades e os parâmetros de pré-dimensionamento adotados no estudo, incluindo o comprimento comercial de \(115\,\mathrm{mm}\), a sobreposição padrão de \(0\,\mathrm{mm}\) e o mínimo construtivo de três camadas por barra. Os demais parâmetros devem corresponder aos adotados na execução de referência.
+    \item Executar a análise estrutural e examinar o diagrama de esforços axiais e os resultados numéricos das barras.
+    \item Executar o pré-dimensionamento e consultar a distribuição de camadas e a estimativa de palitos comerciais por barra.
+    \item Consultar o relatório consolidado e confrontar seus resultados com as tabelas e figuras apresentadas no Capítulo~\ref{chap:resultados}.
+\end{enumerate}
+
+Na configuração utilizada para os resultados de referência, a ferramenta apresentou uma soma de 154 camadas nas 19 barras e uma estimativa de 430 palitos comerciais para a face analisada. A extrapolação para 860 palitos considera duas faces idênticas, sem incluir elementos de ligação transversal ou perdas de fabricação.
+
+Esses valores servem como referência para a reprodução do caso estudado e dependem da manutenção das propriedades do modelo estrutural e dos parâmetros de pré-dimensionamento utilizados na avaliação.

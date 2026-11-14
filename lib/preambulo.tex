@@ -18,7 +18,7 @@
 %\usepackage{titlesec}                              % Permite alterar os títulos do documento
 \usepackage{tocloft}         % Permite alterar a formatação do Sumário
 \usepackage{etoolbox}                               % Usado para alterar a fonte da Section no Sumário
-\usepackage[nogroupskip,nonumberlist]{glossaries}   % Permite fazer o glossario
+\usepackage[acronym,nogroupskip,nonumberlist]{glossaries}   % Permite fazer o glossario
 
 \usepackage[font={singlespacing},format=plain,skip=0pt,singlelinecheck = false]{caption}            % Altera o comportamento da tag caption
 
@@ -46,10 +46,37 @@
 \usepackage{lib/ufersatex}	      % Biblioteca com as normas para trabalhos academicos
 \usepackage{pdfpages}         % Incluir pdf no documento
 \usepackage{amsmath}          % Usar equacoes matematicas
-
 % importar meus pacotes
+\usepackage{float}
 \usepackage{setspace}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit}
 
+\tikzset{
+    bloco/.style={
+        rectangle,
+        rounded corners=2pt,
+        draw,
+        align=center,
+        minimum width=4cm,
+        minimum height=1.0cm,
+        inner sep=5pt
+    },
+    blocoPequeno/.style={
+        rectangle,
+        rounded corners=2pt,
+        draw,
+        align=center,
+        minimum width=5cm,
+        minimum height=0.8cm,
+        inner sep=4pt
+    },
+    fluxo/.style={
+        ->,
+        >=Stealth,
+        thick
+    }
+}
 \makeglossaries % Organiza e gera a lista de abreviaturas, simbolos e glossario
 \makeindex      % Gera o Indice do documento
 
