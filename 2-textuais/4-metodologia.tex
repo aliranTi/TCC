@@ -356,14 +356,14 @@ permitindo verificar tanto a interpretação das dimensões quanto sua represent
 
 A etapa de análise foi verificada por meio de relações de equilíbrio e de casos com solução analítica conhecida. Para os modelos analisados, foi avaliado o equilíbrio global entre as cargas externas aplicadas e as reações de apoio calculadas, considerando separadamente as componentes horizontal e vertical.
 
-Adicionalmente, foram empregados casos simplificados para verificar grandezas específicas produzidas pelo modelo. Entre eles, utilizou-se uma barra em balanço submetida a uma força concentrada na extremidade. O deslocamento calculado foi comparado ao valor obtido pela expressão analítica
+Como verificação complementar do tratamento de elementos com rigidez à flexão, foi implementado um caso de teste automatizado e independente, representando uma viga em balanço com uma extremidade engastada e uma força concentrada aplicada na extremidade livre. Esse caso não representa a ponte analisada neste trabalho; sua finalidade é verificar a conversão e a análise de elementos do tipo viga pelo caminho que utiliza a função \texttt{add\_element()}. O deslocamento vertical na extremidade livre foi comparado ao valor obtido pela expressão analítica
 
 \begin{equation}
     \delta =
     \frac{PL^3}{3EI},
 \end{equation}
 
-em que \(P\) representa a força aplicada, \(L\) o comprimento do elemento, \(E\) o módulo de elasticidade e \(I\) o momento de inércia da seção.
+em que \(P\) representa a força aplicada, \(L\) o comprimento do elemento, \(E\) o módulo de elasticidade e \(I\) o momento de inércia da seção. Essa expressão é utilizada exclusivamente nesse caso auxiliar e não se aplica às barras da ponte, que são representadas como elementos de treliça, sem consideração de rigidez à flexão.
 
 Para os modelos de treliça utilizados no desenvolvimento, também foram verificados valores de esforços axiais que podem ser obtidos a partir das condições de equilíbrio da estrutura. Dessa forma, buscou-se avaliar não apenas a execução da biblioteca anaStruct, mas também a correspondência entre o modelo reconstruído a partir do arquivo \texttt{.ftl} e o sistema efetivamente submetido à análise.
 
