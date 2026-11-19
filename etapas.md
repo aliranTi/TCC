@@ -1,6 +1,6 @@
 # Etapas do TCC
 
-Última atualização: 13/11/2026.
+Última atualização: 19/11/2026.
 
 Este arquivo serve como roteiro de execução do TCC. A ideia é consultar esta página antes de começar uma nova sessão de escrita para saber **o que fazer agora**, **o que ainda falta** e **quando uma etapa pode ser considerada concluída**.
 
@@ -42,7 +42,7 @@ O código é o meio utilizado para resolver o problema, não o objeto principal 
 - [x] Resultados escritos.
 - [x] Conclusão escrita.
 - [x] Resumo e abstract finais redigidos.
-- [ ] Revisão final de texto, referências e formatação.
+- [x] Revisão final de texto, referências e formatação.
 
 ### Prioridade atual
 
@@ -790,3 +790,12 @@ Se um trecho não responder claramente a nenhuma dessas perguntas, verificar se 
 - Padronizada a sigla `CP3` como "Competição de Pontes com Palitos de Picolé" em `lista-de-abreviaturas-e-siglas.tex`.
 - Atualizados os metadados de `lamberti2025ponte` e `martha2022ftool` em `referencias.bib` e removidas as entradas não citadas (`mendes2018analise` e `martha2025ftool5`).
 - Atualizados os checklists de andamento após a conclusão da escrita de todos os capítulos textuais (Capítulos 1 a 6), do Resumo, do Abstract e do Apêndice A.
+
+## 19/11/2026 — Revisão metodológica dos capítulos textuais
+
+- Padronizados os rótulos dos capítulos (`cap:`) e as remissões explícitas na seção de organização do trabalho (`1-introducao.tex`) e no `apendice-a.tex`.
+- Alinhada a notação entre a Fundamentação Teórica (`2-fundamentacao-teorica.tex`) e a Metodologia (`4-metodologia.tex`), explicitando a relação $E_{0,05} = 0,8\,E_{c0,m}$, a composição $k_{mod} = k_{mod,1}k_{mod,2}$ e a resistência média à tração paralela às fibras ($f_{t0,m}$), além de eliminar repetições da equação de área da seção composta.
+- Adicionado o critério de seleção dos estudos e removido o parágrafo duplicado na síntese comparativa em `3-trabalhos-relacionados.tex`.
+- Incluída a caracterização metodológica da pesquisa, a citação explícita à Figura de fluxo geral, a Tabela completa de parâmetros adotados no estudo de caso (`tab:parametros-pre-dimensionamento`) e o detalhamento da correção da referência de comprimento comercial na planilha em `4-metodologia.tex`.
+- Acrescentados em `5-resultados.tex` o equilíbrio global das reações de apoio ($1000,000\,\mathrm{N}$ em `n7` e `n8`), a síntese da execução dos 36 testes automatizados da suíte de verificação, a relação de correspondência $\mathrm{m}_i \leftrightarrow \mathrm{m}_{78+i}$ na abertura da seção de pré-dimensionamento e a verificação analítica passo a passo das barras `m4` (compressão, $n=17$ reprova e $n=18$ aprova) e `m8` (tração governada pelo mínimo construtivo de 3 camadas).
+- Incluída a resposta direta à questão de pesquisa e a síntese das evidências de verificação em `6-conclusao.tex`.

@@ -58,7 +58,7 @@ A anaStruct é uma biblioteca para a linguagem Python destinada à análise de e
 
 Essa característica é relevante para aplicações que necessitam incorporar a análise estrutural a um fluxo computacional mais amplo. Em vez de exigir que cada etapa seja executada manualmente em programas distintos, os resultados da análise podem ser processados por outras rotinas, utilizados em verificações adicionais ou apresentados em interfaces desenvolvidas para um problema específico.
 
-A construção de um modelo na anaStruct é realizada a partir da classe \texttt{SystemElements}, que representa o sistema estrutural a ser analisado. A escolha da função utilizada para adicionar cada elemento depende do comportamento estrutural que se deseja representar. Para elementos idealizados como barras de treliça, o conversor utiliza a função \texttt{add\_truss\_element()}. Quando o arquivo descreve elementos que apresentam rigidez à flexão, utiliza-se a função \texttt{add\_element()}, informando as rigidezes axial e à flexão (\(EA\) e \(EI\)) e, quando aplicável, as liberações rotacionais nas extremidades. Esse segundo tipo de elemento permite representar vigas e barras de pórticos. No estudo de caso deste trabalho, as barras da ponte são idealizadas como elementos de treliça e, portanto, são adicionadas por meio de \texttt{add\_truss\_element()}. O suporte a \texttt{add\_element()} é mantido para a interpretação de outros modelos estruturais e sua utilização é verificada separadamente por meio de um caso de viga em balanço, apresentado na subseção~\ref{subsec:verificacao-analise}.
+A construção de um modelo na anaStruct é realizada a partir da classe \texttt{SystemElements}, que representa o sistema estrutural a ser analisado. A escolha da função utilizada para adicionar cada elemento depende do comportamento estrutural que se deseja representar: elementos idealizados como barras de treliça, submetidos apenas a esforços axiais, podem ser adicionados por meio da função \texttt{add\_truss\_element()}, enquanto elementos que apresentam rigidez à flexão (como vigas e barras de pórticos) são definidos por \texttt{add\_element()}, informando-se as coordenadas das extremidades, as rigidezes axial e à flexão (\(EA\) e \(EI\)) e, quando aplicável, as liberações rotacionais nas extremidades.
 
 As condições de contorno são definidas por funções específicas para os diferentes tipos de apoio, como \texttt{add\_support\_fixed()}, \texttt{add\_support\_hinged()} e \texttt{add\_support\_roll()}. Os carregamentos nodais podem ser aplicados por funções como \texttt{point\_load()} e \texttt{moment\_load()}.
 
@@ -79,6 +79,7 @@ Uma camada representa uma faixa longitudinal de palitos com seção transversal 
 
 \begin{equation}
     A = nbh.
+    \label{eq:area-secao-composta}
 \end{equation}
 
 Quando o comprimento da barra excede o comprimento comercial de um palito, mais de um palito físico pode ser necessário ao longo da mesma camada. Assim, o número de camadas da seção transversal e a quantidade física de palitos empregada ao longo da barra representam grandezas distintas.
@@ -94,25 +95,19 @@ Nos elementos submetidos à tração, o esforço axial atua no sentido de alonga
 
 em que \(N_t\) representa a força normal de tração, \(A\) corresponde à área resistente da seção transversal e \(\sigma_t\) é a tensão normal atuante.
 
-Considerando uma barra composta por \(n\) camadas de palitos de seção retangular, com largura \(b\) e espessura \(h\), a área resistente pode ser representada por
-
-\begin{equation}
-A = nbh.
-\end{equation}
-
-Consequentemente, a tensão de tração pode ser escrita como
+Substituindo a área resistente da seção composta por \(n\) camadas dada pela Equação~\ref{eq:area-secao-composta}, a tensão de tração pode ser escrita como
 
 \begin{equation}
 \sigma_t = \frac{N_t}{nbh}.
 \end{equation}
 
-A verificação do elemento consiste em comparar a tensão solicitante com a resistência à tração adotada para o material, de modo que a condição resistente possa ser expressa, de forma geral, por
+A verificação do elemento consiste em comparar a tensão solicitante com a resistência à tração paralela às fibras adotada para o material, de modo que a condição resistente possa ser expressa, de forma geral, por
 
 \begin{equation}
-\sigma_t \leq f_t,
+\sigma_t \leq f_{t0},
 \end{equation}
 
-em que \(f_t\) representa a resistência à tração considerada no modelo de cálculo.
+em que \(f_{t0}\) representa a resistência à tração paralela às fibras considerada no modelo de cálculo.
 
 Em aplicações computacionais, a força normal \(N_t\) pode ser obtida a partir da análise estrutural do modelo, enquanto as propriedades geométricas e resistentes são utilizadas posteriormente na verificação da seção. Dessa forma, a análise estrutural e o pré-dimensionamento constituem etapas distintas, embora relacionadas, do processo de avaliação das barras.
 
@@ -125,13 +120,7 @@ Nos elementos submetidos à compressão, o esforço axial atua no sentido de enc
 \sigma_c = \frac{N_c}{A},
 \end{equation}
 
-em que \(N_c\) representa a força normal de compressão, \(A\) corresponde à área resistente da seção transversal e \(\sigma_c\) é a tensão normal de compressão.
-
-Para uma barra formada por \(n\) camadas de palitos de largura \(b\) e espessura \(h\), a área resistente é dada por
-
-\begin{equation}
-A = nbh.
-\end{equation}
+em que \(N_c\) representa a força normal de compressão, \(A = nbh\) corresponde à área resistente da seção transversal composta por \(n\) camadas (Equação~\ref{eq:area-secao-composta}) e \(\sigma_c\) é a tensão normal de compressão.
 
 Entretanto, diferentemente do caso de tração, a verificação de elementos comprimidos não depende apenas da resistência do material. Barras esbeltas podem perder estabilidade por flambagem\footnote{Fenômeno de instabilidade pelo qual um elemento comprimido pode apresentar deslocamentos laterais significativos antes de atingir a resistência do material.} antes que a tensão resistente do material seja atingida \cite{souza2015flambagem,silva2026ruptura}.
 
@@ -189,7 +178,7 @@ e
     \sqrt{\frac{f_{c0,k}}{E_{0,05}}},
 \end{equation}
 
-em que \(f_{c0,k}\) representa a resistência característica à compressão paralela às fibras e \(E_{0,05}\) corresponde ao valor característico do módulo de elasticidade na direção paralela às fibras \cite{abnt2022nbr7190}.
+em que \(f_{c0,k}\) representa a resistência característica à compressão paralela às fibras e \(E_{0,05}\) corresponde ao valor característico do módulo de elasticidade na direção paralela às fibras, que pode ser estimado a partir do módulo de elasticidade médio \(E_{c0,m}\) pela relação \(E_{0,05} = 0,8\,E_{c0,m}\) \cite{abnt2022nbr7190,silva2026ruptura}.
 
 A resistência de cálculo à compressão paralela às fibras pode ser expressa por \cite{abnt2022nbr7190}
 
@@ -199,7 +188,7 @@ A resistência de cálculo à compressão paralela às fibras pode ser expressa 
     \frac{k_{mod} f_{c0,k}}{\gamma_w},
 \end{equation}
 
-em que \(k_{mod}\) representa o coeficiente de modificação das propriedades resistentes e \(\gamma_w\) o coeficiente de minoração da resistência.
+em que \(k_{mod}\) representa o coeficiente de modificação das propriedades resistentes (obtido pelo produto dos coeficientes parciais de modificação considerados) e \(\gamma_w\) o coeficiente de minoração da resistência.
 
 Quando os efeitos de estabilidade precisam ser considerados, a \gls{ABNT} \gls{NBR} 7190-1:2022 emprega coeficientes redutores associados a cada direção principal da seção \cite{abnt2022nbr7190}. Esses coeficientes podem ser determinados por
 

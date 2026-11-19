@@ -1,6 +1,9 @@
 \chapter{Metodologia}
+\label{cap:metodologia}
 
 \section{Visão geral da metodologia}
+
+Este trabalho caracteriza-se como uma pesquisa de natureza aplicada e abordagem quantitativa, centrada no desenvolvimento e na verificação de uma ferramenta computacional voltada à interpretação de modelos do \acrshort{FTOOL}, à análise estrutural e ao pré-dimensionamento de pontes treliçadas de palitos de picolé no contexto da \acrshort{CP3}. A avaliação da solução compreende testes automatizados de verificação das rotinas implementadas, um estudo de caso baseado no modelo bidimensional de uma face de ponte (\texttt{ponte.ftl}, composto por 10 nós e 19 barras) e uma comparação descritiva e quantitativa com uma planilha eletrônica de pré-dimensionamento preexistente.
 
 Este capítulo descreve os procedimentos empregados no desenvolvimento da ferramenta proposta. O processo foi organizado de modo a integrar a modelagem estrutural realizada no \acrshort{FTOOL} à interpretação computacional do arquivo \texttt{.ftl}, à análise da estrutura e ao pré-dimensionamento das barras de palitos. Por fim, essas etapas foram integradas a uma aplicação web destinada à apresentação dos resultados ao usuário.
 
@@ -10,7 +13,7 @@ A partir desse arquivo, o sistema interpreta as informações armazenadas e reco
 
 Os esforços axiais obtidos nessa etapa são posteriormente utilizados pelas rotinas de pré-dimensionamento. Para cada barra, são avaliadas separadamente as solicitações de tração e compressão, conforme os critérios apresentados na Fundamentação Teórica. A partir dessas verificações, estima-se a quantidade de camadas necessária à composição da seção e, considerando o comprimento de cada elemento, a quantidade física de palitos necessária para sua construção.
 
-Todo o processamento foi integrado a uma aplicação web. O arquivo \texttt{.ftl} é lido e processado no próprio navegador, e os resultados são apresentados por meio de representações gráficas, tabelas e um relatório de pré-dimensionamento. Dessa forma, o fluxo adotado pode ser sintetizado pelas etapas de pré-processamento no \acrshort{FTOOL}, interpretação do arquivo, análise estrutural, pré-dimensionamento e apresentação dos resultados.
+Todo o processamento foi integrado a uma aplicação web. O arquivo \texttt{.ftl} é lido e processado no próprio navegador, e os resultados são apresentados por meio de representações gráficas, tabelas e um relatório de pré-dimensionamento. Dessa forma, o fluxo adotado pode ser sintetizado pelas etapas de pré-processamento no \acrshort{FTOOL}, interpretação do arquivo, análise estrutural, pré-dimensionamento e apresentação dos resultados, conforme ilustrado na Figura~\ref{fig:fluxo-metodologia}.
 
 \begin{figure}[H]
     \centering
@@ -108,9 +111,7 @@ Após a montagem completa do sistema, a análise é executada pelo método \text
 
 Para os nós, são obtidos os deslocamentos e, nos casos em que existem restrições de apoio, as respectivas reações. Para as barras são recuperados os resultados dos elementos, com destaque para os esforços normais utilizados na etapa de pré-dimensionamento.
 
-A ferramenta mantém uma correspondência entre os identificadores gerados durante a interpretação do arquivo \texttt{.ftl} e os identificadores utilizados internamente pela anaStruct. Dessa forma, os resultados podem ser novamente associados às barras e aos nós do modelo original, permitindo sua posterior apresentação ao usuário e utilização nas demais rotinas do sistema.
-
-Para cada barra, são considerados os valores mínimo e máximo do esforço axial obtidos na análise. Adota-se a convenção de sinal na qual valores positivos representam tração e valores negativos representam compressão. Dessa forma, a solicitação de tração de cada elemento é obtida a partir da parcela positiva do esforço axial, enquanto a solicitação de compressão é determinada a partir da magnitude da parcela negativa.
+A ferramenta mantém uma correspondência entre os identificadores gerados durante a interpretação do arquivo \texttt{.ftl} e os identificadores sequenciais utilizados internamente pela anaStruct (\texttt{m1}, \texttt{m2}, \dots). Dessa forma, os resultados podem ser associados às barras e aos nós do modelo original, permitindo sua posterior apresentação ao usuário e utilização nas rotinas de pré-dimensionamento.
 
 Os resultados obtidos na análise estrutural são utilizados como dados de entrada para o pré-dimensionamento das barras. A partir dos esforços determinados e das propriedades geométricas e mecânicas adotadas para os palitos, são realizadas as verificações necessárias para estimar a composição de cada elemento da estrutura.
 
@@ -133,7 +134,37 @@ para a tração, e
 
 para a compressão.
 
-Por padrão, as dimensões da seção dos palitos são obtidas da seção retangular associada a cada barra no modelo importado do \acrshort{FTOOL}. Quando essa opção está habilitada, uma seção sem dimensões retangulares válidas impede o pré-dimensionamento da barra; alternativamente, é possível configurar dimensões nominais independentes do arquivo. Na configuração padrão, essas dimensões são largura de \(8,58\,\mathrm{mm}\), espessura de \(1,94\,\mathrm{mm}\) e comprimento comercial de \(115\,\mathrm{mm}\). Esses valores são parâmetros adotados para o cálculo, não medições experimentais das amostras utilizadas. Na interface web, parâmetros de seção e de material podem ser ajustados para cada execução, assim como as propriedades e os critérios adotados nas verificações de resistência e estabilidade. Os valores utilizados no pré-dimensionamento, portanto, correspondem à configuração aplicada ao modelo após a interpretação, e não necessariamente aos valores originalmente armazenados no arquivo. Para a composição das barras, considera-se que a adição de camadas ocorre pela espessura do palito, de forma que uma seção composta\footnote{Seção transversal formada pela associação de dois ou mais componentes, representada conforme hipóteses específicas de interação entre eles.} por \(n\) camadas apresenta largura \(b\), altura \(H=nh\) e área \(A=nbh\).
+Por padrão (\texttt{use\_section\_geometry = True}), as dimensões da seção dos palitos são obtidas da seção retangular associada a cada barra no modelo importado do \acrshort{FTOOL}, adotando-se a maior dimensão transversal como largura \(b\) e a menor como espessura \(h\) (empilhamento das camadas pelas faces largas). Quando o arquivo contém definições homônimas que diferem apenas na capitalização e uma delas encontra-se incompleta — como ocorre no arquivo \texttt{ponte.ftl}, que registra uma seção \texttt{PALITO} com espessura nula e uma seção \texttt{palito} com dimensões completas de \(7,84\,\mathrm{mm}\times 1,85\,\mathrm{mm}\) —, o módulo seleciona automaticamente a definição válida equivalente. Alternativamente, quando a leitura geométrica da seção do arquivo é desabilitada, utilizam-se as dimensões nominais padrão configuradas no código (\(b = 8,58\,\mathrm{mm}\) e \(h = 1,94\,\mathrm{mm}\)), mantendo-se em ambos os casos o comprimento comercial padrão de \(L_p = 115\,\mathrm{mm}\). Esses valores constituem parâmetros adotados para o cálculo, e não medições experimentais de amostras físicas. Para a composição das barras, considera-se que a adição de camadas ocorre pela espessura do palito, de forma que uma seção composta\footnote{Seção transversal formada pela associação de dois ou mais componentes, representada conforme hipóteses específicas de interação entre eles.} por \(n\) camadas apresenta largura \(b\), altura \(H=nh\) e área \(A=nbh\).
+
+Na interface web, parâmetros de seção e de material podem ser ajustados para cada execução, assim como as propriedades e os critérios adotados nas verificações de resistência e estabilidade. A Tabela~\ref{tab:parametros-pre-dimensionamento} sintetiza os parâmetros adotados na configuração de referência do estudo de caso (\texttt{ponte.ftl}).
+
+\begin{table}[H]
+    \centering
+    \caption{Parâmetros geométricos, mecânicos e normativos utilizados na execução de referência do estudo de caso (\texttt{ponte.ftl}).}
+    \label{tab:parametros-pre-dimensionamento}
+    \small
+    \begin{tabular}{llrl}
+        \hline
+        \textbf{Parâmetro} & \textbf{Símbolo} & \textbf{Valor} & \textbf{Origem / Observação} \\
+        \hline
+        Largura da seção do palito & \(b\) & \(7,84\,\mathrm{mm}\) & Seção \texttt{palito} do \texttt{.ftl} (nominal: \(8,58\,\mathrm{mm}\)) \\
+        Espessura da seção do palito & \(h\) & \(1,85\,\mathrm{mm}\) & Seção \texttt{palito} do \texttt{.ftl} (nominal: \(1,94\,\mathrm{mm}\)) \\
+        Módulo de elasticidade na análise & \(E\) & \(7\,350\,\mathrm{MPa}\) & Material \texttt{palito} do arquivo \texttt{.ftl} \\
+        Comprimento comercial do palito & \(L_p\) & \(115,0\,\mathrm{mm}\) & Configuração padrão da ferramenta \\
+        Sobreposição nas emendas & \(L_s\) & \(0,0\,\mathrm{mm}\) & Configuração padrão da ferramenta \\
+        Mínimo construtivo por barra & \(n_{\min}\) & \(3\) & Configuração padrão da ferramenta \\
+        Resistência caract. à compressão & \(f_{c0,k}\) & \(25,0\,\mathrm{MPa}\) & Configuração padrão (classe C35) \\
+        Módulo médio de elasticidade & \(E_{c0,m}\) & \(13\,000\,\mathrm{MPa}\) & Padrão (\(E_{0,05}=0,8\,E_{c0,m}=10\,400\,\mathrm{MPa}\)) \\
+        Coeficientes de modificação & \(k_{mod,1},\,k_{mod,2}\) & \(1,1\text{ e }0,9\) & Padrão (\(k_{mod}=k_{mod,1}k_{mod,2}=0,99\)) \\
+        Coeficiente de minoração & \(\gamma_w\) & \(1,0\) & Padrão (\(f_{c0,d}=24,75\,\mathrm{MPa}\)) \\
+        Parâmetro de imperfeição & \(\beta_c\) & \(0,1\) & Configuração padrão da ferramenta \\
+        Resistência média à tração paralela & \(f_{t0,m}\) & \(66,0\,\mathrm{MPa}\) & Configuração padrão da ferramenta \\
+        Fator de comprimento efetivo & \(K\) & \(1,0\) & Configuração padrão (\(L_e = K L\)) \\
+        Fatores de força (comp. e tração) & \(\gamma_c,\,\gamma_t\) & \(1,0\text{ e }1,0\) & Configuração padrão da ferramenta \\
+        \hline
+    \end{tabular}
+    \fonte{Elaborado pelo autor.}
+\end{table}
 
 As verificações de tração e compressão são realizadas independentemente. Quando uma barra apresenta solicitações relevantes nos dois sentidos, é adotada a quantidade de camadas correspondente à condição mais restritiva. Além dos critérios resistentes, foi estabelecido um número mínimo de três camadas para todas as barras, conforme o padrão construtivo adotado neste trabalho.
 
@@ -154,7 +185,7 @@ em que \(h\) representa a espessura de um palito, e a tensão normal corresponde
     \sigma_t = \frac{N_t}{A}.
 \end{equation}
 
-A tensão calculada é então comparada à resistência à tração paralela às fibras adotada no modelo. Na implementação, a solicitação de tração é multiplicada por um fator configurável, de valor padrão \(1,0\), antes do cálculo da tensão. A seção é considerada suficiente quando a tensão atuante é estritamente inferior à resistência estabelecida (\(\sigma_t<f_{t0}\)). Caso a condição não seja atendida, o número de camadas é incrementado e a verificação é repetida.
+A tensão calculada é então comparada à resistência média à tração paralela às fibras (\(f_{t0,m}\)) adotada no modelo, cujo valor padrão é \(66,0\,\mathrm{MPa}\). Na implementação, a solicitação de tração é multiplicada por um fator configurável (\(\gamma_t\)), de valor padrão \(1,0\), antes do cálculo da tensão. A seção é considerada suficiente quando a tensão atuante é estritamente inferior à resistência estabelecida (\(\sigma_t < f_{t0,m}\)). Cabe registrar que, diferentemente da verificação à compressão — que emprega a resistência de cálculo \(f_{c0,d}\) obtida a partir de \(k_{mod}\) e \(\gamma_w\) e o critério \(\eta \leq 1\) —, a rotina de tração compara diretamente a tensão solicitante ao parâmetro \(f_{t0,m}\) configurado, preservando a formulação do código de referência. Caso a condição não seja atendida, o número de camadas é incrementado e a verificação é repetida.
 
 O procedimento resulta na menor quantidade de camadas que satisfaz o critério de tração. Posteriormente, esse valor é comparado à quantidade requerida pela verificação à compressão e ao número mínimo estabelecido pelo critério construtivo.
 
@@ -179,9 +210,9 @@ e
     I_y = \frac{Hb^3}{12}.
 \end{equation}
 
-A partir dessas propriedades são calculados os raios de giração e os índices de esbeltez nos dois eixos. A força de compressão utilizada na tensão de cálculo também é multiplicada por um fator configurável, igual a \(1,0\) na configuração padrão. O comprimento efetivo é determinado a partir do comprimento da barra e do fator de comprimento efetivo adotado no modelo.
+A partir dessas propriedades são calculados os raios de giração e os índices de esbeltez nos dois eixos. A força de compressão utilizada na tensão de cálculo também é multiplicada por um fator configurável (\(\gamma_c\)), igual a \(1,0\) na configuração padrão. O comprimento efetivo \(L_e = K L\) é determinado a partir do comprimento da barra e do fator de comprimento efetivo \(K\) adotado no modelo.
 
-Na sequência, são calculados os índices de esbeltez relativa e os respectivos coeficientes redutores de estabilidade \(k_{cx}\) e \(k_{cy}\), conforme a formulação apresentada na Fundamentação Teórica. Esses valores são utilizados para determinar as resistências efetivas consideradas em cada direção.
+Na sequência, a partir do módulo de elasticidade médio na compressão paralela às fibras (\(E_{c0,m}\), de valor padrão \(13\,000\,\mathrm{MPa}\)), a rotina determina o módulo característico por \(E_{0,05} = 0,8\,E_{c0,m}\) (\(10\,400\,\mathrm{MPa}\)) e a resistência de cálculo por \(f_{c0,d} = (k_{mod,1}k_{mod,2})\,f_{c0,k}/\gamma_w\) (\(24,75\,\mathrm{MPa}\) na configuração padrão). Com esses parâmetros, são calculados os índices de esbeltez relativa e os respectivos coeficientes redutores de estabilidade \(k_{cx}\) e \(k_{cy}\), conforme a formulação apresentada na Fundamentação Teórica. Esses valores são utilizados para determinar as resistências efetivas consideradas em cada direção.
 
 Para avaliar a seção, são calculados os índices de utilização
 
@@ -402,7 +433,7 @@ Como procedimento complementar de avaliação, foi utilizada uma planilha eletr�
 
 O documento contém campos para inserção dos comprimentos e esforços axiais das barras, além de fórmulas destinadas à estimativa da quantidade de camadas e palitos necessários à composição dos elementos estruturais. Os cálculos são realizados a partir de parâmetros geométricos e resistentes previamente estabelecidos na planilha.
 
-Para realizar a comparação, foi utilizada uma cópia da planilha, na qual foram inseridos os comprimentos e esforços axiais correspondentes às 19 barras do modelo estrutural apresentado neste trabalho. Dessa forma, buscou-se utilizar informações de entrada equivalentes às empregadas pela ferramenta desenvolvida.
+Para realizar a comparação, foi utilizada uma cópia da planilha, na qual foram inseridos os comprimentos e esforços axiais correspondentes às 19 barras do modelo estrutural apresentado neste trabalho. Nessa cópia, corrigiu-se apenas a referência da fórmula de contabilização total de palitos para utilizar o parâmetro de comprimento comercial de \(11,5\,\mathrm{cm}\) (\(115\,\mathrm{mm}\)) já definido na própria planilha, preservando-se inalteradas todas as demais fórmulas intermediárias e parâmetros originais (\(b = 7,84\,\mathrm{mm}\) e \(d = 1,85\,\mathrm{mm}\)). Dessa forma, buscou-se utilizar informações de entrada equivalentes às empregadas pela ferramenta desenvolvida.
 
 Os procedimentos foram examinados quanto aos critérios utilizados para determinação das camadas, às estimativas de quantidade de palitos e às hipóteses consideradas nas verificações dos elementos estruturais. Também foram observadas as diferenças entre os parâmetros adotados e as formas de contabilização do material.
 
