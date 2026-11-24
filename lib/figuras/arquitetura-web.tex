@@ -5,41 +5,39 @@
 
 % Entrada
 \node[blocoPequeno] (entrada) {
-    Arquivo \texttt{.ftl}
+    \textbf{Arquivo \texttt{.ftl}} (Selecionado pelo usuário)
 };
 
 % Interface
 \node[bloco, below=of entrada] (interface) {
-    Interface web\\
-    Prévia e edição dos parâmetros\\
+    \textbf{Interface web (Camada de apresentação)}\\
+    Prévia da geometria e edição de parâmetros\\
     Next.js / React / TypeScript
 };
 
 % Título do ambiente de processamento
 \node[
-    below=1.5cm of interface,
+    below=1.4cm of interface,
     font=\small\bfseries
 ] (workertitle) {
-    Web Worker + Pyodide
+    Web Worker + Pyodide (Python via WebAssembly)
 };
 
 % Módulos internos
 \node[blocoPequeno, below=0.45cm of workertitle] (parser) {
-    Parser \texttt{.ftl}
+    1. Parser \texttt{.ftl} (em memória)
 };
 
 \node[blocoPequeno, below=of parser] (anastruct) {
-    Análise estrutural\\
-    anaStruct
+    2. Análise estrutural (anaStruct)
 };
 
 \node[blocoPequeno, below=of anastruct] (predim) {
-    Pré-dimensionamento
+    3. Pré-dimensionamento iterativo
 };
 
 \node[blocoPequeno, below=of predim] (geracao) {
-    Geração de gráficos, tabelas\\
-    e relatório
+    4. Geração de gráficos, tabelas e relatório
 };
 
 % Caixa externa
@@ -53,20 +51,22 @@
 
 % Saída
 \node[bloco, below=1.0cm of workerbox] (saida) {
-    Resultados apresentados ao usuário
+    \textbf{Resultados apresentados na interface web}
 };
 
 % Setas
 \draw[fluxo] (entrada) -- (interface);
 
 \draw[fluxo] (interface) --
-    node[right, font=\scriptsize] {\glsentryshort{JSON}}
+    node[right, font=\scriptsize] {Payload \glsentryshort{JSON}}
     (workerbox.north);
 
 \draw[fluxo] (parser) -- (anastruct);
 \draw[fluxo] (anastruct) -- (predim);
 \draw[fluxo] (predim) -- (geracao);
 
-\draw[fluxo] (workerbox.south) -- (saida);
+\draw[fluxo] (workerbox.south) --
+    node[right, font=\scriptsize] {Retorno \glsentryshort{JSON}}
+    (saida);
 
 \end{tikzpicture}

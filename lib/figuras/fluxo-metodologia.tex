@@ -1,32 +1,36 @@
-\begin{tikzpicture}[node distance=1.2cm]
+\begin{tikzpicture}[
+    node distance=0.9cm,
+    every node/.style={font=\small}
+]
 
 \node[blocoPequeno] (ftool) {
-    \acrshort{FTOOL}\\
-    Pré-processamento
+    \textbf{1. \acrshort{FTOOL}}\\
+    Pré-processamento (Geometria, apoios e cargas)
 };
 
 \node[blocoPequeno, below=of ftool] (ftl) {
-    Arquivo \texttt{.ftl}
+    \textbf{2. Arquivo \texttt{.ftl}}\\
+    Armazenamento do modelo estrutural plano
 };
 
 \node[blocoPequeno, below=of ftl] (parser) {
-    Interpretação e reconstrução\\
-    do modelo estrutural
+    \textbf{3. Interpretação e reconstrução}\\
+    Leitura do \texttt{.ftl}, topologia e normalização \glsentryshort{SI}
 };
 
 \node[blocoPequeno, below=of parser] (analise) {
-    Análise estrutural\\
-    anaStruct
+    \textbf{4. Análise estrutural (anaStruct)}\\
+    Esforços internos axiais, reações e deslocamentos
 };
 
 \node[blocoPequeno, below=of analise] (predim) {
-    Pré-dimensionamento\\
-    das barras
+    \textbf{5. Pré-dimensionamento das barras}\\
+    Verificação iterativa (tração, compressão e flambagem)
 };
 
 \node[blocoPequeno, below=of predim] (web) {
-    Apresentação dos resultados\\
-    na aplicação web
+    \textbf{6. Aplicação web}\\
+    Diagramas, mapa de camadas e relatório consolidado
 };
 
 \draw[fluxo] (ftool) -- (ftl);

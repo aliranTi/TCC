@@ -1,10 +1,10 @@
 \begin{tikzpicture}[
-    node distance=0.9cm,
+    node distance=0.8cm,
     every node/.style={font=\small}
 ]
 
 \node[blocoPequeno] (ftl) {
-    Arquivo \texttt{.ftl}
+    \textbf{Arquivo \texttt{.ftl}} (v4.00 / v4.01)
 };
 
 \node[blocoPequeno, below=of ftl] (leitura) {
@@ -19,12 +19,12 @@
 
 \node[blocoPequeno, below=of dados] (barras) {
     Identificação das barras\\
-    e de suas extremidades
+    e coordenadas das extremidades
 };
 
 \node[blocoPequeno, below=of barras] (nos) {
-    Reconstrução e\\
-    deduplicação dos nós
+    Reconstrução e deduplicação\\
+    dos nós (tolerância de $1\,\mathrm{mm}$)
 };
 
 \node[blocoPequeno, below=of nos] (associacao) {
@@ -34,12 +34,12 @@
 
 \node[blocoPequeno, below=of associacao] (unidades) {
     Normalização das unidades\\
-    para o \glsentryshort{SI}
+    para o \glsentryshort{SI} ($\mathrm{m}$, $\mathrm{N}$, $\mathrm{Pa}$)
 };
 
 \node[blocoPequeno, below=of unidades] (modelo) {
-    Modelo estrutural\\
-    reconstruído
+    \textbf{Modelo estrutural}\\
+    \textbf{reconstruído em memória}
 };
 
 \draw[fluxo] (ftl) -- (leitura);
